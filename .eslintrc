@@ -7,17 +7,14 @@
     "node": true
   },
   "rules": {
-    "arrow-parens": ["error", "as-needed"],
-    "consistent-return": "off",
-    "comma-dangle": "off",
-    "no-use-before-define": "off",
-    "import/no-unresolved": ["error", { "ignore": ["electron"] }],
-    "import/no-extraneous-dependencies": "off",
-    "react/jsx-no-bind": "off",
-    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
-    "react/prefer-stateless-function": "off",
-    "generator-star-spacing": "off"
-  },
+    "comma-dangle": [2, "never"],
+    "new-cap": [0],
+    "no-unused-vars": [2, {
+      "vars": "all",
+      "argsIgnorePattern": "^_",
+      "varsIgnorePattern": "^_"
+    }]
+  }
   "plugins": [
     "import",
     "react"

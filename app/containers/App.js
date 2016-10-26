@@ -1,15 +1,20 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import MarkdownEditor from '../components/MarkdownEditor';
+import MarkdownRendered from '../components/MarkdownRendered';
 
-export default class App extends Component {
-  static propTypes = {
-    children: PropTypes.element.isRequired
-  };
+const App = ({ raw, rendered }) => (
+  <div className="flex justify-between items-stretch h-100">
+    <MarkdownEditor text={raw} />
+    <MarkdownRendered content={rendered} />
+  </div>
+);
 
-  render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+App.propTypes = {
+  text: PropTypes.string
+};
+const mapStateToProps = state => ({
+  raw: state.text.get('raw'),
+  rendered: state.text.get('rendered')
+})
+export default connect(mapStateToProps)(App);

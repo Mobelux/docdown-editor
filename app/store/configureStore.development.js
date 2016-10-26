@@ -1,15 +1,12 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { hashHistory } from 'react-router';
-import { routerMiddleware, push } from 'react-router-redux';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 
-import * as counterActions from '../actions/counter';
+import * as textActions from '../actions/text';
 
 const actionCreators = {
-  ...counterActions,
-  push,
+  ...textActions
 };
 
 const logger = createLogger({
@@ -17,10 +14,8 @@ const logger = createLogger({
   collapsed: true
 });
 
-const router = routerMiddleware(hashHistory);
-
 const enhancer = compose(
-  applyMiddleware(thunk, router, logger),
+  applyMiddleware(thunk, logger),
   window.devToolsExtension ?
     window.devToolsExtension({ actionCreators }) :
     noop => noop

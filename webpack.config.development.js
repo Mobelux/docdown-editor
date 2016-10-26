@@ -7,6 +7,12 @@
 import webpack from 'webpack';
 import validate from 'webpack-validator';
 import merge from 'webpack-merge';
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import postcssImport from 'postcss-import';
+import postcssUrl from 'postcss-url';
+import cssnext from 'postcss-cssnext';
+import browserReporter from 'postcss-browser-reporter';
+import reporter from 'postcss-reporter';
 import baseConfig from './webpack.config.base';
 
 const port = process.env.PORT || 3000;
@@ -19,7 +25,8 @@ export default validate(merge(baseConfig, {
   entry: [
     `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
     'babel-polyfill',
-    './app/index'
+    './app/index',
+    './app/styles/app.css'
   ],
 
   output: {
@@ -38,15 +45,13 @@ export default validate(merge(baseConfig, {
 
       {
         test: /^((?!\.global).)*\.css$/,
-        loaders: [
-          'style-loader',
-          'css-loader?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
-        ]
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
       }
     ]
   },
 
   plugins: [
+    new ExtractTextPlugin('app.css'),
     // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
     new webpack.HotModuleReplacementPlugin(),
 
@@ -61,5 +66,13 @@ export default validate(merge(baseConfig, {
   ],
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
-  target: 'electron-renderer'
+  target: 'electron-renderer',
+  postcss: w =>
+    [
+      postcssImport({ addDependencyTo: w }),
+      postcssUrl(),
+      cssnext(),
+      browserReporter(),
+      reporter()
+    ]
 }));
