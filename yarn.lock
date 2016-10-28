@@ -2387,14 +2387,6 @@ draft-js-code:
     ends-with "^0.2.0"
     immutable "^3.8.1"
 
-draft-js-prism:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/draft-js-prism/-/draft-js-prism-1.0.3.tgz#5dd79ac74f3cd89d788ae4bd1b3e731df3542c7a"
-  dependencies:
-    extend "^3.0.0"
-    immutable "*"
-    prismjs "^1.5.0"
-
 draft-js@^0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/draft-js/-/draft-js-0.7.0.tgz#29506980d2cb96db2697054fae619e6f5b5d4101"
@@ -3773,7 +3765,7 @@ img-stats@^0.5.2:
   dependencies:
     xmldom "^0.1.19"
 
-immutable@*, immutable@^3.7.4, immutable@^3.7.6, immutable@^3.8.1:
+immutable@^3.7.4, immutable@^3.7.6, immutable@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
 
@@ -6308,7 +6300,7 @@ pretty-bytes@^1.0.2:
     get-stdin "^4.0.1"
     meow "^3.1.0"
 
-prismjs, prismjs@^1.5.0:
+prismjs:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.5.1.tgz#224990100ff6c2a7588d086be1a5ac62e83690f7"
 
