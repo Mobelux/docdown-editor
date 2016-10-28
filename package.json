@@ -108,9 +108,12 @@
   },
   "dependencies": {
     "draft-js": "^0.9.1",
+    "draft-js-code": "^0.2.0",
+    "draft-js-prism": "^1.0.3",
     "electron-debug": "^1.0.1",
     "font-awesome": "^4.6.3",
     "immutable": "^3.8.1",
+    "prismjs": "^1.5.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",
     "react-redux": "^4.4.5",
