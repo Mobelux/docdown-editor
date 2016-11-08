@@ -1,10 +1,10 @@
 import 'prismjs';
 import 'prismjs/components/prism-markdown';
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Editor, EditorState, RichUtils, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
+import CodeUtils from 'draft-js-code';
 import PrismDecorator from '../utils/PrismDecorator';
 import PrismToken from './PrismToken';
-import CodeUtils from 'draft-js-code';
 
 const options = {
   defaultSyntax: 'markdown',
@@ -15,6 +15,11 @@ const options = {
 const decorator = new PrismDecorator(options);
 
 class MarkdownEditor extends React.Component {
+  static propTypes = {
+    text: PropTypes.string,
+    handleUpdate: PropTypes.func
+  }
+
   constructor(props) {
     super(props);
 
@@ -29,11 +34,16 @@ class MarkdownEditor extends React.Component {
     const contentState = convertFromRaw(initialContent);
 
     this.state = { editorState: EditorState.createWithContent(contentState, decorator) };
-    this.onChange = editorState => this.setState({ editorState });
+    this.onChange = ::this.onChange;
     this.handleKeyCommand = ::this.handleKeyCommand;
     this.keyBindingFn = ::this.keyBindingFn;
     this.handleReturn = ::this.handleReturn;
     this.handleTab = ::this.handleTab;
+  }
+
+  onChange(editorState) {
+    this.props.handleUpdate(editorState.getCurrentContent().getPlainText());
+    this.setState({ editorState });
   }
 
   handleKeyCommand(command) {

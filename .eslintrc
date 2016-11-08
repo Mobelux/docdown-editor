@@ -14,7 +14,7 @@
       "argsIgnorePattern": "^_",
       "varsIgnorePattern": "^_"
     }]
-  }
+  },
   "plugins": [
     "import",
     "react"

@@ -1,13 +1,19 @@
 import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
+import Remarkable from 'remarkable';
 import { TEXT_UPDATE } from '../actions/text';
+
+const md = new Remarkable();
 
 const initialState = Map({
   raw: '',
-  rendered: 'Rendered Markdown Goes Here'
+  rendered: ''
 });
 
 const textReducer = handleActions({
-  [TEXT_UPDATE]: (state, { text }) => state.set('raw', text)
+  [TEXT_UPDATE]: (state, { payload }) => {
+    const { text } = payload;
+    return state.merge({ raw: text, rendered: md.render(text) });
+  }
 }, initialState);
 export default textReducer;
