@@ -4,6 +4,7 @@
  * https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
  */
 
+import path from 'path';
 import webpack from 'webpack';
 import validate from 'webpack-validator';
 import merge from 'webpack-merge';
@@ -14,9 +15,7 @@ const port = process.env.PORT || 3000;
 
 export default validate(merge(baseConfig, {
   debug: true,
-
   devtool: 'cheap-module-eval-source-map',
-
   entry: [
     `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
     'babel-polyfill',
@@ -42,6 +41,16 @@ export default validate(merge(baseConfig, {
         test: /^((?!\.global).)*\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
       }
+    ]
+  },
+
+  resolve: {
+    alias: {
+      docdown: path.resolve(__dirname, 'app', 'docdown')
+    },
+    extensions: ['', '.js', '.jsx', '.json'],
+    modulesDirectories: [
+      'node_modules'
     ]
   },
 

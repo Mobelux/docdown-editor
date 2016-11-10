@@ -48,6 +48,11 @@ app.on('ready', async () => {
     mainWindow.focus();
   });
 
+  mainWindow.webContents.on('new-window', (e, url) => {
+    e.preventDefault();
+    shell.openExternal(url);
+  });
+
   mainWindow.on('closed', () => {
     mainWindow = null;
   });
