@@ -1,5 +1,9 @@
 @import '~tachyons-sass/tachyons.scss';
 @import '~prismjs/themes/prism-okaidia.css';
+@import 'reset.scss';
+@import 'fonts.scss';
+
+
 .vw-100 { width: 100vw; }
 .flex-1-50 { flex: 1 50%; }
 
@@ -8,5 +12,3 @@ pre[class*="language-"] {
   height: 100%;
   border-radius: 0;
 }
-
-@import 'fonts.scss'

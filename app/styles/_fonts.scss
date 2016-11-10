@@ -9,7 +9,64 @@
     font-weight: 400;
 }
 
+@font-face {
+    font-family: 'LivioNorm';
+    src: url('fonts/LivioNorm-Medium-WebS.eot');
+    src: url('fonts/LivioNorm-Medium-WebS.eot?#iefix') format('embedded-opentype'),
+         url('fonts/LivioNorm-Medium-WebS.woff2') format('woff2'),
+         url('fonts/LivioNorm-Medium-WebS.woff') format('woff'),
+         url('fonts/LivioNorm-Medium-WebS.ttf') format('ttf'),
+         url('fonts/LivioNorm-Medium-WebS.svg') format('svg');
+    font-weight: 500;
+}
+
+@mixin t-base {
+	font-family: 'LivioNorm', Helvetica, sans-serif;
+	// probably make this color a variable
+	color: #394e60;
+}
+
 h2 {
-  color: red;
-	font-family: 'LivioNorm';
+  @include t-base;
+	font-size: 40px;
+	line-height: 50px;
+	font-weight: 400;
+	margin: 70px 0 40px 0;
+}
+
+h3 {
+	@include t-base;
+	font-size: 20px;
+	line-height: 40px;
+	font-weight: 500;
+	margin: 30px 0;
+}
+
+h4 {
+	// this heading gets the theme color applied - not sure how we are going to integrate that
+	@include t-base;
+	font-size: 16px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-weight: 500;
+	margin-top: 60px;
+}
+
+h5 {
+	@include t-base;
+	font-size: 15px;
+	line-height: 20px;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-weight: 500;
+	margin: 10px 0 8px;
+}
+
+p,
+ul,
+ol {
+	@include t-base;
+	font-size: 20px;
+	line-height: 30px;
+	letter-spacing: 0.25px;
 }
