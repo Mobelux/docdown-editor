@@ -2,3 +2,9 @@
 @import 'prismjs/themes/prism-okaidia.css';
 .vw-100 { width: 100vw; }
 .flex-1-50 { flex: 1 50%; }
+
+pre[class*="language-"] {
+  margin: 0;
+  height: 100%;
+  border-radius: 0;
+}
