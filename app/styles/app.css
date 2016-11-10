@@ -8,3 +8,9 @@ pre[class*="language-"] {
   height: 100%;
   border-radius: 0;
 }
+
+h2 {
+  color: red;
+}
+
+/*FONTS*/
