@@ -2,6 +2,7 @@
  * Build config for electron 'Renderer Process' file
  */
 
+import path from 'path';
 import webpack from 'webpack';
 import validate from 'webpack-validator';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
@@ -10,7 +11,6 @@ import baseConfig from './webpack.config.base';
 
 const config = validate(merge(baseConfig, {
   devtool: 'cheap-module-source-map',
-
   entry: [
     'babel-polyfill',
     './app/index'
@@ -39,6 +39,16 @@ const config = validate(merge(baseConfig, {
           'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
         )
       }
+    ]
+  },
+
+  resolve: {
+    alias: {
+      docdown: path.resolve(__dirname, 'app', 'docdown')
+    },
+    extensions: ['', '.js', '.jsx', '.json'],
+    modulesDirectories: [
+      'node_modules'
     ]
   },
 
