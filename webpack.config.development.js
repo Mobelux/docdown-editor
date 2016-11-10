@@ -8,11 +8,6 @@ import webpack from 'webpack';
 import validate from 'webpack-validator';
 import merge from 'webpack-merge';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import postcssImport from 'postcss-import';
-import postcssUrl from 'postcss-url';
-import cssnext from 'postcss-cssnext';
-import browserReporter from 'postcss-browser-reporter';
-import reporter from 'postcss-reporter';
 import baseConfig from './webpack.config.base';
 
 const port = process.env.PORT || 3000;
@@ -26,7 +21,7 @@ export default validate(merge(baseConfig, {
     `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
     'babel-polyfill',
     './app/index',
-    './app/styles/app.css'
+    './app/styles/app.scss'
   ],
 
   output: {
@@ -44,8 +39,8 @@ export default validate(merge(baseConfig, {
       },
 
       {
-        test: /^((?!\.global).)*\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+        test: /^((?!\.global).)*\.scss$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
       }
     ]
   },
@@ -66,13 +61,5 @@ export default validate(merge(baseConfig, {
   ],
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
-  target: 'electron-renderer',
-  postcss: w =>
-    [
-      postcssImport({ addDependencyTo: w }),
-      postcssUrl(),
-      cssnext(),
-      browserReporter(),
-      reporter()
-    ]
+  target: 'electron-renderer'
 }));
