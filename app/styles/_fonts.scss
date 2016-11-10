@@ -1,3 +1,15 @@
+@font-face {
+    font-family: 'LivioNorm';
+    src: url('fonts/LivioNorm-Regular-WebS.eot');
+    src: url('fonts/LivioNorm-Regular-WebS.eot?#iefix') format('embedded-opentype'),
+         url('fonts/LivioNorm-Regular-WebS.woff2') format('woff2'),
+         url('fonts/LivioNorm-Regular-WebS.woff') format('woff'),
+         url('fonts/LivioNorm-Regular-WebS.ttf') format('ttf'),
+         url('fonts/LivioNorm-Regular-WebS.svg') format('svg');
+    font-weight: 400;
+}
+
 h2 {
   color: red;
+	font-family: 'LivioNorm';
 }

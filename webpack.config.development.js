@@ -40,6 +40,10 @@ export default validate(merge(baseConfig, {
       {
         test: /^((?!\.global).)*\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file?name=app/styles/fonts/[name].[ext]'
       }
     ]
   },
