@@ -6,5 +6,5 @@ const MarkdownRendered = ({ content }) => (
 
 MarkdownRendered.propTypes = {
   content: PropTypes.string
-}
+};
 export default MarkdownRendered;
