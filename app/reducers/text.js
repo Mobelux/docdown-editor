@@ -64,7 +64,7 @@ const md = new Remarkable({
         </div>
       </a>
     </div>\n
-    <img class="visual-print-image" src="{{{ image_url }}}">
+    <img src="{{{ image_url }}}">
   `
   },
   note_blocks: {

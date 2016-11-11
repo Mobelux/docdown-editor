@@ -1,0 +1,52 @@
+.visual-link {
+    display: block;
+
+    text-decoration: none;
+    color: $black;
+
+    background: white;
+    box-shadow: 0px 12px 40px 0px $grey-light;
+
+    &__body {
+        padding: 33px 30px;
+        p:last-of-type {
+            margin: 0 !important;
+        }
+    }
+
+    &__title {
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    &__link {
+        position: relative;
+        padding: 20px 30px;
+        min-width: 60px;
+
+        font-size: 15px;
+        text-align: center;
+
+        border-top: 1px solid $mirror;
+
+        span {
+            position: relative;
+            z-index: 10;
+        }
+
+        .icon {
+            margin-left: auto;
+        }
+    }
+
+    &:hover {
+        .visual-link__link {
+            background: $ice;
+        }
+    }
+}
+
+.visual-link-wrapper {
+    margin: 60px 0;
+}
