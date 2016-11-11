@@ -22,8 +22,13 @@
 
 @mixin t-base {
 	font-family: 'LivioNorm', Helvetica, sans-serif;
-	// probably make this color a variable
-	color: #394e60;
+	color: $dark-grey-base;
+}
+
+@mixin t-base-theme {
+	font-family: 'LivioNorm', Helvetica, sans-serif;
+	// this is the placeholder color for what shoudl be a doc theme color
+	color: $grey-base;
 }
 
 h2 {
@@ -43,8 +48,7 @@ h3 {
 }
 
 h4 {
-	// this heading gets the theme color applied - not sure how we are going to integrate that
-	@include t-base;
+	@include t-base-theme;
 	font-size: 16px;
 	letter-spacing: 2px;
 	text-transform: uppercase;
@@ -77,4 +81,12 @@ ol {
 	font-size: 20px;
 	line-height: 30px;
 	letter-spacing: 0.25px;
+}
+
+a {
+	@include t-base-theme;
+	font-size: 20px;
+	line-height: 30px;
+	letter-spacing: 0.25px;
+	text-decoration: none;
 }
