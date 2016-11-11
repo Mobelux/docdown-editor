@@ -20,6 +20,17 @@
     font-weight: 500;
 }
 
+@font-face {
+    font-family: 'LivioMono';
+    src: url('fonts/LivioMono-Regular-WebS.eot');
+    src: url('fonts/LivioMono-Regular-WebS.eot?#iefix') format('embedded-opentype'),
+         url('fonts/LivioMono-Regular-WebS.woff2') format('woff2'),
+         url('fonts/LivioMono-Regular-WebS.woff') format('woff'),
+         url('fonts/LivioMono-Regular-WebS.ttf') format('ttf'),
+         url('fonts/LivioMono-Regular-WebS.svg') format('svg');
+    font-weight: 400;
+}
+
 @mixin t-base {
 	font-family: 'LivioNorm', Helvetica, sans-serif;
 	color: $dark-grey-base;
@@ -31,62 +42,10 @@
 	color: $grey-base;
 }
 
-h2 {
-  @include t-base;
-	font-size: 40px;
-	line-height: 50px;
-	font-weight: 400;
-	margin: 70px 0 40px 0;
-}
-
-h3 {
-	@include t-base;
-	font-size: 20px;
-	line-height: 40px;
-	font-weight: 500;
-	margin: 30px 0;
-}
-
-h4 {
-	@include t-base-theme;
-	font-size: 16px;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	font-weight: 500;
-	margin-top: 60px;
-}
-
-h5 {
-	@include t-base;
+@mixin code-base {
+	font-family: 'LivioMono', monospace;
 	font-size: 15px;
-	line-height: 20px;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	font-weight: 500;
-	margin: 10px 0 8px;
-}
-
-h6 {
-	@include t-base;
-	font-size: 15px;
-  line-height: 20px;
-  letter-spacing: 2px;
 	font-weight: 400;
-}
-
-p,
-ul,
-ol {
-	@include t-base;
-	font-size: 20px;
 	line-height: 30px;
 	letter-spacing: 0.25px;
-}
-
-a {
-	@include t-base-theme;
-	font-size: 20px;
-	line-height: 30px;
-	letter-spacing: 0.25px;
-	text-decoration: none;
 }
