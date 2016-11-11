@@ -1,5 +1,12 @@
 @import '~tachyons-sass/tachyons.scss';
 @import '~prismjs/themes/prism-okaidia.css';
+@import 'reset.scss';
+@import 'colors.scss';
+@import 'fonts.scss';
+@import 'typography.scss';
+@import 'code.scss';
+
+
 .vw-100 { width: 100vw; }
 .flex-1-50 { flex: 1 50%; }
 

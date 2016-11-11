@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'LivioNorm';
+    src: url('fonts/LivioNorm-Regular-WebS.eot');
+    src: url('fonts/LivioNorm-Regular-WebS.eot?#iefix') format('embedded-opentype'),
+         url('fonts/LivioNorm-Regular-WebS.woff2') format('woff2'),
+         url('fonts/LivioNorm-Regular-WebS.woff') format('woff'),
+         url('fonts/LivioNorm-Regular-WebS.ttf') format('ttf'),
+         url('fonts/LivioNorm-Regular-WebS.svg') format('svg');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'LivioNorm';
+    src: url('fonts/LivioNorm-Medium-WebS.eot');
+    src: url('fonts/LivioNorm-Medium-WebS.eot?#iefix') format('embedded-opentype'),
+         url('fonts/LivioNorm-Medium-WebS.woff2') format('woff2'),
+         url('fonts/LivioNorm-Medium-WebS.woff') format('woff'),
+         url('fonts/LivioNorm-Medium-WebS.ttf') format('ttf'),
+         url('fonts/LivioNorm-Medium-WebS.svg') format('svg');
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: 'LivioMono';
+    src: url('fonts/LivioMono-Regular-WebS.eot');
+    src: url('fonts/LivioMono-Regular-WebS.eot?#iefix') format('embedded-opentype'),
+         url('fonts/LivioMono-Regular-WebS.woff2') format('woff2'),
+         url('fonts/LivioMono-Regular-WebS.woff') format('woff'),
+         url('fonts/LivioMono-Regular-WebS.ttf') format('ttf'),
+         url('fonts/LivioMono-Regular-WebS.svg') format('svg');
+    font-weight: 400;
+}
+
+@mixin t-base {
+	font-family: 'LivioNorm', Helvetica, sans-serif;
+	color: $dark-grey-base;
+}
+
+@mixin t-base-theme {
+	font-family: 'LivioNorm', Helvetica, sans-serif;
+	// this is the placeholder color for what shoudl be a doc theme color
+	color: $grey-base;
+}
+
+@mixin code-base {
+	font-family: 'LivioMono', monospace;
+	font-size: 15px;
+	font-weight: 400;
+	line-height: 30px;
+	letter-spacing: 0.25px;
+}

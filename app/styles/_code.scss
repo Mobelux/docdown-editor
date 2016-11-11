@@ -1,0 +1,29 @@
+//
+// Inline Code Styling
+//
+p code {
+	padding: 2px 5px;
+
+	@include code-base;
+
+	background: $ice;
+	border-radius: 2px;
+	border: 1px solid $grey-light;
+}
+
+//
+// Code Block Styling
+//
+
+.rendered pre {
+	margin: 30px 0;
+	padding: 30px;
+
+	background: $black;
+}
+
+pre code {
+	@include code-base;
+	// this is just a placeholder color for now
+	color: white;
+}
