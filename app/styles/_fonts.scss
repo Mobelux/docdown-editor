@@ -62,11 +62,19 @@ h5 {
 	margin: 10px 0 8px;
 }
 
+h6 {
+	@include t-base;
+	font-size: 15px;
+  line-height: 20px;
+  letter-spacing: 2px;
+	font-weight: 400;
+}
+
 p,
 ul,
 ol {
 	@include t-base;
-	font-size: 15px;
-	line-height: 25px;
+	font-size: 20px;
+	line-height: 30px;
 	letter-spacing: 0.25px;
 }
