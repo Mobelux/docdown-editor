@@ -107,7 +107,7 @@ class MarkdownEditor extends React.Component {
     const { editorState } = this.state;
     return (
       <div className="flex-1-50">
-        <pre className="language-markdown overflow-x-hidden">
+        <pre className="language-markdown">
           <Editor
             editorState={editorState}
             onChange={this.onChange}
