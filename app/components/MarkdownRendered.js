@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const MarkdownRendered = ({ content }) => (
-  <div className="flex-1-50 overflow-auto rendered" dangerouslySetInnerHTML={{ __html: content }} />
+  <div className="flex-1-50 overflow-auto rendered pa4" dangerouslySetInnerHTML={{ __html: content }} />
 );
 
 MarkdownRendered.propTypes = {
