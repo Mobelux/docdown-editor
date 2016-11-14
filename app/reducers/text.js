@@ -78,23 +78,15 @@ const md = new Remarkable({
     tags: {
       must: {
         svg: `<img src="${svgPath('icon-must')}" />`,
-        // svg_path: staticPath('svg/standard/icon-must.svg'),
         title: 'Must'
       },
       note: {
         svg: `<img src="${svgPath('icon-note')}" />`,
-        // svg_path: staticPath('svg/standard/icon-note.svg'),
         title: 'Note'
       },
       may: {
         svg: `<img src="${svgPath('icon-may')}" />`,
-        // svg_path: staticPath('svg/standard/icon-may.svg'),
         title: 'May'
-      },
-      sdl: {
-        svg: `<img src="${svgPath('icon-sql')}" />`,
-        // svg_path: staticPath('svg/standard/icon-sdl.svg'),
-        title: 'SDL'
       }
     }
   },
