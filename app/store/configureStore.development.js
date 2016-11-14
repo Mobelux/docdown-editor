@@ -7,9 +7,11 @@ import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 
 import * as textActions from '../actions/text';
+import * as uiActions from '../actions/ui';
 
 const actionCreators = {
-  ...textActions
+  ...textActions,
+  ...uiActions
 };
 
 const logger = createLogger({
