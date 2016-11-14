@@ -54,7 +54,7 @@ const md = new Remarkable({
         <a href="{{{ image_url }}}" target="_blank" class="visual-link">
           <div class="visual-link__body">
             <div class="t-h6 visual-link__title">{{ title }}</div>
-            <p class="t-default">`,
+            <p>`,
     postfix: `
           \n</p>
         </div>
