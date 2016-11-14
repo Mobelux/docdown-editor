@@ -18,15 +18,3 @@ pre[class*="language-"] {
   border-radius: 0;
 	overflow: auto;
 }
-
-div[class*="DraftEditor-"]{
-	height: 100%;
-
-	& > div {
-		height: 100%;
-	}
-}
-
-pre, div[class*="DraftStyleDefault-"]{
-	height: 100%;
-}
