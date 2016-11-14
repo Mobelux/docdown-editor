@@ -1,4 +1,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import { persistStore, autoRehydrate } from 'redux-persist';
+import { asyncSessionStorage } from 'redux-persist/storages';
+import immutableTransform from 'redux-persist-transform-immutable';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
@@ -15,6 +18,7 @@ const logger = createLogger({
 });
 
 const enhancer = compose(
+  autoRehydrate(),
   applyMiddleware(thunk, logger),
   window.devToolsExtension ?
     window.devToolsExtension({ actionCreators }) :
@@ -23,6 +27,8 @@ const enhancer = compose(
 
 export default function configureStore(initialState) {
   const store = createStore(rootReducer, initialState, enhancer);
+  persistStore(store, { storage: asyncSessionStorage, transforms: [immutableTransform()] });
+
 
   if (window.devToolsExtension) {
     window.devToolsExtension.updateStore(store);
