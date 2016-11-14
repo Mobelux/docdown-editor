@@ -71,29 +71,29 @@ const md = new Remarkable({
     prefix: `
       <div class="{{ tag }}">
         <div class="icon">
-          {{{ svg }}}<img class="icon--pdf" src="{{{ svg_path }}} />
+          {{{ svg }}}
         </div>
         <h5>{{ title }}</h5>`,
     postfix: '\n</div>',
     tags: {
       must: {
         svg: `<img src="${svgPath('icon-must')}" />`,
-        svg_path: staticPath('svg/standard/icon-must.svg'),
+        // svg_path: staticPath('svg/standard/icon-must.svg'),
         title: 'Must'
       },
       note: {
         svg: `<img src="${svgPath('icon-note')}" />`,
-        svg_path: staticPath('svg/standard/icon-note.svg'),
+        // svg_path: staticPath('svg/standard/icon-note.svg'),
         title: 'Note'
       },
       may: {
         svg: `<img src="${svgPath('icon-may')}" />`,
-        svg_path: staticPath('svg/standard/icon-may.svg'),
+        // svg_path: staticPath('svg/standard/icon-may.svg'),
         title: 'May'
       },
       sdl: {
         svg: `<img src="${svgPath('icon-sql')}" />`,
-        svg_path: staticPath('svg/standard/icon-sdl.svg'),
+        // svg_path: staticPath('svg/standard/icon-sdl.svg'),
         title: 'SDL'
       }
     }
