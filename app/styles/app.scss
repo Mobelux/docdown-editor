@@ -1,11 +1,11 @@
 @import '~tachyons-sass/tachyons.scss';
 @import '~prismjs/themes/prism-okaidia.css';
-@import 'utils/reset.scss';
-@import 'utils/colors.scss';
-@import 'utils/fonts.scss';
-@import 'utils/typography.scss';
-@import 'components/code.scss';
-@import 'components/sequence-diagram.scss';
+@import 'utils/reset';
+@import 'utils/colors';
+@import 'utils/fonts';
+@import 'utils/typography';
+@import 'components/code';
+@import 'components/sequence-diagram';
 
 
 .vw-100 { width: 100vw; }

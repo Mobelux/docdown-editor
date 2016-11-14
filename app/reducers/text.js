@@ -58,13 +58,13 @@ const md = new Remarkable({
     postfix: `
           \n</p>
         </div>
-        <div class="visual-link__link fx-wrapper fx-s-between fx-a-center">
+        <div class="visual-link__link flex justify-center items-center">
           <span class="fc-theme">View Diagram</span>
           <span class="icon"><img src="${svgPath('icon-visual')}" /></span>
         </div>
       </a>
     </div>\n
-    <img src="{{{ image_url }}}">
+    <img class="visual-print-image" src="{{{ image_url }}}">
   `
   },
   note_blocks: {

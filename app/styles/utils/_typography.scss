@@ -42,6 +42,7 @@ h5 {
 	font-weight: 500;
 }
 
+.t-h6,
 h6 {
 	@include t-base;
 	font-size: 15px;
