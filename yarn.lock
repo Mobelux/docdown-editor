@@ -3604,7 +3604,7 @@ ignore@^3.1.5:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ignore/-/ignore-3.2.0.tgz#8d88f03c3002a0ac52114db25d2c673b0bf1e435"
 
-immutable@^3.7.4, immutable@^3.7.6, immutable@^3.8.1:
+immutable@^3.7.4, immutable@^3.7.6, immutable@^3.8.1, "immutable@>= 3":
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
 
@@ -4183,6 +4183,10 @@ lockfile@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/lockfile/-/lockfile-1.0.2.tgz#97e1990174f696cbe0a3acd58a43b84aa30c7c83"
 
+lodash-es@^4.16.0:
+  version "4.17.0"
+  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.0.tgz#b94e3ba146a914b6513e9c302cc59cc6be6c7e79"
+
 lodash-es@^4.2.1:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.16.4.tgz#4dc3e2cf33a8c343028aa7f7e06d1c9697042599"
@@ -4575,6 +4579,10 @@ lodash@^3.10.1:
 lodash@^4.0.0, lodash@^4.13.1, lodash@^4.14.0, lodash@^4.15.0, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0, lodash@^4.5.1, lodash@^4.6.1, lodash@^4.8.0:
   version "4.16.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.4.tgz#01ce306b9bad1319f2a5528674f88297aeb70127"
+
+lodash@^4.11.1:
+  version "4.17.0"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.0.tgz#93f4466e5ab73e5a1f1216c34eea11535f0a8df5"
 
 lodash@~4.16.4:
   version "4.16.6"
@@ -6092,6 +6100,22 @@ redux-logger@^2.6.1:
   dependencies:
     deep-diff "0.3.4"
 
+redux-persist:
+  version "4.0.0-alpha7"
+  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-4.0.0-alpha7.tgz#d05f53f4910127fba8a82898c02ac84e7c38a4ea"
+  dependencies:
+    json-stringify-safe "^5.0.1"
+    lodash "^4.11.1"
+    lodash-es "^4.16.0"
+
+redux-persist-transform-immutable:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/redux-persist-transform-immutable/-/redux-persist-transform-immutable-4.1.0.tgz#379bf0d660bf8d528c3b1e3b8918d5a2d770fb87"
+  dependencies:
+    immutable ">= 3"
+    transit-immutable-js ">= 0.5"
+    transit-js ">= 0.8"
+
 redux-thunk@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.1.0.tgz#c724bfee75dbe352da2e3ba9bc14302badd89a98"
@@ -6998,6 +7022,14 @@ tough-cookie@^2.3.1, tough-cookie@>=0.12.0, tough-cookie@~2.3.0:
 tr46@~0.0.3:
   version "0.0.3"
   resolved "https://registry.yarnpkg.com/tr46/-/tr46-0.0.3.tgz#8184fd347dac9cdc185992f3a6622e14b9d9ab6a"
+
+"transit-immutable-js@>= 0.5":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/transit-immutable-js/-/transit-immutable-js-0.6.0.tgz#db738a54a152f75c67b51f4cabc0ebe8cdb45f9d"
+
+"transit-js@>= 0.8":
+  version "0.8.846"
+  resolved "https://registry.yarnpkg.com/transit-js/-/transit-js-0.8.846.tgz#76e06e8f0e6be27675e3442112f5c9bb75343464"
 
 "traverse@>=0.3.0 <0.4":
   version "0.3.9"

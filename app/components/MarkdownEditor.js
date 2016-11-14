@@ -22,28 +22,41 @@ class MarkdownEditor extends React.Component {
 
   constructor(props) {
     super(props);
-
-    const initialContent = {
-      entityMap: {},
-      blocks: [{
-        type: 'code-block',
-        text: props.text
-      }]
-    };
-
-    const contentState = convertFromRaw(initialContent);
-
-    this.state = { editorState: EditorState.createWithContent(contentState, decorator) };
     this.onChange = ::this.onChange;
     this.handleKeyCommand = ::this.handleKeyCommand;
     this.keyBindingFn = ::this.keyBindingFn;
     this.handleReturn = ::this.handleReturn;
     this.handleTab = ::this.handleTab;
+    this.state = { editorState: EditorState.createEmpty(decorator) };
+  }
+
+  componentDidMount() {
+    this.setInitialText(this.props.text);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.text === '' && nextProps.text !== '') {
+      this.setInitialText(nextProps.text);
+    }
   }
 
   onChange(editorState) {
     this.props.handleUpdate(editorState.getCurrentContent().getPlainText());
     this.setState({ editorState });
+  }
+
+  setInitialText(text) {
+    const initialContent = {
+      entityMap: {},
+      blocks: [{
+        type: 'code-block',
+        text
+      }]
+    };
+
+    const contentState = convertFromRaw(initialContent);
+
+    this.setState({ editorState: EditorState.createWithContent(contentState, decorator) });
   }
 
   handleKeyCommand(command) {
