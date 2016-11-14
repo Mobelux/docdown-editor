@@ -14,7 +14,7 @@ const options = {
 };
 const decorator = new PrismDecorator(options);
 
-class MarkdownEditor extends React.PureComponent {
+class MarkdownEditor extends React.Component {
   static propTypes = {
     text: PropTypes.string,
     handleUpdate: PropTypes.func
