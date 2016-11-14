@@ -24,7 +24,7 @@ body {
 }
 
 // Removing margins with great prejudice
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h4, h5, h6, p, pre {
     margin: 0;
     padding: 0;
 }
@@ -227,13 +227,6 @@ hr {
     box-sizing: content-box;
 }
 
-/**
-* Contain overflow in all browsers.
-*/
-
-pre {
-    overflow: auto;
-}
 
 /**
 * Address odd `em`-unit font size rendering in all browsers.
