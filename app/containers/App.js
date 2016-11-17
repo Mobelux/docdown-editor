@@ -6,15 +6,18 @@ import MarkdownEditor from '../components/MarkdownEditor';
 import MarkdownRendered from '../components/MarkdownRendered';
 import { updateText } from '../actions/text';
 import { resizePane } from '../actions/ui';
+import Sidebar from '../components/Sidebar';
 
 const App = ({ raw, rendered, paneSize, handleUpdate, handleResize }) => (
-  <div>
+  <div className="flex">
     <Sidebar />
-    <SplitPane className="h-100 v-100" split="vertical" minSize={20} defaultSize={paneSize} onChange={handleResize}>
-      <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
-      <MarkdownRendered content={rendered} />
-    </SplitPane>
-  <div>
+    <div className="split-pane-wrapper">
+      <SplitPane className="h-100 v-100 static" split="vertical" minSize={20} defaultSize={paneSize} onChange={handleResize}>
+        <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+        <MarkdownRendered content={rendered} />
+      </SplitPane>
+    </div>
+  </div>
 );
 
 App.propTypes = {
