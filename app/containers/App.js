@@ -10,13 +10,15 @@ import Sidebar from '../components/Sidebar';
 
 const App = ({ raw, rendered, paneSize, handleUpdate, handleResize }) => (
   <div className="flex">
-    <Sidebar />
-    <div className="split-pane-wrapper">
-      <SplitPane className="h-100 v-100 static" split="vertical" minSize={20} defaultSize={paneSize} onChange={handleResize}>
-        <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
-        <MarkdownRendered content={rendered} />
-      </SplitPane>
-    </div>
+    <SplitPane className="h-100 v-100 static" split="vertical" minSize={20} defaultSize={paneSize} onChange={handleResize}>
+      <Sidebar />
+      <div className="split-pane-wrapper">
+        <SplitPane className="h-100 v-100 static" split="vertical" minSize={20} defaultSize={paneSize} onChange={handleResize}>
+          <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+          <MarkdownRendered content={rendered} />
+        </SplitPane>
+      </div>
+    </SplitPane>
   </div>
 );
 
