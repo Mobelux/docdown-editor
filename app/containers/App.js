@@ -8,11 +8,13 @@ import { updateText } from '../actions/text';
 import { resizePane } from '../actions/ui';
 
 const App = ({ raw, rendered, paneSize, handleUpdate, handleResize }) => (
-  <Sidebar />
-  <SplitPane className="h-100 v-100" split="vertical" minSize={20} defaultSize={paneSize} onChange={handleResize}>
-    <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
-    <MarkdownRendered content={rendered} />
-  </SplitPane>
+  <div>
+    <Sidebar />
+    <SplitPane className="h-100 v-100" split="vertical" minSize={20} defaultSize={paneSize} onChange={handleResize}>
+      <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+      <MarkdownRendered content={rendered} />
+    </SplitPane>
+  <div>
 );
 
 App.propTypes = {
