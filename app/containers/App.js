@@ -12,8 +12,8 @@ import Sidebar from '../components/Sidebar';
 const App = ({ raw, rendered, ui, handleUpdate, uiActions }) => (
   <SplitPane className="h-100 v-100" split="vertical" minSize={0} defaultSize={ui.get('sidebarSize')} onChange={uiActions.handleResizeSidebar}>
     <Sidebar visible={ui.get('sidebarVisible')} toggle={uiActions.toggleSidebar} />
-    <div className="split-pane-wrapper">
-      <SplitPane className="h-100 v-100" split="vertical" minSize={200} defaultSize={ui.get('paneSize')} onChange={uiActions.handleResizePane}>
+    <div id="split-pane-wrapper">
+      <SplitPane className="h-100 v-100" split="vertical" minSize={0} defaultSize={ui.get('paneSize')} onChange={uiActions.handleResizePane}>
         <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
         <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
       </SplitPane>
