@@ -12,7 +12,7 @@ const App = ({ raw, rendered, paneSize, handleUpdate, handleResize }) => (
   <SplitPane className="h-100 v-100" split="vertical" minSize={100} defaultSize={250} onChange={handleResize}>
     <Sidebar />
     <div id="split-pane-wrapper">
-      <SplitPane className="h-100 v-100" split="vertical" minSize={0} defaultSize={paneSize} onChange={handleResize}>
+      <SplitPane className="h-100 v-100" split="vertical" minSize={200} defaultSize={paneSize} onChange={handleResize}>
         <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
         <MarkdownRendered content={rendered} />
       </SplitPane>
