@@ -6,7 +6,7 @@ import { SIDEBAR_TOGGLE, PANE_RESIZE } from '../actions/ui';
 
 const initialState = Map({
   sidebarVisible: true,
-  paneSize: (document.documentElement.clientWidth / 2)
+  paneSize: ((document.documentElement.clientWidth-250) / 2)
   // paneSize: (document.getElementById('split-pane-wrapper').clientWidth / 2)
 });
 
