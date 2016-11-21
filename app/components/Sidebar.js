@@ -17,7 +17,9 @@ class Sidebar extends React.Component {
         </div>
       );
     }
-    return null;
+    return (
+      <div className="arrow-right" onClick={toggle} />
+    );
   }
 }
 
