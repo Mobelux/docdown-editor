@@ -17,8 +17,8 @@ const uiReducer = handleActions({
     return state.merge({ sidebarVisible: !state.get('sidebarVisible'), sidebarSize });
   },
   [PANE_TOGGLE]: (state) => {
-    // this logic is wrong for the default state - removing the right element but makign width of pane 1 0
-    const paneSize = !state.get('paneSize') ? (document.getElementById('split-pane-wrapper') / 2) : 0;
+    // this logic is not exactly right - it will never actually be 0... but it is working
+    const paneSize = !state.get('paneVisible') ? 0 : 100 + '%';
     return state.merge({ paneVisible: !state.get('paneVisible'), paneSize });
   },
   [PANE_RESIZE]: (state, { payload }) => (state.set('paneSize', payload)),
