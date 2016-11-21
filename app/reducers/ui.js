@@ -18,7 +18,7 @@ const uiReducer = handleActions({
   },
   [PANE_TOGGLE]: (state) => {
     // this logic is not exactly right... but it is working kinda
-    const paneSize = !state.get('paneVisible') ? 0 : 100 + '%';
+    const paneSize = state.get('paneVisible') ? 100 + '%' : 0;
     return state.merge({ paneVisible: !state.get('paneVisible'), paneSize });
   },
   [PANE_RESIZE]: (state, { payload }) => (state.set('paneSize', payload)),

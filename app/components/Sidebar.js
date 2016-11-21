@@ -18,7 +18,7 @@ class Sidebar extends React.Component {
       );
     }
     return (
-      <div className="arrow-right" onClick={toggle} />
+      <div className="arrow arrow-right" onClick={toggle} />
     );
   }
 }

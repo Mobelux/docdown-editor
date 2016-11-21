@@ -18,7 +18,9 @@ class MarkdownRendered extends React.Component {
         </div>
       );
     }
-    return null;
+    return (
+      <div className="arrow arrow-left" onClick={toggle} />
+    );
   }
 }
 
