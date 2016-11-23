@@ -9,17 +9,63 @@ import { updateText } from '../actions/text';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
 
-const App = ({ raw, rendered, ui, handleUpdate, uiActions }) => (
-  <SplitPane className="h-100 v-100" split="vertical" minSize={0} defaultSize={ui.get('sidebarSize')} onChange={uiActions.handleResizeSidebar}>
-    <Sidebar visible={ui.get('sidebarVisible')} toggle={uiActions.toggleSidebar} />
-    <div id="split-pane-wrapper">
-      <SplitPane className="h-100 v-100" split="vertical" minSize={0} defaultSize={ui.get('paneSize')} onChange={uiActions.handleResizePane}>
-        <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
-        <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
+class App extends React.Component {
+
+  componentWillReceiveProps() {
+    this.sidebar.setState({
+      draggedSize: this.sidebarSize()
+    });
+    this.pane.setState({
+      draggedSize: this.paneSize()
+    });
+    this.pane.setSize(this.pane.props, this.pane.state);
+  }
+
+  sidebarSize() {
+    const { ui } = this.props;
+    return ui.get('sidebarVisible') ? ui.get('sidebarSize') : '0';
+  }
+
+  paneSize() {
+    const { ui } = this.props;
+    return ui.get('paneVisible') ? ui.get('paneSize') : '0';
+  }
+
+  render() {
+    const { raw, rendered, ui, handleUpdate, uiActions } = this.props;
+
+    return (
+      <SplitPane
+        ref={(n) => { this.sidebar = n; }}
+        className="h-100 v-100"
+        split="vertical"
+        minSize={0}
+        defaultSize={this.sidebarSize()}
+        size={ui.get('sidebarVisible') ? undefined : '0'}
+        allowResize={ui.get('sidebarVisible')}
+        onChange={uiActions.resizeSidebar}
+      >
+        <Sidebar visible={ui.get('sidebarVisible')} toggle={uiActions.toggleSidebar} />
+        <div id="split-pane-wrapper">
+          <SplitPane
+            ref={(n) => { this.pane = n; }}
+            className="h-100 v-100"
+            split="vertical"
+            minSize={0}
+            defaultSize={this.paneSize()}
+            size={ui.get('paneVisible') ? undefined : '0'}
+            allowResize={ui.get('paneVisible')}
+            primary="second"
+            onChange={uiActions.resizePane}
+          >
+            <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+            <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
+          </SplitPane>
+        </div>
       </SplitPane>
-    </div>
-  </SplitPane>
-);
+    );
+  }
+};
 
 App.propTypes = {
   raw: PropTypes.string,
@@ -28,8 +74,9 @@ App.propTypes = {
   handleUpdate: PropTypes.func,
   uiActions: PropTypes.shape({
     toggleSidebar: PropTypes.func,
-    handleResizePane: PropTypes.func,
-    handleResizeSidebar: PropTypes.func
+    togglePane: PropTypes.func,
+    resizePane: PropTypes.func,
+    resizeSidebar: PropTypes.func
   })
 };
 const mapStateToProps = state => ({

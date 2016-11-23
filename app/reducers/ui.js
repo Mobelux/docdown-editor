@@ -12,14 +12,8 @@ const initialState = Map({
 });
 
 const uiReducer = handleActions({
-  [SIDEBAR_TOGGLE]: (state) => {
-    const sidebarSize = !state.get('sidebarVisible') ? 250 : 0;
-    return state.merge({ sidebarVisible: !state.get('sidebarVisible'), sidebarSize });
-  },
-  [PANE_TOGGLE]: (state) => {
-    const paneSize = !state.get('paneVisible') ? 100 + '%' : 0;
-    return state.merge({ paneVisible: !state.get('paneVisible'), paneSize });
-  },
+  [SIDEBAR_TOGGLE]: state => (state.set('sidebarVisible', !state.get('sidebarVisible'))),
+  [PANE_TOGGLE]: state => (state.set('paneVisible', !state.get('paneVisible'))),
   [PANE_RESIZE]: (state, { payload }) => (state.set('paneSize', payload)),
   [SIDEBAR_RESIZE]: (state, { payload }) => (state.set('sidebarSize', payload))
 }, initialState);
