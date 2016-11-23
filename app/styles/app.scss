@@ -4,10 +4,12 @@
 @import 'utils/colors';
 @import 'utils/fonts';
 @import 'utils/typography';
+@import 'utils/buttons';
 @import 'components/code';
 @import 'components/sequence-diagram';
 @import 'components/notes';
 @import 'components/resizer';
+@import 'components/sidebar';
 
 
 .vw-100 { width: 100vw; }
@@ -17,4 +19,10 @@ pre[class*="language-"] {
   margin: 0;
   height: 100%;
   border-radius: 0;
+}
+
+#split-pane-wrapper {
+	width: 100%;
+	height: 100vh;
+	position: relative;
 }
