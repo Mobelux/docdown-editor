@@ -10,15 +10,9 @@ import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
 
 class App extends React.Component {
-
-  componentWillReceiveProps() {
-    this.sidebar.setState({
-      draggedSize: this.sidebarSize()
-    });
-    this.pane.setState({
-      draggedSize: this.paneSize()
-    });
-    this.pane.setSize(this.pane.props, this.pane.state);
+  componentDidUpdate() {
+    this.sidebar.setSize({ ...this.sidebar.props, size: this.sidebarSize() }, this.sidebar.state);
+    this.pane.setSize({ ...this.pane.props, size: this.paneSize() }, this.pane.state);
   }
 
   sidebarSize() {
@@ -65,7 +59,7 @@ class App extends React.Component {
       </SplitPane>
     );
   }
-};
+}
 
 App.propTypes = {
   raw: PropTypes.string,
