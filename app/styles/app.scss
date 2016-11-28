@@ -25,4 +25,8 @@ pre[class*="language-"] {
 	width: 100%;
 	height: 100vh;
 	position: relative;
+
+	.SplitPane .Pane1 {
+		overflow: hidden;
+	}
 }
