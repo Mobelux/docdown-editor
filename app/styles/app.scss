@@ -18,7 +18,9 @@
 pre[class*="language-"] {
   margin: 0;
   height: 100%;
-  border-radius: 0;
+	min-width: 300px;
+
+	border-radius: 0;
 }
 
 #split-pane-wrapper {
