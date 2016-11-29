@@ -1,0 +1,12 @@
+.gutter {
+	margin: 0;
+	padding: 16px 0 16px 10px;
+
+	background: #272822;
+
+	&__num {
+		color: #A9B3BF;
+		font-size: 13px;
+		line-height: 1.5;
+	}
+}
