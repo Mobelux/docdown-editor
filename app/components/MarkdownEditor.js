@@ -119,7 +119,7 @@ class MarkdownEditor extends React.Component {
   render() {
     const { editorState } = this.state;
     return (
-      <div className="vh-100 overflow-scroll">
+      <div className="vh-100">
         <pre className="language-markdown">
           <Editor
             editorState={editorState}
