@@ -8,6 +8,7 @@ import MarkdownRendered from '../components/MarkdownRendered';
 import { updateText } from '../actions/text';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
+import Gutter from '../components/Gutter';
 
 class App extends React.Component {
   componentDidUpdate() {
@@ -52,7 +53,11 @@ class App extends React.Component {
             primary="second"
             onChange={uiActions.resizePane}
           >
-            <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+            <div>
+              <Gutter text={raw}>
+                <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+              </Gutter>
+            </div>
             <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
           </SplitPane>
         </div>
