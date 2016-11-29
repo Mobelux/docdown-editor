@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditorGutter } from './Draft-js-gutter';
+import { EditorGutter } from 'draft-js-gutter';
 
 class Gutter extends React.Component {
   render() {
