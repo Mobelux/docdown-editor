@@ -1,15 +1,44 @@
-import React from 'react';
-import { EditorGutter } from 'draft-js-gutter';
+import React, { Component, PropTypes } from 'react';
 
-class Gutter extends React.Component {
+export default class Gutter extends Component {
+  static propTypes = {
+    text: PropTypes.string,
+    list: PropTypes.object,
+    listItem: PropTypes.object,
+    style: PropTypes.object,
+    styleList: PropTypes.object,
+    styleListItem: PropTypes.object,
+    children: PropTypes.object
+  }
+
+  static defaultProps = {
+    style: { border: '1px solid black' },
+    styleEditor: {},
+    styleList: { background: '#eee' },
+    styleListItem: {}
+  }
+
   render() {
+    const { text, style, styleList, styleListItem, list, listItem, children } = this.props;
+
     return (
-      <EditorGutter
-        style={{ border: '1px solid black' }}
-        styleList={{ background: '#eee' }}
-      />
+      <div style={{ ...style, display: 'flex' }}>
+        <ol
+          {...list}
+          style={{ ...styleList, margin: 0, padding: 0 }}
+        >
+          {[...Array(text.split('\n').length)].map((x, i) =>
+            <li
+              key={i}
+              {...listItem}
+              style={{ ...styleListItem, listStylePosition: 'inside' }}
+            />
+          )}
+        </ol>
+        <div style={{ flex: 1 }}>
+          {children}
+        </div>
+      </div>
     );
   }
 }
-
-export default Gutter;

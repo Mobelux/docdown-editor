@@ -54,8 +54,9 @@ class App extends React.Component {
             onChange={uiActions.resizePane}
           >
             <div>
-              <Gutter />
-              <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+              <Gutter text={raw}>
+                <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+              </Gutter>
             </div>
             <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
           </SplitPane>
