@@ -14,7 +14,7 @@ class MarkdownRendered extends React.Component {
       return (
         <div>
           <a href="#toggle" onClick={toggle}>X</a>
-          <div className="vh-100 rendered pa4" dangerouslySetInnerHTML={{ __html: content }} />
+          <div className="vh-100 overflow-auto rendered pa4" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
       );
     }
