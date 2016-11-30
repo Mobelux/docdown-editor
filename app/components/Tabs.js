@@ -1,6 +1,6 @@
 import React, { PropTypes, cx } from 'react';
 
-class Tabs extends React.Component {
+export class Tabs extends React.Component {
   static PropTypes = {
     // not sure if this is necessary
     children: PropTypes.object
@@ -28,11 +28,11 @@ class Tabs extends React.Component {
 
   render() {
     const { children } = this.props;
-    let tabs;
-    let tabContents;
+    let tabs = [];
+    let tabContents =[];
 
     // maps over the children to generate a list of tabs and tab content
-    React.Children.forEach(children, (tab, idx) => (
+    React.Children.forEach(children, (tab, idx) => {
       // creates an array of tabs
       tabs.push(
         <li
@@ -48,12 +48,12 @@ class Tabs extends React.Component {
       tabContents.push(
         <div
           // tab-view__tab-contents is hidden if state is not equal to idx
-          className={cx('tab-view__tab-contents'}, {'is-hidden': this.state.selected !== idx })
+          className={cx('tab-view__tab-contents', { 'is-hidden': this.state.selected !== idx })}
         >
           { tab }
         </div>
       )
-    ));
+    });
 
     return (
       <div className ="tab-view">
