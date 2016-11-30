@@ -60,13 +60,17 @@ class Tabs extends React.Component {
         <ol
           className="tab-view__tabs"
         >
-          { tabs }
+          { tab }
         </ol>
         <div className="tab-view__content">
-        // here is where we need everything thine #split-pane-wrapper to render
+        // here is where we need everything within #split-pane-wrapper to render
           { tabContents }
         </div>
       </div>
     );
   }
 }
+
+export const Tab = ({ children }) => (
+  <div>{children}</div>
+);
