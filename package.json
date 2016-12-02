@@ -123,7 +123,10 @@
     "redux-persist-transform-immutable": "^4.1.0",
     "redux-thunk": "^2.1.0",
     "remarkable": "^1.6.2",
-    "source-map-support": "^0.4.2"
+    "reselect": "^2.5.4",
+    "source-map-support": "^0.4.2",
+    "uuid": "^3.0.1",
+    "watch": "^1.0.1"
   },
   "devEngines": {
     "node": "4.x || 5.x || 6.x",

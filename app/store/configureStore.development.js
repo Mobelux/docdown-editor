@@ -6,11 +6,11 @@ import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
 
-import * as textActions from '../actions/text';
+import * as fileActions from '../actions/files';
 import * as uiActions from '../actions/ui';
 
 const actionCreators = {
-  ...textActions,
+  ...fileActions,
   ...uiActions
 };
 
