@@ -9,7 +9,7 @@ import { updateText } from '../actions/text';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
 import Gutter from '../components/Gutter';
-import Tabs from '../components/Tabs';
+import TabBar from '../components/Tabs';
 
 class App extends React.Component {
   componentDidUpdate() {
@@ -42,26 +42,27 @@ class App extends React.Component {
         onChange={uiActions.resizeSidebar}
       >
         <Sidebar visible={ui.get('sidebarVisible')} toggle={uiActions.toggleSidebar} />
-        <div id="split-pane-wrapper">
-          <SplitPane
-            ref={(n) => { this.pane = n; }}
-            className="h-100 v-100"
-            split="vertical"
-            minSize={0}
-            defaultSize={this.paneSize()}
-            size={ui.get('paneVisible') ? undefined : '0'}
-            allowResize={ui.get('paneVisible')}
-            primary="second"
-            onChange={uiActions.resizePane}
-          >
-            <div>
-              <Gutter text={raw}>
-                <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
-              </Gutter>
-            </div>
-            <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
-          </SplitPane>
-        </div>
+          <div id="split-pane-wrapper">
+            <TabBar />
+            <SplitPane
+              ref={(n) => { this.pane = n; }}
+              className="h-100 v-100"
+              split="vertical"
+              minSize={0}
+              defaultSize={this.paneSize()}
+              size={ui.get('paneVisible') ? undefined : '0'}
+              allowResize={ui.get('paneVisible')}
+              primary="second"
+              onChange={uiActions.resizePane}
+            >
+              <div>
+                <Gutter text={raw}>
+                  <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+                </Gutter>
+              </div>
+              <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
+            </SplitPane>
+          </div>
       </SplitPane>
     );
   }

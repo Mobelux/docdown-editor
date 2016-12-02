@@ -1,6 +1,7 @@
-import React, { PropTypes, cx } from 'react';
+import React, { PropTypes } from 'react';
+import cx from 'classnames';
 
-export class Tabs extends React.Component {
+class TabBar extends React.Component {
   static PropTypes = {
     // not sure if this is necessary
     children: PropTypes.object
@@ -28,8 +29,8 @@ export class Tabs extends React.Component {
 
   render() {
     const { children } = this.props;
-    let tabs = [];
-    let tabContents =[];
+    const tabs = [];
+    const tabContents = [];
 
     // maps over the children to generate a list of tabs and tab content
     React.Children.forEach(children, (tab, idx) => {
@@ -42,9 +43,10 @@ export class Tabs extends React.Component {
           data-tabId={idx}
           onClick={this.handleTabClick}
         >
-          { tab.props.name }
+          // { tab.props.name }
+          inside the li
         </li>
-      )
+      );
       tabContents.push(
         <div
           // tab-view__tab-contents is hidden if state is not equal to idx
@@ -52,25 +54,19 @@ export class Tabs extends React.Component {
         >
           { tab }
         </div>
-      )
+      );
     });
 
     return (
-      <div className ="tab-view">
+      <div className="tab-view">
         <ol
           className="tab-view__tabs"
         >
-          { tab }
+          { tabs }
         </ol>
-        <div className="tab-view__content">
-        // here is where we need everything within #split-pane-wrapper to render
-          { tabContents }
-        </div>
       </div>
     );
   }
 }
 
-export const Tab = ({ children }) => (
-  <div>{children}</div>
-);
+export default TabBar;
