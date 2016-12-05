@@ -9,11 +9,8 @@ import { updateFile } from '../actions/files';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
 import Gutter from '../components/Gutter';
-<<<<<<< HEAD
 import Tabs from '../components/Tabs'
-=======
 import { getCurrentFile } from '../selectors';
->>>>>>> master
 
 class App extends React.Component {
   componentDidUpdate() {
