@@ -40,11 +40,11 @@ const filesReducer = handleActions({
   },
   [FILE_UPDATE]: (state, { payload }) => {
     const { text } = payload;
-    const id = state.get('currentFile');
+    const id = state.get('currentFile', uuid());
     let file = state.getIn(['files', id], Map({}));
     file = file.merge({
       id,
-      contents: text,
+      contents: text || '',
       changed: true
     });
     return state.setIn(['files', id], file);
