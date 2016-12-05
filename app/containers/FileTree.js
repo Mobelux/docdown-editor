@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import watch from 'watch';
-import { Map } from 'immutable';
+import { Map, OrderedMap } from 'immutable';
 import Folder from '../components/Folder';
 import File from '../components/File';
 import { openFile } from '../actions/files';
@@ -98,10 +98,10 @@ class FileTree extends React.PureComponent {
       const pieces = f.replace(basePath, '').split('/');
       let value = f;
       if (stat.isDirectory()) {
-        value = Map({});
+        value = OrderedMap({});
       }
       return acc.setIn(pieces, value);
-    }, Map({}));
+    }, OrderedMap({}));
     const files = tree.get(folderName);
     return (
       <ul>{buildTree(folderName, files, handleFile)}</ul>

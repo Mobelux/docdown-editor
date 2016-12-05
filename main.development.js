@@ -1,4 +1,5 @@
-import { app, BrowserWindow, Menu, shell } from 'electron';
+import { app, BrowserWindow, Menu, shell, dialog, webContents } from 'electron';
+import { openFolder, saveFile } from './app/actions/files';
 
 let menu;
 let template;
@@ -73,9 +74,9 @@ app.on('ready', async () => {
 
   if (process.platform === 'darwin') {
     template = [{
-      label: 'Electron',
+      label: 'DocDown',
       submenu: [{
-        label: 'About ElectronReact',
+        label: 'About DocDown',
         selector: 'orderFrontStandardAboutPanel:'
       }, {
         type: 'separator'
@@ -85,7 +86,7 @@ app.on('ready', async () => {
       }, {
         type: 'separator'
       }, {
-        label: 'Hide ElectronReact',
+        label: 'Hide DocDown',
         accelerator: 'Command+H',
         selector: 'hide:'
       }, {
@@ -104,6 +105,29 @@ app.on('ready', async () => {
           app.quit();
         }
       }]
+    }, {
+      label: 'File',
+      submenu: [{
+        label: 'Open',
+        accelerator: 'Command+O',
+        selector: 'open:',
+        click() {
+          dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }, (filePaths) => {
+            const contents = webContents.getAllWebContents();
+            contents.forEach(content => content.send('redux', openFolder(filePaths[0])));
+          });
+        }
+      },
+      {
+        label: 'Save',
+        accelerator: 'Command+S',
+        selector: 'save:',
+        click() {
+          const contents = webContents.getAllWebContents();
+          contents.forEach(content => content.send('redux', saveFile()));
+        }
+      }
+    ]
     }, {
       label: 'Edit',
       submenu: [{

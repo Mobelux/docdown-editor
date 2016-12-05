@@ -1,3 +1,4 @@
+import { ipcRenderer } from 'electron';
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { asyncSessionStorage } from 'redux-persist/storages';
@@ -41,6 +42,10 @@ export default function configureStore(initialState) {
       store.replaceReducer(require('../reducers')) // eslint-disable-line global-require
     );
   }
+
+  ipcRenderer.on('redux', (event, action) => {
+    store.dispatch(action);
+  });
 
   return store;
 }
