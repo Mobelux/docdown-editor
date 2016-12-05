@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
-import text from './text';
+import files from './files';
 import ui from './ui';
 
 const rootReducer = combineReducers({
-  text,
+  files,
   ui
 });
 
