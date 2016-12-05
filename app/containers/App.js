@@ -9,7 +9,7 @@ import { updateText } from '../actions/text';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
 import Gutter from '../components/Gutter';
-import Tab from '../components/Tab'
+import Tabs from '../components/Tabs'
 
 class App extends React.Component {
   componentDidUpdate() {

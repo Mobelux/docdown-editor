@@ -2,18 +2,17 @@ import React from 'react';
 
 class Tab extends React.Component {
   static propTypes = {
-    // I am assuming what I need here are the ID and Name
+    name: PropTypes.string,
+    id: PropTypes.number
   }
 
   render() {
+    const { name, id } = this.props;
+
     return (
-      <div className="tabbar">
-        <div className="tab">
-          This is a tab
-        </div>
-      </div>
+      <li>
+        { this.props.name }
+      </li>
     );
   }
 }
-
-export default Tab;
