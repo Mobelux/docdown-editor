@@ -1,5 +1,5 @@
 import React from 'react';
-import component
+import Tab from './Tab';
 
 class Tabs extends React.Component {
   static propTypes = {
@@ -15,4 +15,4 @@ class Tabs extends React.Component {
   }
 }
 
-export default Tab;
+export default Tabs;

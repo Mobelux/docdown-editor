@@ -43,7 +43,7 @@ class App extends React.Component {
       >
         <Sidebar visible={ui.get('sidebarVisible')} toggle={uiActions.toggleSidebar} />
         <div id="split-pane-wrapper">
-          <Tab />
+          <Tabs />
           <SplitPane
             ref={(n) => { this.pane = n; }}
             className="h-100 v-100"
