@@ -10,4 +10,4 @@ export const openFile = createAction(FILE_OPEN, path => ({ path }));
 export const closeFile = createAction(FILE_CLOSE);
 export const selectFile = createAction(FILE_SELECT);
 export const saveFile = createAction(FILE_SAVE);
-export const updateFile = createAction(FILE_UPDATE);
+export const updateFile = createAction(FILE_UPDATE, text => ({ text }));
