@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import FileTree from '../containers/FileTree';
 
 class Sidebar extends React.Component {
   static propTypes = {
@@ -12,8 +13,8 @@ class Sidebar extends React.Component {
     if (visible) {
       return (
         <div className="sidebar">
-          Sidebar Content
           <a href="#toggle" onClick={toggle}>x</a>
+          <FileTree />
         </div>
       );
     }

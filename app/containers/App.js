@@ -5,10 +5,11 @@ import { bindActionCreators } from 'redux';
 import SplitPane from 'react-split-pane';
 import MarkdownEditor from '../components/MarkdownEditor';
 import MarkdownRendered from '../components/MarkdownRendered';
-import { updateText } from '../actions/text';
+import { updateFile } from '../actions/files';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
 import Gutter from '../components/Gutter';
+import { getCurrentFile } from '../selectors';
 
 class App extends React.Component {
   componentDidUpdate() {
@@ -27,7 +28,9 @@ class App extends React.Component {
   }
 
   render() {
-    const { raw, rendered, ui, handleUpdate, uiActions } = this.props;
+    const { currentFile, ui, handleUpdate, uiActions } = this.props;
+    const raw = currentFile.get('raw');
+    const rendered = currentFile.get('rendered');
 
     return (
       <SplitPane
@@ -67,8 +70,7 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  raw: PropTypes.string,
-  rendered: PropTypes.string,
+  currentFile: ImmutablePropTypes.map,
   ui: ImmutablePropTypes.map,
   handleUpdate: PropTypes.func,
   uiActions: PropTypes.shape({
@@ -79,12 +81,11 @@ App.propTypes = {
   })
 };
 const mapStateToProps = state => ({
-  raw: state.text.get('raw'),
-  rendered: state.text.get('rendered'),
+  currentFile: getCurrentFile(state),
   ui: state.ui
 });
 const mapDispatchToProps = dispatch => ({
-  handleUpdate: bindActionCreators(updateText, dispatch),
+  handleUpdate: bindActionCreators(updateFile, dispatch),
   uiActions: bindActionCreators(uiActionCreators, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(App);
