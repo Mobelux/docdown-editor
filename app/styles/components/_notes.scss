@@ -1,49 +1,49 @@
 .note,
 .must,
 .may {
-	margin: 50px 0;
-	padding: 60px 90px;
-	position: relative;
+  margin: 50px 0;
+  padding: 60px 90px;
+  position: relative;
 
-	font-size: 15px;
-	line-height: 20px;
+  font-size: 15px;
+  line-height: 20px;
 
-	h5 {
-		margin: 0 0 30px 0;
-	}
+  h5 {
+    margin: 0 0 30px 0;
+  }
 
-	p {
-		font-size: 15px;
-	}
+  p {
+    font-size: 15px;
+  }
 
-	ul, ol {
-		padding-left: 25px;
-		font-size: inherit;
-		line-height: inherit;
-	}
+  ul, ol {
+    padding-left: 25px;
+    font-size: inherit;
+    line-height: inherit;
+  }
 
-	.icon {
-		position: absolute;
-	}
+  .icon {
+    position: absolute;
+  }
 }
 
 .note {
-	border: 1px solid $grey-light;
+  border: 1px solid $grey-light;
 
-	.icon {
-		top: 60px;
-		left: 45px;
-		width: 10px;
-		height: 22px;
-	}
+  .icon {
+    top: 60px;
+    left: 45px;
+    width: 10px;
+    height: 22px;
+  }
 }
 
 .must,
 .may {
-	background: $ice;
+  background: $ice;
 
-	.icon {
-		top: 60px;
-		left: 40px;
-	}
+  .icon {
+    top: 60px;
+    left: 40px;
+  }
 }
