@@ -18,21 +18,21 @@ const filesReducer = handleActions({
   },
   [FILE_OPEN]: (state, { payload }) => {
     const { path } = payload;
-    const paths = state.get('paths');
     const pieces = path.split('/');
     const name = pieces[pieces.length - 1];
-    const id = paths.get('path', uuid());
+    const id = state.getIn(['paths', path], uuid());
+    let paths = state.get('paths');
     let files = state.get('files');
-    if (!files.get(id)) {
-      files = files.set(id, Map({
-        id,
-        name,
-        path,
-        contents: fs.readFileSync(path, 'utf8'),
-        changed: false
-      }));
-    }
-    return state.merge({ files, currentFile: id });
+    const file = state.getIn(['files', id], Map({
+      id,
+      name,
+      path,
+      contents: fs.readFileSync(path, 'utf8'),
+      changed: false
+    }));
+    paths = paths.set(path, id);
+    files = files.set(id, file);
+    return state.merge({ currentFile: id, files, paths });
   },
   [FILE_CLOSE]: (state, { payload }) => {
     const { id } = payload;

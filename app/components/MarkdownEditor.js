@@ -16,6 +16,7 @@ const decorator = new PrismDecorator(options);
 
 class MarkdownEditor extends React.Component {
   static propTypes = {
+    file: PropTypes.string,
     text: PropTypes.string,
     handleUpdate: PropTypes.func
   }
@@ -35,7 +36,7 @@ class MarkdownEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.text !== '') {
+    if (nextProps.file !== this.props.file && nextProps.text !== '') {
       this.setInitialText(nextProps.text);
     }
   }
