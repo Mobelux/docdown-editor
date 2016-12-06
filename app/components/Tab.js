@@ -13,7 +13,8 @@ const Tab = ({ id, name, changed, onTabClick }) => (
 Tab.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
-  changed: PropTypes.bool
+  changed: PropTypes.bool,
+  onTabClick: PropTypes.func
 };
 
 export default Tab;

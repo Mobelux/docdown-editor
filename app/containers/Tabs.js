@@ -36,6 +36,7 @@ class Tabs extends React.PureComponent {
         name={f.get('name')}
         changed={f.get('changed')}
         className="tabs__item"
+        onTabClick={this.handleTabClick}
       />
     ).valueSeq();
 
