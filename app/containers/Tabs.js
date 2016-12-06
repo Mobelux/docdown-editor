@@ -8,7 +8,9 @@ import Tab from '../components/Tab';
 class Tabs extends React.PureComponent {
   static propTypes = {
     files: ImmutablePropTypes.map,
-    handleFile: PropTypes.func
+    handleFile: PropTypes.func,
+    // handleRemoveFile: PropTypes.func
+    currentFile: PropTypes.string
   }
 
   constructor(props) {
@@ -21,8 +23,12 @@ class Tabs extends React.PureComponent {
     this.props.handleFile(id);
   }
 
+  // handleRemoveTab(id) {
+  //   this.props.handleRemoveFile(id);
+  // }
+
   render() {
-    const { files } = this.props;
+    const { files, currentFile } = this.props;
     // will there ever be an instance in which there is no files?
     // I think a blank new one should be created - maybe that needs to be returned instead of null
     if (!files) {
@@ -35,8 +41,9 @@ class Tabs extends React.PureComponent {
         id={f.get('id')}
         name={f.get('name')}
         changed={f.get('changed')}
-        className="tabs__item"
+        currentFile={f.get('currentFile')}
         onTabClick={this.handleTabClick}
+        onRemoveTab={this.handleRemoveTab}
       />
     ).valueSeq();
 
@@ -54,10 +61,11 @@ class Tabs extends React.PureComponent {
 // value of mapStateToProps will be an object derived from state (as it lives in the store),
 // whose keys will be passed to your target component (the component connect is applied to) as props.
 const mapStateToProps = state => ({
-  files: state.files.get('files')
+  files: state.files.get('files'),
+  currentFile: state.files.get('currentFile')
 });
 
-//passing the file ID to actions?
+// passing the file ID to actions?
 const mapDispatchToProps = dispatch => ({
   handleFile: bindActionCreators(selectFile, dispatch)
 });

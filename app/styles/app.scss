@@ -11,6 +11,7 @@
 @import 'components/resizer';
 @import 'components/sidebar';
 @import 'components/gutter';
+@import 'components/tabs';
 
 
 .vw-100 { width: 100vw; }
@@ -21,6 +22,7 @@ pre[class*="language-"] {
   height: 100%;
 	min-width: 300px;
 
+	background: $black;
 	border-radius: 0;
 }
 
@@ -32,10 +34,4 @@ pre[class*="language-"] {
 
 span {
 	white-space: pre-wrap;
-}
-
-.tab-view {
-	height: 100px;
-	width: 100%;
-	background: red;
 }
