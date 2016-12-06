@@ -2,7 +2,7 @@ import fs from 'fs';
 import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
-import { FILE_OPEN, FILE_CLOSE, FILE_SELECT, FILE_SAVE, FILE_UPDATE } from '../actions/files';
+import { FOLDER_OPEN, FILE_OPEN, FILE_CLOSE, FILE_SELECT, FILE_SAVE, FILE_UPDATE } from '../actions/files';
 
 const initialState = Map({
   folder: null,
@@ -12,20 +12,27 @@ const initialState = Map({
 });
 
 const filesReducer = handleActions({
+  [FOLDER_OPEN]: (state, { payload }) => {
+    const { path } = payload;
+    return state.set('folder', path);
+  },
   [FILE_OPEN]: (state, { payload }) => {
     const { path } = payload;
-    const paths = state.get('paths');
-    const id = paths.get('path', uuid());
+    const pieces = path.split('/');
+    const name = pieces[pieces.length - 1];
+    const id = state.getIn(['paths', path], uuid());
+    let paths = state.get('paths');
     let files = state.get('files');
-    if (!files.get(id)) {
-      files = files.set(id, Map({
-        id,
-        path,
-        contents: fs.readFileSync(path, 'utf8'),
-        changed: false
-      }));
-    }
-    return state.merge({ files, currentFile: id });
+    const file = state.getIn(['files', id], Map({
+      id,
+      name,
+      path,
+      contents: fs.readFileSync(path, 'utf8'),
+      changed: false
+    }));
+    paths = paths.set(path, id);
+    files = files.set(id, file);
+    return state.merge({ currentFile: id, files, paths });
   },
   [FILE_CLOSE]: (state, { payload }) => {
     const { id } = payload;
@@ -49,8 +56,8 @@ const filesReducer = handleActions({
     });
     return state.setIn(['files', id], file);
   },
-  [FILE_SAVE]: (state, { payload }) => {
-    const { id } = payload;
+  [FILE_SAVE]: (state) => {
+    const id = state.get('currentFile');
     let file = state.getIn(['files', id]);
     fs.writeFileSync(file.get('path'), file.get('contents'));
     file = file.set('changed', false);

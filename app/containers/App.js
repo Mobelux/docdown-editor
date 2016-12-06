@@ -60,7 +60,7 @@ class App extends React.Component {
           >
             <div>
               <Gutter text={raw}>
-                <MarkdownEditor text={raw} handleUpdate={handleUpdate} />
+                <MarkdownEditor file={currentFile.get('id')} text={raw} handleUpdate={handleUpdate} />
               </Gutter>
             </div>
             <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
