@@ -113,8 +113,7 @@ app.on('ready', async () => {
         selector: 'open:',
         click() {
           dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }, (filePaths) => {
-            const contents = webContents.getAllWebContents();
-            contents.forEach(content => content.send('redux', openFolder(filePaths[0])));
+            mainWindow.webContents.send('redux', openFolder(filePaths[0]));
           });
         }
       },
@@ -123,8 +122,7 @@ app.on('ready', async () => {
         accelerator: 'Command+S',
         selector: 'save:',
         click() {
-          const contents = webContents.getAllWebContents();
-          contents.forEach(content => content.send('redux', saveFile()));
+          mainWindow.webContents.send('redux', saveFile());
         }
       }
     ]
