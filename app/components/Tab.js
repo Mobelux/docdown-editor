@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
 
 // will probably need an onClick to close and a way to indicate Changed=true in future
-const Tab = ({ id, name, changed }) => (
+// need to do somethign with that onTabClick so it gets the id
+const Tab = ({ id, name, changed, onTabClick }) => (
   <li>
-    <a href={`#${name}`}>
+    <a href={`#${name}`} onClick={() => onTabClick(id)}>
       <span>{name}</span>
     </a>
   </li>

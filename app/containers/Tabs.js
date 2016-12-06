@@ -1,19 +1,27 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { selectFile } from '../actions/files';
 import Tab from '../components/Tab';
 
 class Tabs extends React.PureComponent {
   static propTypes = {
-    files: PropTypes.object,
+    files: ImmutablePropTypes.map,
     handleFile: PropTypes.func
   }
 
-  constructor(props){
+  constructor(props) {
     super(props);
-    // I am not sure about the state
+    this.handleTabClick = ::this.handleTabClick;
+  }
+
+  // this is where I want to dispath the file open action with the given path
+  handleTabClick(id) {
+    this.props.handleFile(id);
   }
 
   render() {
-    // names does not exist yet but it will - these are from the fiels.js reducer
     const { files } = this.props;
     // will there ever be an instance in which there is no files?
     // I think a blank new one should be created - maybe that needs to be returned instead of null
@@ -22,18 +30,19 @@ class Tabs extends React.PureComponent {
     }
 
     // this is where I want to map over each file and return the id/name/and changed
+    const fileComponents = files.map(f =>
+      <Tab
+        id={f.get('id')}
+        name={f.get('name')}
+        changed={f.get('changed')}
+        className="tabs__item"
+      />
+    ).valueSeq();
 
     // then I want to make and render the data from the maps
     return (
       <ul className="tabs__list">
-        {files.map(f =>
-          <Tab
-            id={f.get('id')}
-            name={f.get('name')}
-            changes={f.get('changed')}
-            className="tabs__item"
-          />
-        )})
+        { fileComponents }
       </ul>
     );
   }
@@ -49,7 +58,7 @@ const mapStateToProps = state => ({
 
 //passing the file ID to actions?
 const mapDispatchToProps = dispatch => ({
-  handleFile: bindActionCreators(openFile, dispatch)
+  handleFile: bindActionCreators(selectFile, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tabs);
