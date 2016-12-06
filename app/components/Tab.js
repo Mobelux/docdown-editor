@@ -11,7 +11,7 @@ const Tab = ({ id, name, changed, onTabClick }) => (
 );
 
 Tab.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   name: PropTypes.string,
   changed: PropTypes.bool
 };
