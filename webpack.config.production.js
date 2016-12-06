@@ -13,7 +13,8 @@ const config = validate(merge(baseConfig, {
   devtool: 'cheap-module-source-map',
   entry: [
     'babel-polyfill',
-    './app/index'
+    './app/index',
+    './app/styles/app.scss'
   ],
 
   output: {
@@ -22,22 +23,20 @@ const config = validate(merge(baseConfig, {
 
   module: {
     loaders: [
-      // Extract all .global.css to style.css as is
       {
         test: /\.global\.css$/,
-        loader: ExtractTextPlugin.extract(
+        loaders: [
           'style-loader',
           'css-loader'
-        )
+        ]
       },
-
-      // Pipe other styles through css modules and apend to style.css
       {
-        test: /^((?!\.global).)*\.css$/,
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]'
-        )
+        test: /^((?!\.global).)*\.scss$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+      },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)$/,
+        loader: 'file?name=fonts/[name].[ext]'
       }
     ]
   },
@@ -71,7 +70,7 @@ const config = validate(merge(baseConfig, {
     }),
 
     // Set the ExtractTextPlugin output filename
-    new ExtractTextPlugin('style.css', { allChunks: true })
+    new ExtractTextPlugin('app.css', { allChunks: true })
   ],
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
