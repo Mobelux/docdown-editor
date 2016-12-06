@@ -120,18 +120,16 @@ class MarkdownEditor extends React.Component {
   render() {
     const { editorState } = this.state;
     return (
-      <div className="vh-100">
-        <pre className="language-markdown">
-          <Editor
-            editorState={editorState}
-            onChange={this.onChange}
-            keyBindingFn={this.keyBindingFn}
-            handleKeyCommand={this.handleKeyCommand}
-            handleReturn={this.handleReturn}
-            onTab={this.handleTab}
-          />
-        </pre>
-      </div>
+      <pre className="language-markdown">
+        <Editor
+          editorState={editorState}
+          onChange={this.onChange}
+          keyBindingFn={this.keyBindingFn}
+          handleKeyCommand={this.handleKeyCommand}
+          handleReturn={this.handleReturn}
+          onTab={this.handleTab}
+        />
+      </pre>
     );
   }
 }

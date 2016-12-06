@@ -1,20 +1,20 @@
 .arrow {
-		position: absolute;
-		z-index: 2;
+    position: absolute;
+    z-index: 2;
 
-		border-top: 10px solid transparent;
-		border-bottom: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
 
-		cursor: pointer;
+    cursor: pointer;
 
-		&-right {
-			border-left: 10px solid white;
-		}
+    &-right {
+      border-left: 10px solid white;
+    }
 
-		&-left {
-			bottom: 0;
-			right: 0;
+    &-left {
+      bottom: 0;
+      right: 0;
 
-			border-right: 10px solid red;
-		}
+      border-right: 10px solid red;
+    }
 }

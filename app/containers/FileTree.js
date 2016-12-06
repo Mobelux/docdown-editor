@@ -14,18 +14,18 @@ const watchOptions = {
   ignoreDirectoryPattern: /node_modules/
 };
 
-function buildTree(folderName, files, handleClick) {
+function buildTree(folderName, files, handleClick, forceOpen = false) {
   let listing;
   if (files) {
-    listing = files.map((value, filename) => {
+    listing = files.entrySeq().map(([filename, value]) => {
       if (typeof value !== 'string') {
         return buildTree(filename, value, handleClick);
       }
-      return <File name={filename} path={value} handleClick={handleClick} />;
+      return <File key={value} name={filename} path={value} handleClick={handleClick} />;
     });
   }
   return (
-    <Folder name={folderName}>
+    <Folder key={folderName} name={folderName} forceOpen={forceOpen}>
       {listing}
     </Folder>
   );
@@ -104,7 +104,7 @@ class FileTree extends React.PureComponent {
     }, OrderedMap({}));
     const files = tree.get(folderName);
     return (
-      <ul>{buildTree(folderName, files, handleFile)}</ul>
+      <ul>{buildTree(folderName, files, handleFile, true)}</ul>
     );
   }
 }

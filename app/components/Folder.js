@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { withState } from 'recompose';
 
-const Folder = ({ name, collapsed, toggleCollapsed, children }) => (
+const Folder = ({ name, forceOpen = false, collapsed, toggleCollapsed, children }) => (
   <li>
     <a
       href={`#${name}`}
@@ -12,12 +12,13 @@ const Folder = ({ name, collapsed, toggleCollapsed, children }) => (
     >
       <span>{name}</span>
     </a>
-    {!collapsed && <ul>{children}</ul>}
+    {(forceOpen || !collapsed) && <ul>{children}</ul>}
   </li>
 );
 
 Folder.propTypes = {
   name: PropTypes.string,
+  forceOpen: PropTypes.bool,
   collapsed: PropTypes.bool,
   toggleCollapsed: PropTypes.func,
   children: PropTypes.any

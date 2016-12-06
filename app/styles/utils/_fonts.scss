@@ -32,20 +32,20 @@
 }
 
 @mixin t-base {
-	font-family: 'LivioNorm', Helvetica, sans-serif;
-	color: $dark-grey-base;
+  font-family: 'LivioNorm', Helvetica, sans-serif;
+  color: $dark-grey-base;
 }
 
 @mixin t-base-theme {
-	font-family: 'LivioNorm', Helvetica, sans-serif;
-	// this is the placeholder color for what shoudl be a doc theme color
-	color: $grey-base;
+  font-family: 'LivioNorm', Helvetica, sans-serif;
+  // this is the placeholder color for what shoudl be a doc theme color
+  color: $grey-base;
 }
 
 @mixin code-base {
-	font-family: 'LivioMono', monospace;
-	font-size: 15px;
-	font-weight: 400;
-	line-height: 30px;
-	letter-spacing: 0.25px;
+  font-family: 'LivioMono', monospace;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 30px;
+  letter-spacing: 0.25px;
 }

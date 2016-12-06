@@ -1,33 +1,26 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
-export default class Gutter extends Component {
-  static propTypes = {
-    text: PropTypes.string,
-    listItem: PropTypes.object,
-    children: PropTypes.object
-  }
+const Gutter = ({ text, listItem, children }) => (
+  <div style={{ display: 'flex' }} className="vh-100 overflow-container bg-dark-black">
+    <ol className="gutter">
+      {[...Array(text.split('\n').length)].map((x, i) =>
+        <li
+          className="gutter__num"
+          key={i}
+          {...listItem}
+        />
+      )}
+    </ol>
+    <div style={{ flex: 1 }}>
+      {children}
+    </div>
+  </div>
+);
 
-  render() {
-    const { text, listItem, children } = this.props;
+Gutter.propTypes = {
+  text: PropTypes.string,
+  listItem: PropTypes.object,
+  children: PropTypes.object
+};
 
-    return (
-      <div style={{ display: 'flex' }}>
-        <ol
-          className="gutter"
-        >
-          {[...Array(text.split('\n').length)].map((x, i) =>
-            <li
-              className="gutter__num"
-              key={i}
-              {...listItem}
-              style={{ listStylePosition: 'inside' }}
-            />
-          )}
-        </ol>
-        <div style={{ flex: 1 }}>
-          {children}
-        </div>
-      </div>
-    );
-  }
-}
+export default Gutter;
