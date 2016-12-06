@@ -36,7 +36,6 @@ export default validate(merge(baseConfig, {
           'css-loader?sourceMap'
         ]
       },
-
       {
         test: /^((?!\.global).)*\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
