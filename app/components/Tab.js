@@ -10,7 +10,7 @@ const Tab = ({ id, name, changed, isActive, onTabClick, onRemoveTab }) => (
     <a href={`#${name}`} onClick={() => onTabClick(id)}>
       <span>{name}</span>
     </a>
-    <button onClick={() => onRemoveTab(id)}>x</button>
+    <button className='tabs__item--close'onClick={() => onRemoveTab(id)}>x</button>
   </li>
 );
 
