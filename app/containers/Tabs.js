@@ -2,20 +2,21 @@ import React, { PropTypes } from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { selectFile } from '../actions/files';
+import { selectFile, closeFile } from '../actions/files';
 import Tab from '../components/Tab';
 
 class Tabs extends React.PureComponent {
   static propTypes = {
     files: ImmutablePropTypes.map,
     handleFile: PropTypes.func,
-    // handleRemoveFile: PropTypes.func
+    handleRemoveFile: PropTypes.func,
     currentFile: PropTypes.string
   }
 
   constructor(props) {
     super(props);
     this.handleTabClick = ::this.handleTabClick;
+    this.handleRemoveTab = ::this.handleRemoveTab;
   }
 
   // this is where I want to dispath the file open action with the given path
@@ -23,9 +24,9 @@ class Tabs extends React.PureComponent {
     this.props.handleFile(id);
   }
 
-  // handleRemoveTab(id) {
-  //   this.props.handleRemoveFile(id);
-  // }
+  handleRemoveTab(id) {
+    this.props.handleRemoveFile(id);
+  }
 
   render() {
     const { files, currentFile } = this.props;
@@ -41,9 +42,9 @@ class Tabs extends React.PureComponent {
         id={f.get('id')}
         name={f.get('name')}
         changed={f.get('changed')}
-        currentFile={f.get('currentFile')}
         onTabClick={this.handleTabClick}
         onRemoveTab={this.handleRemoveTab}
+        isActive={f.get('id') === currentFile}
       />
     ).valueSeq();
 
@@ -67,7 +68,8 @@ const mapStateToProps = state => ({
 
 // passing the file ID to actions?
 const mapDispatchToProps = dispatch => ({
-  handleFile: bindActionCreators(selectFile, dispatch)
+  handleFile: bindActionCreators(selectFile, dispatch),
+  handleRemoveFile: bindActionCreators(closeFile, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Tabs);
