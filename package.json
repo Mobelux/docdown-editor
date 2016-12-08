@@ -1,6 +1,6 @@
 {
   "name": "docdown-editor",
-  "productName": "DocDownEditor",
+  "productName": "DocDown Editor",
   "version": "0.1.0",
   "description": "DocDown Editor",
   "main": "main.js",
@@ -26,16 +26,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chentsulin/electron-react-boilerplate.git"
+    "url": "git://github.com/Mobelux/docdown-editor.git"
   },
   "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
+    "name": "Mobelux, LLC",
+    "email": "daniel@mobelux.com",
+    "url": "https://github.com/Mobelux/docdown-editor"
   },
-  "license": "MIT",
+  "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/chentsulin/electron-react-boilerplate/issues"
+    "url": "https://github.com/Mobelux/docdown-editor/issues"
   },
   "keywords": [
     "electron",
@@ -45,7 +45,7 @@
     "webpack",
     "react-hot"
   ],
-  "homepage": "https://github.com/chentsulin/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/Mobelux/docdown-editor#readme",
   "devDependencies": {
     "asar": "^0.12.2",
     "babel-core": "^6.14.0",
@@ -68,7 +68,6 @@
     "css-loader": "^0.25.0",
     "del": "^2.2.2",
     "devtron": "^1.3.0",
-    "electron": "^1.3.4",
     "electron-devtools-installer": "^2.0.1",
     "electron-packager": "^8.1.0",
     "electron-rebuild": "^1.2.1",
@@ -107,6 +106,7 @@
     "csv-parse": "^1.1.7",
     "draft-js": "^0.9.1",
     "draft-js-code": "^0.2.0",
+    "electron": "^1.3.4",
     "electron-debug": "^1.0.1",
     "font-awesome": "^4.6.3",
     "highlight.js": "^9.8.0",
