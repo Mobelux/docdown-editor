@@ -1,8 +1,6 @@
 import React, { PropTypes } from 'react';
 import cx from 'classnames';
 
-// will probably need an onClick to close and a way to indicate Changed=true in future
-// need to do somethign with that onTabClick so it gets the id
 const Tab = ({ id, name, changed, isActive, onTabClick, onRemoveTab }) => (
   <li
     className={cx('tabs__item', { 'is-active': isActive })}
@@ -10,7 +8,7 @@ const Tab = ({ id, name, changed, isActive, onTabClick, onRemoveTab }) => (
     <a href={`#${name}`} onClick={() => onTabClick(id)}>
       <span>{name}</span>
     </a>
-    <button className='tabs__item--close'onClick={() => onRemoveTab(id)}>x</button>
+    <button className="tabs__item--close" onClick={() => onRemoveTab(id)}>x</button>
   </li>
 );
 
