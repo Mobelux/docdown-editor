@@ -3,10 +3,10 @@
   margin: 0;
   padding: 16px 0 16px 10px;
 
-	background: $black;
+	background: color(black);
 
   &__num {
-    color: #A9B3BF;
+    color: color(grey,base);
     font-size: 13px;
     line-height: 1.5;
     list-style-position: inside;
