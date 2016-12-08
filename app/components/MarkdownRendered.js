@@ -13,7 +13,7 @@ class MarkdownRendered extends React.PureComponent {
     if (visible) {
       return (
         <div>
-          <a href="#toggle" onClick={toggle}>X</a>
+          <a className="pane-close" href="#toggle" onClick={toggle}>X</a>
           <div className="vh-100 overflow-auto rendered pa4" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
       );

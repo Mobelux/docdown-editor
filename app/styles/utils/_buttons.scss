@@ -1,3 +1,5 @@
+// redo this naming and bemify stuff here
+
 .arrow {
     position: fixed;
     z-index: 2;
@@ -17,4 +19,9 @@
 
       border-right: 10px solid color(white);
     }
+}
+
+.pane-close {
+  display: flex;
+  justify-content: flex-end;
 }
