@@ -1,5 +1,5 @@
 .arrow {
-    position: absolute;
+    position: fixed;
     z-index: 2;
 
     border-top: 10px solid transparent;
@@ -13,8 +13,8 @@
 
     &-left {
       bottom: 0;
-      right: 0;
+      right: 1px;
 
-      border-right: 10px solid red;
+      border-right: 10px solid color(white);
     }
 }
