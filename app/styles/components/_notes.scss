@@ -28,7 +28,7 @@
 }
 
 .note {
-  border: 1px solid $grey-light;
+  border: 1px solid color(grey,light);
 
   .icon {
     top: 60px;
@@ -40,7 +40,7 @@
 
 .must,
 .may {
-  background: $ice;
+  background: color(ice);
 
   .icon {
     top: 60px;

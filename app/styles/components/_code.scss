@@ -6,9 +6,9 @@ p code {
 
   @include code-base;
 
-  background: $ice;
+  background: color(ice);
   border-radius: 2px;
-  border: 1px solid $grey-light;
+  border: 1px solid color(grey,light);
 }
 
 //
@@ -19,7 +19,7 @@ p code {
   margin: 30px 0;
   padding: 30px;
 
-  background: $black;
+  background: color(black);
 }
 
 pre code {

@@ -2,10 +2,10 @@
     display: block;
 
     text-decoration: none;
-    color: $black;
+    color: color(black);
 
     background: white;
-    box-shadow: 0px 12px 40px 0px $grey-light;
+    box-shadow: 0px 12px 40px 0px color(grey,light);
 
     &__body {
         padding: 33px 30px;
@@ -28,7 +28,7 @@
         font-size: 15px;
         text-align: center;
 
-        border-top: 1px solid $mirror;
+        border-top: 1px solid color(mirror);
 
         span {
             position: relative;
@@ -42,7 +42,7 @@
 
     &:hover {
         .visual-link__link {
-            background: $ice;
+            background: color(ice);
         }
     }
 }
