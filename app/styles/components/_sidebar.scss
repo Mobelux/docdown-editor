@@ -1,6 +1,17 @@
 .sidebar {
   z-index: 2;
   height: 100vh;
-  background-color: color(white);
+
+  background-color: color(dark-grey,base);
   overflow-y: scroll;
+
+  & ul {
+    padding: 0 10px 0 20px;
+  }
+
+  span {
+    color: color(grey,light);
+    font-size: 15px;
+    line-height: 1.5px;
+  }
 }
