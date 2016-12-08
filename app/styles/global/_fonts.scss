@@ -33,13 +33,13 @@
 
 @mixin t-base {
   font-family: 'LivioNorm', Helvetica, sans-serif;
-  color: $dark-grey-base;
+  color: color(dark-grey,base);
 }
 
 @mixin t-base-theme {
   font-family: 'LivioNorm', Helvetica, sans-serif;
   // this is the placeholder color for what shoudl be a doc theme color
-  color: $grey-base;
+  color: color(grey,base);
 }
 
 @mixin code-base {

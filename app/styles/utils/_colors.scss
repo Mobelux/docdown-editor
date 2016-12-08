@@ -1,7 +1,104 @@
-$dark-grey-base: #394e60;
-$grey-base: #A9B3BD;
-$grey-light: #dee1e6;
-$ice: #f7f8fa;
-$black: #202c36;
-$mirror: #f4f5f7;
-$navy: #366FB3;
+@function color($color-name, $color-variant:null) {
+  @if ($color-variant != null) {
+    @return map-get(map-get($colors, $color-name), $color-variant);
+  } @else {
+    @return map-get($colors, $color-name);
+  }
+}
+
+$colors: (
+    black: #202C36,
+    white: #FFFFFF,
+    steel: #647686,
+    lemon: #FFF6A2,
+    platinum: #94A0AB,
+    mirror: #f4f5f7,
+    ice: #F7F8FA,
+
+    grey: (
+        base: #A9B3BD,
+        light: #dee1e6,
+    ),
+    dark-grey: (
+        base: #394e60,
+        light: #546a7c,
+        dark: #465e72
+    ),
+    blue: (
+        base: #5DA0DE,
+        dark: #478CCB,
+        light: #6BACE7
+    ),
+    navy: (
+        base: #366FB3,
+        dark: #2b588f,
+        light: #5e8bc2,
+    ),
+    forest: (
+        base: #2BB074,
+        dark: #25A169,
+        light: #3DC085
+    ),
+    orange: (
+        base: #F39659,
+        dark: #E98441,
+        light: #FDA165
+    ),
+    red: (
+        base: #F3636C,
+        dark: #E75059,
+        light: #FF7A82
+    ),
+    teal: (
+        base: #3AC2B4,
+        dark: #2AB1A3,
+        light: #47D0C3
+    ),
+    lime: (
+        base: #78C96F,
+        dark: #6BBD62,
+        light: #89D681
+    ),
+    //extended color palette
+    gold: (
+        base: #f3c359,
+        dark: #c29c47,
+        light: #f5cf7a
+    ),
+    rose: (
+        base: #dd5f7c,
+        dark: #b04c63,
+        light: #e37f96,
+    ),
+    army: (
+        base: #3e8263,
+        dark: #31684f,
+        light: #649b82
+    ),
+    brown: (
+        base: #8c6e5e,
+        dark: #70584b,
+        light: #a38b7e
+    ),
+    lavender: (
+        base: #7674ad,
+        dark: #5e5c8a,
+        light: #918fbd
+    ),
+    moss: (
+        base: #c1bd51,
+        dark:  #9a9740,
+        light: #cdca73
+    ),
+    sand: (
+        base: #d0ad8d,
+        dark: #a68a70,
+        light: #d9bda3
+    ),
+    purple: (
+        base: #be8dd0,
+        dark: #b17cc5,
+        light: #cc9cde,
+    ),
+);
+>>>>>>> master

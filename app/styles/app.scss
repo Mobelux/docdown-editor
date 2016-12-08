@@ -1,10 +1,18 @@
+// Vendor
 @import '~tachyons-sass/tachyons.scss';
 @import '~prismjs/themes/prism-okaidia.css';
-@import 'utils/reset';
+
+// Global
+@import 'global/reset';
+@import 'global/fonts';
+
+// Utils
+@import 'utils/base';
 @import 'utils/colors';
-@import 'utils/fonts';
 @import 'utils/typography';
 @import 'utils/buttons';
+
+// Components
 @import 'components/code';
 @import 'components/sequence-diagram';
 @import 'components/notes';
@@ -12,27 +20,3 @@
 @import 'components/sidebar';
 @import 'components/gutter';
 @import 'components/tabs';
-
-
-.bg-dark-black { background: #272822; }
-.vw-100 { width: 100vw; }
-.flex-1-50 { flex: 1 50%; }
-
-pre[class*="language-"] {
-  margin: 0;
-  height: 100%;
-	min-width: 300px;
-
-	background: $black;
-	border-radius: 0;
-}
-
-#split-pane-wrapper {
-  width: 100%;
-  height: 100vh;
-  position: relative;
-}
-
-span {
-  white-space: pre-wrap;
-}
