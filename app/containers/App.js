@@ -8,7 +8,6 @@ import MarkdownRendered from '../components/MarkdownRendered';
 import { updateFile } from '../actions/files';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
-import Gutter from '../components/Gutter';
 import Tabs from '../containers/Tabs';
 import { getCurrentFile } from '../selectors';
 
@@ -59,9 +58,7 @@ class App extends React.Component {
             onChange={uiActions.resizePane}
           >
             <div>
-              <Gutter text={raw}>
-                <MarkdownEditor file={currentFile.get('id')} text={raw} handleUpdate={handleUpdate} />
-              </Gutter>
+              <MarkdownEditor file={currentFile.get('id')} text={raw} handleUpdate={handleUpdate} />
             </div>
             <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
           </SplitPane>
