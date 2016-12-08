@@ -18,36 +18,37 @@
 		border-left: 2px solid color(black,dark);
 
     span {
-      color: color(grey,light);
+      padding-left: 15px;
+
+      color: color(grey,base);
       font-size: 15px;
     }
 
 		&.is-active {
+      background: color(black,base);
 			border-left: 3px solid color(navy,base);
-			background: color(black,base);
 
-			> button {
-				color: color(dark-grey,base);
-			}
+      span {
+        color: color(grey,light);
+      }
 		}
 
 		&--close {
-			color: color(black,base);
+      padding: 0 0 0 15px;
+
+      font-size: 15px;
+			color: color(dark-grey,base);
 
 			background: none;
 			border: none;
 
 			&:hover {
-				color: color(white);
+				color: color(grey,light);
 			}
 
 			&:focus {
 				outline: none;
 			}
-		}
-
-		& a span:last-of-type {
-			padding-left: 15px;
 		}
 	}
 }
