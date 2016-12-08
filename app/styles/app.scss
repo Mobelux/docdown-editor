@@ -7,8 +7,8 @@
 @import 'global/fonts';
 
 // Utils
-@import 'utils/base';
 @import 'utils/colors';
+@import 'utils/base';
 @import 'utils/typography';
 @import 'utils/buttons';
 
@@ -19,3 +19,4 @@
 @import 'components/resizer';
 @import 'components/sidebar';
 @import 'components/gutter';
+@import 'components/tabs';

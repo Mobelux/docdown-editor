@@ -9,6 +9,7 @@ import { updateFile } from '../actions/files';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
 import Gutter from '../components/Gutter';
+import Tabs from '../containers/Tabs';
 import { getCurrentFile } from '../selectors';
 
 class App extends React.Component {
@@ -45,6 +46,7 @@ class App extends React.Component {
       >
         <Sidebar visible={ui.get('sidebarVisible')} toggle={uiActions.toggleSidebar} />
         <div id="split-pane-wrapper">
+          <Tabs />
           <SplitPane
             ref={(n) => { this.pane = n; }}
             className="h-100 v-100"

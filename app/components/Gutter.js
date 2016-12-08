@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const Gutter = ({ text, listItem, children }) => (
-  <div style={{ display: 'flex' }} className="vh-100 overflow-container bg-dark-black">
+  <div style={{ display: 'flex' }} className="vh-100 overflow-container">
     <ol className="gutter">
       {[...Array(text.split('\n').length)].map((x, i) =>
         <li
@@ -11,7 +11,7 @@ const Gutter = ({ text, listItem, children }) => (
         />
       )}
     </ol>
-    <div style={{ flex: 1 }}>
+    <div style={{ flex: 1, backgroundColor: '#202C36' }}>
       {children}
     </div>
   </div>

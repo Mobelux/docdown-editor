@@ -1,10 +1,10 @@
-.bg-dark-black { background: #272822; }
 .vw-100 { width: 100vw; }
-.flex-1-50 { flex: 1 50%; }
 
 pre[class*="language-"] {
   margin: 0;
   min-width: 300px;
+
+  background: color(black);
   border-radius: 0;
 }
 

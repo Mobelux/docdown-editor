@@ -1,0 +1,48 @@
+.tabs {
+	&__list {
+		display: flex;
+		flex-direction: row;
+		padding: 0;
+		margin: 0;
+
+		list-style: none;
+
+		background: color(dark-grey,base);
+	}
+
+	&__item {
+		margin: 0, 15px, 0, 0;
+		padding: 10px;
+
+		background: color(dark-grey,base);
+		border-left: 2px solid color(dark-grey,base);
+
+		&.is-active {
+			border-left: 3px solid color(navy,base);
+			background: color(black);
+
+			> button {
+				color: color(dark-grey,base);
+			}
+		}
+
+		&--close {
+			color: color(black);
+
+			background: none;
+			border: none;
+
+			&:hover {
+				color: color(white);
+			}
+
+			&:focus {
+				outline: none;
+			}
+		}
+
+		& a span:last-of-type {
+			padding-left: 15px;
+		}
+	}
+}

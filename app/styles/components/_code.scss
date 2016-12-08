@@ -25,5 +25,5 @@ p code {
 pre code {
   @include code-base;
   // this is just a placeholder color for now
-  color: white;
+  color: color(white);
 }
