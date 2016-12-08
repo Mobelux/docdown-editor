@@ -120,7 +120,7 @@ class MarkdownEditor extends React.Component {
   render() {
     const { editorState } = this.state;
     return (
-      <pre className="language-markdown">
+      <pre className="language-markdown vh-100">
         <Editor
           editorState={editorState}
           onChange={this.onChange}
