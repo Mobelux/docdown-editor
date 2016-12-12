@@ -1,8 +1,11 @@
 import fs from 'fs';
+import { ipcRenderer } from 'electron';
 import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
-import { FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT, FILE_SAVE, FILE_UPDATE } from '../actions/files';
+import {
+  FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT, FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE
+} from '../actions/files';
 
 const initialState = Map({
   folder: null,
@@ -84,9 +87,26 @@ const filesReducer = handleActions({
   [FILE_SAVE]: (state) => {
     const id = state.get('currentFile');
     let file = state.getIn(['files', id]);
+    if (!file.get('path')) {
+      ipcRenderer.send('save-as', id);
+      return state;
+    }
     fs.writeFileSync(file.get('path'), file.get('contents'));
     file = file.set('changed', false);
     return state.setIn(['files', id], file);
+  },
+  [FILE_SAVE_AS]: (state, { payload }) => {
+    const id = state.get('currentFile');
+    const path = payload.filename;
+    const pieces = path.split('/');
+    const name = pieces[pieces.length - 1];
+    let file = state.getIn(['files', id]);
+    let paths = state.get('paths');
+    file = file.merge({ path, name });
+    paths = paths.set(path, id);
+    fs.writeFileSync(path, file.get('contents'));
+    file = file.set('changed', false);
+    return state.setIn(['files', id], file).set('paths', paths);
   }
 }, initialState);
 
