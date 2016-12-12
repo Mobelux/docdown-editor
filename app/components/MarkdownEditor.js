@@ -36,7 +36,7 @@ class MarkdownEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.file !== this.props.file && nextProps.text !== '') {
+    if (nextProps.file !== this.props.file) {
       this.setInitialText(nextProps.text);
     }
   }
