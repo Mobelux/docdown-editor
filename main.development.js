@@ -1,5 +1,5 @@
-import { app, BrowserWindow, Menu, shell, dialog } from 'electron';
-import { newFile, openFolder, saveFile, closeFile } from './app/actions/files';
+import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
+import { newFile, openFolder, saveFile, saveAsFile, closeFile } from './app/actions/files';
 
 let menu;
 let template;
@@ -56,6 +56,12 @@ app.on('ready', async () => {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+  });
+
+  ipcMain.on('save-as', () => {
+    dialog.showSaveDialog(mainWindow, {}, (filename) => {
+      mainWindow.webContents.send('redux', saveAsFile(filename));
+    });
   });
 
   if (process.env.NODE_ENV === 'development') {
@@ -128,9 +134,7 @@ app.on('ready', async () => {
         accelerator: 'Command+S',
         selector: 'save:',
         click() {
-          dialog.showSaveDialog(mainWindow, {}, (filename) => {
-            mainWindow.webContents.send('redux', saveFile(filename));
-          });
+          mainWindow.webContents.send('redux', saveFile());
         }
       }, {
         label: 'Close',
