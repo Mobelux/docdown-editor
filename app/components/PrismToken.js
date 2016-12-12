@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
-const PrismToken = (props) => {
-  return (
-    <span {...props} className={`token ${props.type} ${props.alias}`} />
-  );
-}
+const PrismToken = ({ type, alias, children }) => (
+  <span className={`token ${type} ${alias}`}>{children}</span>
+);
+
+PrismToken.propTypes = {
+  type: PropTypes.string,
+  alias: PropTypes.string,
+  children: PropTypes.any
+};
 
 export default PrismToken;

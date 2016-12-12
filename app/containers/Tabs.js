@@ -36,6 +36,7 @@ class Tabs extends React.PureComponent {
 
     const fileComponents = files.map(f =>
       <Tab
+        key={f.get('id')}
         id={f.get('id')}
         name={f.get('name')}
         changed={f.get('changed')}
