@@ -29,8 +29,8 @@ class App extends React.Component {
 
   render() {
     const { currentFile, ui, handleUpdate, uiActions } = this.props;
-    const raw = currentFile.get('raw');
-    const rendered = currentFile.get('rendered');
+    const raw = currentFile.get('raw', '');
+    const rendered = currentFile.get('rendered', '');
 
     return (
       <SplitPane
