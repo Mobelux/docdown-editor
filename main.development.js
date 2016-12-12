@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu, shell, dialog } from 'electron';
-import { newFile, openFolder, saveFile } from './app/actions/files';
+import { newFile, openFolder, saveFile, closeFile } from './app/actions/files';
 
 let menu;
 let template;
@@ -128,7 +128,16 @@ app.on('ready', async () => {
         accelerator: 'Command+S',
         selector: 'save:',
         click() {
-          mainWindow.webContents.send('redux', saveFile());
+          dialog.showSaveDialog(mainWindow, {}, (filename) => {
+            mainWindow.webContents.send('redux', saveFile(filename));
+          });
+        }
+      }, {
+        label: 'Close',
+        accelerator: 'Command+W',
+        selector: 'performClose:',
+        click() {
+          mainWindow.webContents.send('redux', closeFile());
         }
       }]
     }, {
@@ -194,10 +203,6 @@ app.on('ready', async () => {
         accelerator: 'Command+M',
         selector: 'performMiniaturize:'
       }, {
-        label: 'Close',
-        accelerator: 'Command+W',
-        selector: 'performClose:'
-      }, {
         type: 'separator'
       }, {
         label: 'Bring All to Front',
@@ -240,7 +245,7 @@ app.on('ready', async () => {
         label: '&Close',
         accelerator: 'Ctrl+W',
         click() {
-          mainWindow.close();
+          mainWindow.webContents.send('redux', closeFile());
         }
       }]
     }, {

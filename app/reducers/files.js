@@ -48,7 +48,10 @@ const filesReducer = handleActions({
     return state.merge({ currentFile: id, files, paths });
   },
   [FILE_CLOSE]: (state, { payload }) => {
-    const { id } = payload;
+    let { id } = payload;
+    if (!id) {
+      id = state.get('currentFile');
+    }
     const files = state.get('files');
     const paths = state.get('paths');
     const file = files.get(id);
