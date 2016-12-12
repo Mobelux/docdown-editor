@@ -7,7 +7,6 @@
 }
 
 $colors: (
-    black: #202C36,
     white: #FFFFFF,
     steel: #647686,
     lemon: #FFF6A2,
@@ -15,6 +14,10 @@ $colors: (
     mirror: #f4f5f7,
     ice: #F7F8FA,
 
+    black: (
+      base: #202C36,
+      dark: #1d2228,
+    ),
     grey: (
         base: #A9B3BD,
         light: #dee1e6,
