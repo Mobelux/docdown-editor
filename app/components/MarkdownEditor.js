@@ -28,6 +28,7 @@ class MarkdownEditor extends React.Component {
     this.keyBindingFn = ::this.keyBindingFn;
     this.handleReturn = ::this.handleReturn;
     this.handleTab = ::this.handleTab;
+    this.focusEditor = ::this.focusEditor;
     this.state = { editorState: EditorState.createEmpty(decorator) };
   }
 
@@ -117,11 +118,16 @@ class MarkdownEditor extends React.Component {
     );
   }
 
+  focusEditor() {
+    this.editor.focus();
+  }
+
   render() {
     const { editorState } = this.state;
     return (
-      <pre className="language-markdown vh-100">
+      <pre className="language-markdown vh-100" onClick={this.focusEditor}>
         <Editor
+          ref={(e) => { this.editor = e; }}
           editorState={editorState}
           onChange={this.onChange}
           keyBindingFn={this.keyBindingFn}
