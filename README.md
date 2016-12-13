@@ -2,22 +2,20 @@
 
 A desktop application for editing DocDown and previewing the results.
 
-And then install dependencies.
+
+## Development
+
+To install dependencies you should have yarn installed.  You can install with `npm install -g yarn`.
+
+Then you just run the yarn command to install dependencies:
 
 ```bash
-$ npm install
+$ yarn
 ```
 
 ## Run
 
-Run these two commands __simultaneously__ in different console tabs.
-
-```bash
-$ npm run hot-server
-$ npm run start-hot
-```
-
-or run two servers with one command
+You can run the application using the following command:
 
 ```bash
 $ npm run dev
