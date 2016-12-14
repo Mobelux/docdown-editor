@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { withState } from 'recompose';
+import Icon from './Icon';
 
 const Folder = ({ name, forceOpen = false, collapsed, toggleCollapsed, children }) => (
   <li>
@@ -10,7 +11,7 @@ const Folder = ({ name, forceOpen = false, collapsed, toggleCollapsed, children 
         toggleCollapsed(n => !n);
       }}
     >
-      <span>{name}</span>
+      <span><Icon name="folder" />&nbsp;{name}</span>
     </a>
     {(forceOpen || !collapsed) && <ul>{children}</ul>}
   </li>

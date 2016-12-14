@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
+import Icon from './Icon';
 
 const UnsupportedFile = ({ name }) => (
   <li className="o-40">
-    <span>{name}</span>
+    <span><Icon name="file" />&nbsp;{name}</span>
   </li>
 );
 
