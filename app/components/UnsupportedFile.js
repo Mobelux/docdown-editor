@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 
 const UnsupportedFile = ({ name }) => (
-  <li>
+  <li className="o-40">
     <span>{name}</span>
   </li>
 );
