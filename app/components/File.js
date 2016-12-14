@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 import { mapProps } from 'recompose';
+import Icon from './Icon';
 
 const File = ({ name, handleClick }) => (
   <li>
     <a href={`#${name}`} onClick={handleClick}>
-      <span>{name}</span>
+      <span><Icon name="file" />&nbsp;{name}</span>
     </a>
   </li>
 );
