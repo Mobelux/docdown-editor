@@ -1,16 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="24px" height="20px" viewBox="0 0 24 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-
-
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Icons" transform="translate(-351.000000, -368.000000)">
-            <g id="icon-must" transform="translate(351.000000, 368.000000)">
-                <path d="M19,7.1191 C19,10.7091 16.09,13.6191 12.5,13.6191 C8.91,13.6191 6,10.7091 6,7.1191 C6,3.5291 8.91,0.6191 12.5,0.6191 C16.09,0.6191 19,3.5291 19,7.1191" id="Fill-1" class="svg-theme-fill" fill="#EF5E69"></path>
-                <path d="M16.3242,5.54 L14.8052,4.238 L11.8572,7.678 L10.4142,6.234 L9.0002,7.648 L11.9702,10.619 L16.3242,5.54 Z" id="Fill-3" fill="#FFFFFF"></path>
-                <path d="M7.3242,14.9209 L5.8052,13.6189 L2.8572,17.0589 L1.4142,15.6149 L0.0002,17.0289 L2.9702,19.9999 L7.3242,14.9209 Z" id="Fill-5" fill="#394E60"></path>
-                <path d="M23.3242,14.9209 L21.8052,13.6189 L18.8572,17.0589 L17.4142,15.6149 L16.0002,17.0289 L18.9702,19.9999 L23.3242,14.9209 Z" id="Fill-7" fill="#394E60"></path>
-            </g>
-        </g>
-    </g>
-</svg>
+<svg width="24" height="20" viewBox="0 0 24 20" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><path d="M19 7.12a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0" class="svg-theme-fill" fill="#EF5E69"/><path d="M16.324 5.54l-1.519-1.302-2.948 3.44-1.443-1.444L9 7.648l2.97 2.971 4.354-5.079z" fill="#FFF"/><path d="M7.324 14.92L5.805 13.62l-2.948 3.44-1.443-1.444L0 17.029l2.97 2.97 4.354-5.078zM23.324 14.92l-1.519-1.301-2.948 3.44-1.443-1.444L16 17.029l2.97 2.97 4.354-5.078z" fill="#394E60"/></g></svg>
