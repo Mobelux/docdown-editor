@@ -4,7 +4,8 @@ import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
 import {
-  FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT, FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE
+  FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT,
+  FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_DISCARD
 } from '../actions/files';
 
 const initialState = Map({
@@ -58,6 +59,26 @@ const filesReducer = handleActions({
     const files = state.get('files');
     const paths = state.get('paths');
     const file = files.get(id);
+    if (file.get('changed')) {
+      ipcRenderer.send('close-unsaved', id, file.get('path'));
+      return state;
+    }
+    let currentFile = state.get('currentFile');
+    if (id === currentFile) {
+      const otherFile = files.filter(f => f.get('id') !== id).last();
+      if (otherFile) {
+        currentFile = otherFile.get('id');
+      } else {
+        currentFile = null;
+      }
+    }
+    return state.merge({ currentFile, files: files.delete(id), paths: paths.delete(file.get('path')) });
+  },
+  [FILE_DISCARD]: (state, { payload }) => {
+    const { id } = payload;
+    const files = state.get('files');
+    const paths = state.get('paths');
+    const file = files.get(id);
     let currentFile = state.get('currentFile');
     if (id === currentFile) {
       const otherFile = files.filter(f => f.get('id') !== id).last();
@@ -84,8 +105,11 @@ const filesReducer = handleActions({
     });
     return state.setIn(['files', id], file);
   },
-  [FILE_SAVE]: (state) => {
-    const id = state.get('currentFile');
+  [FILE_SAVE]: (state, { payload }) => {
+    let { id } = payload;
+    if (!id) {
+      id = state.get('currentFile');
+    }
     let file = state.getIn(['files', id]);
     if (!file.get('path')) {
       ipcRenderer.send('save-as', id);
@@ -96,8 +120,7 @@ const filesReducer = handleActions({
     return state.setIn(['files', id], file);
   },
   [FILE_SAVE_AS]: (state, { payload }) => {
-    const id = state.get('currentFile');
-    const path = payload.filename;
+    const { id, path } = payload;
     const pieces = path.split('/');
     const name = pieces[pieces.length - 1];
     let file = state.getIn(['files', id]);

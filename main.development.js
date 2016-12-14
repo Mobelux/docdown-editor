@@ -1,20 +1,17 @@
 import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
-import { newFile, openFolder, saveFile, saveAsFile, closeFile } from './app/actions/files';
+import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './app/actions/files';
 
 let menu;
 let template;
 let mainWindow = null;
 
-
 if (process.env.NODE_ENV === 'development') {
   require('electron-debug')(); // eslint-disable-line global-require
 }
 
-
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
-
 
 const installExtensions = async () => {
   if (process.env.NODE_ENV === 'development') {
@@ -58,9 +55,40 @@ app.on('ready', async () => {
     mainWindow = null;
   });
 
-  ipcMain.on('save-as', () => {
+  ipcMain.on('save-as', (e, id) => {
     dialog.showSaveDialog(mainWindow, {}, (filename) => {
-      mainWindow.webContents.send('redux', saveAsFile(filename));
+      mainWindow.webContents.send('redux', saveAsFile(id, filename));
+    });
+  });
+
+  ipcMain.on('close-unsaved', (e, id, path) => {
+    let file;
+    if (path && path !== '') {
+      const pieces = path.split('/');
+      file = pieces[pieces.length - 1];
+    } else {
+      file = 'Unsaved File';
+    }
+    dialog.showMessageBox(mainWindow, {
+      type: 'question',
+      buttons: ['Don’t Save', 'Cancel', 'Save'],
+      defaultId: 2,
+      title: `'${file}' has changes, do you want to save them?`,
+      message: 'Your changes will be lost if you close this item without saving.'
+    }, (response) => {
+      if (response === 2) {
+        if (path && path !== '') {
+          mainWindow.webContents.send('redux', saveFile(id));
+          mainWindow.webContents.send('redux', closeFile(id));
+        } else {
+          dialog.showSaveDialog(mainWindow, {}, (filename) => {
+            mainWindow.webContents.send('redux', saveAsFile(id, filename));
+            mainWindow.webContents.send('redux', closeFile(id));
+          });
+        }
+      } else if (response === 0) {
+        mainWindow.webContents.send('redux', discardFile(id));
+      }
     });
   });
 
