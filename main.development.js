@@ -271,11 +271,32 @@ app.on('ready', async () => {
     template = [{
       label: '&File',
       submenu: [{
+        label: '&New',
+        accelerator: 'Ctrl+N',
+        selector: 'new:',
+        click() {
+          mainWindow.webContents.send('redux', newFile());
+        }
+      }, {
         label: '&Open',
-        accelerator: 'Ctrl+O'
+        accelerator: 'Ctrl+O',
+        selector: 'open:',
+        click() {
+          dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }, (filePaths) => {
+            mainWindow.webContents.send('redux', openFolder(filePaths[0]));
+          });
+        }
+      }, {
+        label: '&Save',
+        accelerator: 'Ctrl+S',
+        selector: 'save:',
+        click() {
+          mainWindow.webContents.send('redux', saveFile());
+        }
       }, {
         label: '&Close',
         accelerator: 'Ctrl+W',
+        selector: 'performClose:',
         click() {
           mainWindow.webContents.send('redux', closeFile());
         }
