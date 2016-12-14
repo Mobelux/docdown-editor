@@ -1,5 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
 import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './app/actions/files';
+import { toggleSidebar, togglePane } from './app/actions/ui';
 
 let menu;
 let template;
@@ -30,7 +31,7 @@ const installExtensions = async () => {
   }
 };
 
-app.on('ready', async () => {
+const launchApp = async () => {
   await installExtensions();
 
   mainWindow = new BrowserWindow({
@@ -142,7 +143,7 @@ app.on('ready', async () => {
     }, {
       label: 'File',
       submenu: [{
-        label: 'New',
+        label: 'New File',
         accelerator: 'Command+N',
         selector: 'new:',
         click() {
@@ -158,6 +159,8 @@ app.on('ready', async () => {
           });
         }
       }, {
+        type: 'separator'
+      }, {
         label: 'Save',
         accelerator: 'Command+S',
         selector: 'save:',
@@ -165,11 +168,27 @@ app.on('ready', async () => {
           mainWindow.webContents.send('redux', saveFile());
         }
       }, {
-        label: 'Close',
+        label: 'Save As...',
+        accelerator: 'Shift+Command+S',
+        click() {
+          dialog.showSaveDialog(mainWindow, {}, (filename) => {
+            mainWindow.webContents.send('redux', saveAsFile(filename));
+          });
+        }
+      }, {
+        type: 'separator'
+      }, {
+        label: 'Close Tab',
         accelerator: 'Command+W',
         selector: 'performClose:',
         click() {
           mainWindow.webContents.send('redux', closeFile());
+        }
+      }, {
+        label: 'Close Window',
+        accelerator: 'Shift+Command+W',
+        click() {
+          mainWindow.close();
         }
       }]
     }, {
@@ -200,6 +219,8 @@ app.on('ready', async () => {
         label: 'Select All',
         accelerator: 'Command+A',
         selector: 'selectAll:'
+      }, {
+        type: 'separator'
       }]
     }, {
       label: 'View',
@@ -210,10 +231,14 @@ app.on('ready', async () => {
           mainWindow.webContents.reload();
         }
       }, {
-        label: 'Toggle Full Screen',
-        accelerator: 'Ctrl+Command+F',
+        label: 'Toggle File Panel',
         click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
+          mainWindow.webContents.send('redux', toggleSidebar());
+        }
+      }, {
+        label: 'Toggle Preview',
+        click() {
+          mainWindow.webContents.send('redux', togglePane());
         }
       }, {
         label: 'Toggle Developer Tools',
@@ -222,15 +247,25 @@ app.on('ready', async () => {
           mainWindow.toggleDevTools();
         }
       }] : [{
-        label: 'Toggle Full Screen',
-        accelerator: 'Ctrl+Command+F',
+        label: 'Toggle File Panel',
         click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
+          mainWindow.webContents.send('redux', toggleSidebar());
+        }
+      }, {
+        label: 'Toggle Preview',
+        click() {
+          mainWindow.webContents.send('redux', togglePane());
         }
       }]
     }, {
       label: 'Window',
       submenu: [{
+        label: 'Zoom',
+        accelerator: 'Shift+Command+F',
+        click() {
+          mainWindow.setFullScreen(!mainWindow.isFullScreen());
+        }
+      }, {
         label: 'Minimize',
         accelerator: 'Command+M',
         selector: 'performMiniaturize:'
@@ -243,24 +278,9 @@ app.on('ready', async () => {
     }, {
       label: 'Help',
       submenu: [{
-        label: 'Learn More',
+        label: 'View on Github',
         click() {
-          shell.openExternal('http://electron.atom.io');
-        }
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        }
-      }, {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
+          shell.openExternal('https://github.com/livio/docdown-editor');
         }
       }]
     }];
@@ -271,7 +291,7 @@ app.on('ready', async () => {
     template = [{
       label: '&File',
       submenu: [{
-        label: '&New',
+        label: '&New File',
         accelerator: 'Ctrl+N',
         selector: 'new:',
         click() {
@@ -287,6 +307,8 @@ app.on('ready', async () => {
           });
         }
       }, {
+        type: 'separator'
+      }, {
         label: '&Save',
         accelerator: 'Ctrl+S',
         selector: 'save:',
@@ -294,7 +316,17 @@ app.on('ready', async () => {
           mainWindow.webContents.send('redux', saveFile());
         }
       }, {
-        label: '&Close',
+        label: '&Save As',
+        accelerator: 'Shift+Ctrl+S',
+        click() {
+          dialog.showSaveDialog(mainWindow, {}, (filename) => {
+            mainWindow.webContents.send('redux', saveAsFile(filename));
+          });
+        }
+      }, {
+        type: 'separator'
+      }, {
+        label: '&Close Tab',
         accelerator: 'Ctrl+W',
         selector: 'performClose:',
         click() {
@@ -322,37 +354,39 @@ app.on('ready', async () => {
           mainWindow.toggleDevTools();
         }
       }] : [{
-        label: 'Toggle &Full Screen',
+        label: '&Zoom',
         accelerator: 'F11',
         click() {
           mainWindow.setFullScreen(!mainWindow.isFullScreen());
+        }
+      }, {
+        label: 'Toggle &File Panel',
+        click() {
+          mainWindow.webContents.send('redux', toggleSidebar());
+        }
+      }, {
+        label: 'Toggle &Preview',
+        click() {
+          mainWindow.webContents.send('redux', togglePane());
         }
       }]
     }, {
       label: 'Help',
       submenu: [{
-        label: 'Learn More',
+        label: 'View on Github',
         click() {
-          shell.openExternal('http://electron.atom.io');
-        }
-      }, {
-        label: 'Documentation',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
-        }
-      }, {
-        label: 'Community Discussions',
-        click() {
-          shell.openExternal('https://discuss.atom.io/c/electron');
-        }
-      }, {
-        label: 'Search Issues',
-        click() {
-          shell.openExternal('https://github.com/atom/electron/issues');
+          shell.openExternal('https://github.com/livio/docdown-editor');
         }
       }]
     }];
     menu = Menu.buildFromTemplate(template);
     mainWindow.setMenu(menu);
+  }
+};
+
+app.on('ready', launchApp);
+app.on('activate', (e, hasVisibleWindows) => {
+  if (!hasVisibleWindows) {
+    launchApp();
   }
 });
