@@ -43,7 +43,10 @@ class MarkdownEditor extends React.Component {
   }
 
   onChange(editorState) {
-    this.props.handleUpdate(editorState.getCurrentContent().getPlainText());
+    const text = editorState.getCurrentContent().getPlainText();
+    if (this.props.text !== text) {
+      this.props.handleUpdate(text);
+    }
     this.setState({ editorState });
   }
 
