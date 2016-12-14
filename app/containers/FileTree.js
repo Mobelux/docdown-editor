@@ -5,6 +5,7 @@ import watch from 'watch';
 import { Map, OrderedMap } from 'immutable';
 import Folder from '../components/Folder';
 import File from '../components/File';
+import UnsupportedFile from '../components/UnsupportedFile';
 import { openFile } from '../actions/files';
 
 const watchOptions = {
@@ -14,15 +15,30 @@ const watchOptions = {
   ignoreDirectoryPattern: /node_modules/
 };
 
+function isSupportedFile(filename) {
+  return filename.search(/^.*.(md|markdown|ft|txt)$/i) >= 0;
+}
+
+function folderFirstMapper(value, key) {
+  const pieces = key.split('/');
+  const filename = pieces[pieces.length - 1];
+  const folder = pieces.slice(0, pieces.length - 2).join('/');
+  const prefix = value.isDirectory() ? 'dir' : 'file';
+  return `${folder}/${prefix}-${filename}`;
+}
+
 function buildTree(folderName, files, handleClick, forceOpen = false) {
   let listing;
   if (files) {
-    listing = files.entrySeq().map(([filename, value]) => {
+    listing = files.map((value, filename) => {
       if (typeof value !== 'string') {
         return buildTree(filename, value, handleClick);
       }
-      return <File key={value} name={filename} path={value} handleClick={handleClick} />;
-    });
+      if (isSupportedFile(filename)) {
+        return <File key={value} name={filename} path={value} handleClick={handleClick} />;
+      }
+      return <UnsupportedFile key={value} name={filename} />;
+    }).valueSeq();
   }
   return (
     <Folder key={folderName} name={folderName} forceOpen={forceOpen}>
@@ -94,7 +110,7 @@ class FileTree extends React.PureComponent {
     const folderName = folderPieces[folderPieces.length - 1];
     const { filetree } = this.state;
     const basePath = path.replace(folderName, '');
-    const tree = filetree.reduce((acc, stat, f) => {
+    const tree = filetree.sortBy(folderFirstMapper).reduce((acc, stat, f) => {
       const pieces = f.replace(basePath, '').split('/');
       let value = f;
       if (stat.isDirectory()) {
