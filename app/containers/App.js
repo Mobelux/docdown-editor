@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import SplitPane from 'react-split-pane';
 import MarkdownEditor from '../components/MarkdownEditor';
 import MarkdownRendered from '../components/MarkdownRendered';
+import CharacterCount from '../components/CharacterCount';
 import * as fileActionCreators from '../actions/files';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
@@ -64,8 +65,9 @@ class App extends React.Component {
             primary="second"
             onChange={uiActions.resizePane}
           >
-            <div>
+            <div className="h-100 relative">
               <MarkdownEditor file={currentFile.get('id')} text={raw} handleUpdate={fileActions.updateFile} />
+              <CharacterCount visible={ui.get('countVisible')} text={raw} />
             </div>
             <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
           </SplitPane>

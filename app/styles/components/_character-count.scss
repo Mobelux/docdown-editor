@@ -1,0 +1,11 @@
+.character-count {
+  border-top: black 1px solid;
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  padding: 0.25em;
+  font-size: 0.75em;
+  text-align: center;
+  color: color(grey,base);
+  background: color(black,base);
+}
