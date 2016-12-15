@@ -1,10 +1,6 @@
 import Remarkable from 'remarkable';
+import { include, links, media, noteBlocks, sequence } from 'remarkable-docdown';
 import hljs from 'highlight.js';
-import docdownNoteBlocks from './note_blocks';
-import docdownSequence from './sequence';
-import docdownInclude from './include';
-import docdownMedia from './media';
-import docdownLinks from './links';
 
 function svgPath(name) {
   return `./svgs/${name}.svg`;
@@ -94,10 +90,10 @@ const md = new Remarkable({
   }
 });
 md
-  .use(docdownNoteBlocks)
-  .use(docdownSequence)
-  .use(docdownInclude)
-  .use(docdownLinks)
-  .use(docdownMedia);
+  .use(noteBlocks)
+  .use(sequence)
+  .use(include)
+  .use(links)
+  .use(media);
 
 export default md;

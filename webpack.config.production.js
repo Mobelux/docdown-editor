@@ -42,9 +42,6 @@ const config = validate(merge(baseConfig, {
   },
 
   resolve: {
-    alias: {
-      docdown: path.resolve(__dirname, 'app', 'docdown')
-    },
     extensions: ['', '.js', '.jsx', '.json'],
     modulesDirectories: [
       'node_modules'

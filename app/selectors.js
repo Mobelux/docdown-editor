@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { Map } from 'immutable';
-import md from 'docdown/renderer';
+import md from './utils/docdown-renderer';
 
 export const getFiles = state => state.files;
 
