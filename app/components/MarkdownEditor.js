@@ -1,15 +1,14 @@
-import 'prismjs';
-import 'prismjs/components/prism-markdown';
 import React, { PropTypes } from 'react';
 import { Editor, EditorState, RichUtils, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
 import CodeUtils from 'draft-js-code';
+import '../utils/prism-docdown';
 import PrismDecorator from '../utils/PrismDecorator';
 import PrismToken from './PrismToken';
 
 const options = {
-  defaultSyntax: 'markdown',
+  defaultSyntax: 'docdown',
   filter: () => true,
-  getSyntax: () => 'markdown',
+  getSyntax: () => 'docdown',
   render: PrismToken
 };
 const decorator = new PrismDecorator(options);
