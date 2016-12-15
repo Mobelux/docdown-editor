@@ -35,8 +35,8 @@ export default class PrismDecorator {
 
         this.highlighted[blockKey][tokenId] = token;
 
-        occupySlice(decorations, offset, offset + token.matchedStr.length, resultId);
-        offset += token.matchedStr.length;
+        occupySlice(decorations, offset, offset + token.length, resultId);
+        offset += token.length;
       }
     });
 
