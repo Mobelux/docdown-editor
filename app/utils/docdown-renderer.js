@@ -13,6 +13,7 @@ function staticPath(path) {
 const md = new Remarkable({
   html: true,        // Enable HTML tags in source
   breaks: true,        // Convert '\n' in paragraphs into <br>
+  linkTarget: '_blank',
   langPrefix: 'language-',  // CSS language prefix for fenced blocks
   // Highlighter function. Should return escaped HTML,
   // or '' if the source string is not changed

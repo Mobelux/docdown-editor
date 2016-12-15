@@ -1,6 +1,5 @@
 // Vendor
 @import '~tachyons-sass/tachyons.scss';
-@import '~prismjs/themes/prism-okaidia.css';
 
 // Global
 @import 'global/reset';
@@ -13,6 +12,7 @@
 @import 'utils/buttons';
 
 // Components
+@import 'components/prism';
 @import 'components/code';
 @import 'components/sequence-diagram';
 @import 'components/notes';

@@ -1,9 +1,13 @@
 import Immutable from 'immutable';
 import Prism from 'prismjs';
-
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
 import PrismOptions from './PrismOptions';
 
-var KEY_SEPARATOR = '-';
+function occupySlice(targetArr, start, end, componentKey) {
+  for (let ii = start; ii < end; ii++) {
+    targetArr[ii] = componentKey;
+  }
+}
 
 export default class PrismDecorator {
   constructor(options) {
@@ -16,14 +20,14 @@ export default class PrismDecorator {
     const blockKey = block.getKey();
     const blockText = block.getText();
     let offset = 0;
-    let decorations = Array(blockText.length).fill(null);
+    const decorations = Array(blockText.length).fill(null);
 
     this.highlighted[blockKey] = {};
 
-    var syntax = getSyntax(block) || this.options.get('defaultSyntax');
+    const syntax = getSyntax(block) || this.options.get('defaultSyntax');
 
     // Parse text using Prism
-    var grammar = Prism.languages[syntax];
+    const grammar = Prism.languages[syntax];
     const tokens = Prism.tokenize(blockText, grammar);
 
     tokens.forEach((token) => {
@@ -43,7 +47,7 @@ export default class PrismDecorator {
     return Immutable.List(decorations);
   }
 
-  getComponentForKey(key) {
+  getComponentForKey() {
     return this.options.render;
   }
 
@@ -56,10 +60,4 @@ export default class PrismDecorator {
       alias: token.alias || ''
     };
   }
-}
-
-function occupySlice(targetArr, start, end, componentKey) {
-    for (var ii = start; ii < end; ii++) {
-        targetArr[ii] = componentKey;
-    }
 }
