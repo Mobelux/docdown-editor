@@ -22,8 +22,8 @@ function isSupportedFile(filename) {
 function folderFirstMapper(value, key) {
   const pieces = key.split('/');
   const filename = pieces[pieces.length - 1];
-  const folder = pieces.slice(0, pieces.length - 2).join('/');
-  const prefix = value.isDirectory() ? 'dir' : 'file';
+  const folder = pieces.slice(0, pieces.length - 1).join('/');
+  const prefix = value.isDirectory() ? '' : '_';
   return `${folder}/${prefix}-${filename}`;
 }
 
