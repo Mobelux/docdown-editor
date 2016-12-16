@@ -1,0 +1,18 @@
+.replacer {
+  &__row {
+    width: 400px;
+    margin: 18px;
+  }
+  &__input {
+    width: 280px;
+  }
+  &__label {
+    display: inline-block;
+    width: 80px;
+    padding-right: 10px;
+    text-align: right;
+  }
+  &__button {
+    margin: 0 24px;
+  }
+}

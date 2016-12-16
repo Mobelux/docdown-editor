@@ -7,6 +7,7 @@ import {
   FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT,
   FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_DISCARD
 } from '../actions/files';
+import { TEXT_REPLACE, TEXT_REPLACE_ALL } from '../actions/text';
 
 const initialState = Map({
   folder: null,
@@ -130,6 +131,26 @@ const filesReducer = handleActions({
     fs.writeFileSync(path, file.get('contents'));
     file = file.set('changed', false);
     return state.setIn(['files', id], file).set('paths', paths);
+  },
+  [TEXT_REPLACE]: (state, { payload }) => {
+    const { find, replace } = payload;
+    const id = state.get('currentFile', uuid());
+    let file = state.getIn(['files', id], Map({}));
+    file = file.merge({
+      contents: file.get('contents').replace(find, replace),
+      changed: true
+    });
+    return state.setIn(['files', id], file);
+  },
+  [TEXT_REPLACE_ALL]: (state, { payload }) => {
+    const { find, replace } = payload;
+    const id = state.get('currentFile', uuid());
+    let file = state.getIn(['files', id], Map({}));
+    file = file.merge({
+      contents: file.get('contents').replace(new RegExp(find, 'g'), replace),
+      changed: true
+    });
+    return state.setIn(['files', id], file);
   }
 }, initialState);
 
