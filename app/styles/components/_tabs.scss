@@ -1,5 +1,6 @@
 .tabs {
   &__list {
+    height: $tab-height;
     display: flex;
     flex-direction: row;
     padding: 0;

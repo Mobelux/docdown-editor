@@ -3,9 +3,11 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SplitPane from 'react-split-pane';
+import Panel from '../components/Panel';
 import MarkdownEditor from '../components/MarkdownEditor';
 import MarkdownRendered from '../components/MarkdownRendered';
 import CharacterCount from '../components/CharacterCount';
+import StatusBar from '../components/StatusBar';
 import * as fileActionCreators from '../actions/files';
 import * as uiActionCreators from '../actions/ui';
 import Sidebar from '../components/Sidebar';
@@ -52,7 +54,7 @@ class App extends React.Component {
         onChange={uiActions.resizeSidebar}
       >
         <Sidebar visible={ui.get('sidebarVisible')} toggle={uiActions.toggleSidebar} />
-        <div id="split-pane-wrapper">
+        <div className="split-pane-wrapper">
           <Tabs />
           <SplitPane
             ref={(n) => { this.pane = n; }}
@@ -65,11 +67,17 @@ class App extends React.Component {
             primary="second"
             onChange={uiActions.resizePane}
           >
-            <div className="h-100 relative">
-              <MarkdownEditor file={currentFile.get('id')} text={raw} handleUpdate={fileActions.updateFile} />
-              <CharacterCount visible={ui.get('countVisible')} text={raw} />
+            <div className="flex flex-column h-100">
+              <Panel className={ui.get('countVisible') ? 'panel--status' : ''}>
+                <MarkdownEditor file={currentFile.get('id')} text={raw} handleUpdate={fileActions.updateFile} />
+              </Panel>
+              <StatusBar visible={ui.get('countVisible')} className="">
+                <CharacterCount text={raw} />
+              </StatusBar>
             </div>
-            <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
+            <Panel>
+              <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
+            </Panel>
           </SplitPane>
         </div>
       </SplitPane>

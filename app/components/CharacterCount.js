@@ -1,16 +1,13 @@
 import React, { PropTypes } from 'react';
 
-const CharacterCount = ({ text, visible }) => {
-  if (!visible) {
-    return null;
-  }
+const CharacterCount = ({ text, className = '' }) => {
   const count = text.replace(/\s/g, '').length.toLocaleString('en-US');
   return (
-    <div className="character-count">{count} chars</div>
+    <div className={`character-count ${className}`}>{count} chars</div>
   );
 };
 CharacterCount.propTypes = {
   text: PropTypes.string.isRequired,
-  visible: PropTypes.bool.isRequired
+  className: PropTypes.string
 };
 export default CharacterCount;
