@@ -1,21 +1,22 @@
 .tabs {
-	&__list {
-		display: flex;
-		flex-direction: row;
-		padding: 0;
-		margin: 0;
+  &__list {
+    height: $tab-height;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
 
-		list-style: none;
+    list-style: none;
 
-		background: color(black,dark);
-	}
+    background: color(black,dark);
+  }
 
-	&__item {
-		margin: 0, 15px, 0, 0;
-		padding: 10px;
+  &__item {
+    margin: 0, 15px, 0, 0;
+    padding: 10px;
 
-		background: color(black,dark);
-		border-left: 2px solid color(black,dark);
+    background: color(black,dark);
+    border-left: 2px solid color(black,dark);
 
     span {
       padding-left: 15px;
@@ -24,31 +25,31 @@
       font-size: 15px;
     }
 
-		&.is-active {
+    &.is-active {
       background: color(black,base);
-			border-left: 3px solid color(navy,base);
+      border-left: 3px solid color(navy,base);
 
       span {
         color: color(grey,light);
       }
-		}
+    }
 
-		&--close {
+    &--close {
       padding: 0 0 0 15px;
 
       font-size: 15px;
-			color: color(dark-grey,base);
+      color: color(dark-grey,base);
 
-			background: none;
-			border: none;
+      background: none;
+      border: none;
 
-			&:hover {
-				color: color(grey,light);
-			}
+      &:hover {
+        color: color(grey,light);
+      }
 
-			&:focus {
-				outline: none;
-			}
-		}
-	}
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }

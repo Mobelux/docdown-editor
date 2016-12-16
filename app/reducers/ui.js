@@ -1,13 +1,14 @@
 /* global document */
 import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
-import { SIDEBAR_TOGGLE, PANE_TOGGLE, PANE_RESIZE, SIDEBAR_RESIZE } from '../actions/ui';
+import { SIDEBAR_TOGGLE, PANE_TOGGLE, COUNT_TOGGLE, PANE_RESIZE, SIDEBAR_RESIZE } from '../actions/ui';
 import { FOLDER_OPEN } from '../actions/files';
 
 
 const initialState = Map({
   sidebarVisible: false,
   paneVisible: true,
+  countVisible: true,
   paneSize: (document.documentElement.clientWidth / 2),
   sidebarSize: 250
 });
@@ -24,8 +25,9 @@ const uiReducer = handleActions({
     }
     return state.merge({ sidebarVisible, paneSize });
   },
-  [FOLDER_OPEN]: state => (state.set('sidebarVisible', true)),
   [PANE_TOGGLE]: state => (state.set('paneVisible', !state.get('paneVisible'))),
+  [COUNT_TOGGLE]: state => (state.set('countVisible', !state.get('countVisible'))),
+  [FOLDER_OPEN]: state => (state.set('sidebarVisible', true)),
   [PANE_RESIZE]: (state, { payload }) => (state.set('paneSize', payload)),
   [SIDEBAR_RESIZE]: (state, { payload }) => (state.set('sidebarSize', payload))
 }, initialState);
