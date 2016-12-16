@@ -1,6 +1,6 @@
 import Remarkable from 'remarkable';
 import { include, links, media, noteBlocks, sequence } from 'remarkable-docdown';
-import hljs from 'highlight.js';
+import hljs from './highlight';
 
 function svgPath(name) {
   return `./svgs/${name}.svg`;
