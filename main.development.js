@@ -1,7 +1,7 @@
 import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
 import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './app/actions/files';
 import { findText, replaceText, replaceAllText } from './app/actions/text';
-import { toggleSidebar, togglePane } from './app/actions/ui';
+import { toggleSidebar, togglePane, toggleCount } from './app/actions/ui';
 
 let menu;
 let template;
@@ -291,6 +291,11 @@ const launchApp = async () => {
           mainWindow.webContents.send('redux', togglePane());
         }
       }, {
+        label: 'Toggle Character Count',
+        click() {
+          mainWindow.webContents.send('redux', toggleCount());
+        }
+      }, {
         label: 'Toggle Developer Tools',
         accelerator: 'Alt+Command+I',
         click() {
@@ -305,6 +310,11 @@ const launchApp = async () => {
         label: 'Toggle Preview',
         click() {
           mainWindow.webContents.send('redux', togglePane());
+        }
+      }, {
+        label: 'Toggle Character Count',
+        click() {
+          mainWindow.webContents.send('redux', toggleCount());
         }
       }]
     }, {
@@ -418,6 +428,11 @@ const launchApp = async () => {
         label: 'Toggle &Preview',
         click() {
           mainWindow.webContents.send('redux', togglePane());
+        }
+      }, {
+        label: 'Toggle &Character Count',
+        click() {
+          mainWindow.webContents.send('redux', toggleCount());
         }
       }]
     }, {

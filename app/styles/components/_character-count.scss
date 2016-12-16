@@ -1,0 +1,22 @@
+.character-count {
+  height: $status-height;
+  padding: 0.5em;
+  font-size: 0.75em;
+  text-align: center;
+}
+
+.panel {
+  height: calc(100% - #{$tab-height});
+  overflow: scroll;
+  &--status {
+    height: calc(100% - #{$tab-height} - #{$status-height});
+  }
+}
+
+.status-bar {
+  border-top: black 1px solid;
+  height: $status-height;
+  z-index: 1;
+  color: color(grey,base);
+  background: color(black,base);
+}

@@ -6,6 +6,7 @@
 @import 'global/fonts';
 
 // Utils
+@import 'utils/variables';
 @import 'utils/colors';
 @import 'utils/base';
 @import 'utils/typography';
@@ -20,4 +21,5 @@
 @import 'components/sidebar';
 @import 'components/tabs';
 @import 'components/icons';
+@import 'components/character-count';
 @import 'components/replacer';

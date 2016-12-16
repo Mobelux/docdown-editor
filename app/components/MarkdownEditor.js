@@ -127,7 +127,7 @@ class MarkdownEditor extends React.Component {
   render() {
     const { editorState } = this.state;
     return (
-      <pre className="language-markdown vh-100" onClick={this.focusEditor}>
+      <pre className="language-markdown h-100" onClick={this.focusEditor}>
         <Editor
           ref={(e) => { this.editor = e; }}
           editorState={editorState}
