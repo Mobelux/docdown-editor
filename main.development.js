@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
 import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './app/actions/files';
-import { findText, replaceText, replaceAllText } from './app/actions/text';
+import { findText, replaceText, replaceAllText, clearText } from './app/actions/text';
 import { toggleSidebar, togglePane, toggleCount } from './app/actions/ui';
 
 let menu;
@@ -249,6 +249,7 @@ const launchApp = async () => {
           dialogWindow.loadURL(`file://${__dirname}/app/replacer.html`);
           dialogWindow.on('closed', () => {
             dialogWindow = null;
+            mainWindow.webContents.send('redux', clearText());
           });
 
           if (process.env.NODE_ENV === 'development') {

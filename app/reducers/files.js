@@ -102,7 +102,7 @@ const filesReducer = handleActions({
     file = file.merge({
       id,
       contents: text || '',
-      changed: true
+      changed: (file.get('changed') || file.get('contents') !== text)
     });
     return state.setIn(['files', id], file);
   },

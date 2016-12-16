@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Editor, EditorState, RichUtils, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
 import CodeUtils from 'draft-js-code';
 import '../utils/prism-docdown';
@@ -17,6 +18,7 @@ class MarkdownEditor extends React.Component {
   static propTypes = {
     file: PropTypes.string,
     text: PropTypes.string,
+    selection: ImmutablePropTypes.map,
     handleUpdate: PropTypes.func
   }
 
@@ -28,7 +30,11 @@ class MarkdownEditor extends React.Component {
     this.handleReturn = ::this.handleReturn;
     this.handleTab = ::this.handleTab;
     this.focusEditor = ::this.focusEditor;
-    this.state = { editorState: EditorState.createEmpty(decorator) };
+    const editorState = EditorState.createEmpty(decorator);
+    this.state = {
+      editorState,
+      selectionState: editorState.getSelection()
+    };
   }
 
   componentDidMount() {
@@ -39,14 +45,29 @@ class MarkdownEditor extends React.Component {
     if (nextProps.file !== this.props.file) {
       this.setInitialText(nextProps.text);
     }
+    if (nextProps.selection !== this.props.selection) {
+      this.setSelection(nextProps.selection);
+      if (nextProps.selection.get('update')) {
+        this.updateText(nextProps.text);
+      }
+    }
   }
 
   onChange(editorState) {
-    const text = editorState.getCurrentContent().getPlainText();
+    let { selectionState } = this.state;
+    const contentState = editorState.getCurrentContent();
+    if (selectionState !== editorState.getSelection()) {
+      selectionState = editorState.getSelection();
+    }
+    // const blockMap = contentState.getBlockMap();
+    const text = contentState.getPlainText();
     if (this.props.text !== text) {
       this.props.handleUpdate(text);
     }
-    this.setState({ editorState });
+    this.setState({
+      editorState,
+      selectionState
+    });
   }
 
   setInitialText(text) {
@@ -59,8 +80,46 @@ class MarkdownEditor extends React.Component {
     };
 
     const contentState = convertFromRaw(initialContent);
+    const editorState = EditorState.createWithContent(contentState, decorator);
+    this.setState({
+      editorState,
+      selectionState: editorState.getSelection()
+    });
+  }
 
-    this.setState({ editorState: EditorState.createWithContent(contentState, decorator) });
+  setSelection(selection) {
+    const { text } = this.props;
+    const find = selection.get('find');
+    // const replace = selection.get('replace');
+    // const count = selection.get('count');
+    let { selectionState } = this.state;
+    const start = selectionState.getStartOffset();
+    const end = selectionState.getEndOffset();
+    const from = Math.max.apply(Math, [start, end]);
+    const next = text.indexOf(find, from);
+    if (next > -1) {
+      selectionState = selectionState.merge({ anchorOffset: next, focusOffset: next + find.length, isBackward: false });
+    }
+    this.setState({
+      selectionState
+    });
+  }
+
+  updateText(text) {
+    let { editorState } = this.state;
+
+    const updatedContent = {
+      entityMap: {},
+      blocks: [{
+        type: 'code-block',
+        text
+      }]
+    };
+    const contentState = convertFromRaw(updatedContent);
+    editorState = EditorState.push(editorState, contentState, 'change-block-data');
+    this.setState({
+      editorState
+    });
   }
 
   handleKeyCommand(command) {
@@ -125,7 +184,9 @@ class MarkdownEditor extends React.Component {
   }
 
   render() {
-    const { editorState } = this.state;
+    const { selectionState } = this.state;
+    let { editorState } = this.state;
+    editorState = EditorState.forceSelection(editorState, selectionState);
     return (
       <pre className="language-markdown h-100" onClick={this.focusEditor}>
         <Editor
