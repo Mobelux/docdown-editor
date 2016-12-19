@@ -3,26 +3,22 @@ import React, { PropTypes } from 'react';
 class MarkdownRendered extends React.PureComponent {
   static propTypes = {
     content: PropTypes.string,
-    visible: PropTypes.bool,
-    toggle: PropTypes.func
+    visible: PropTypes.bool
   }
 
   render() {
-    const { visible, toggle, content } = this.props;
+    const { visible, content } = this.props;
 
-    if (visible) {
-      return (
-        <div>
-          <a className="pane-close" href="#toggle" onClick={toggle}>X</a>
-          <div className="vh-100 overflow-auto rendered pa4" dangerouslySetInnerHTML={{ __html: content }} />
-        </div>
-      );
+    if (!visible) {
+      return null;
     }
+
     return (
-      <div className="arrow arrow-left" onClick={toggle} />
+      <div>
+        <div className="vh-100 overflow-auto rendered pa4" dangerouslySetInnerHTML={{ __html: content }} />
+      </div>
     );
   }
 }
-
 
 export default MarkdownRendered;

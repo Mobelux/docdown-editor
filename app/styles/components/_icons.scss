@@ -4,6 +4,16 @@
   width: 12px;
 }
 
+.icon-right,
+.icon-left {
+  height: 16px;
+  width: 16px;
+}
+
 svg {
   fill: white;
+  symbol#icon-right,
+  symbol#icon-left {
+    fill: color(grey,base);
+  }
 }

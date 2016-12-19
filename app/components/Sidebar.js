@@ -3,23 +3,18 @@ import FileTree from '../containers/FileTree';
 
 class Sidebar extends React.Component {
   static propTypes = {
-    visible: PropTypes.bool,
-    toggle: PropTypes.func
+    visible: PropTypes.bool
   }
 
   render() {
-    const { visible, toggle } = this.props;
-
-    if (visible) {
-      return (
-        <div className="sidebar">
-          <a href="#toggle" onClick={toggle}>x</a>
-          <FileTree />
-        </div>
-      );
+    if (!this.props.visible) {
+      return null;
     }
+
     return (
-      <div className="arrow arrow-right" onClick={toggle} />
+      <div className="sidebar">
+        <FileTree />
+      </div>
     );
   }
 }
