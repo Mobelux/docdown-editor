@@ -13,22 +13,8 @@ class Tabs extends React.PureComponent {
     currentFile: PropTypes.string
   }
 
-  constructor(props) {
-    super(props);
-    this.handleTabClick = ::this.handleTabClick;
-    this.handleRemoveTab = ::this.handleRemoveTab;
-  }
-
-  handleTabClick(id) {
-    this.props.handleFile(id);
-  }
-
-  handleRemoveTab(id) {
-    this.props.handleRemoveFile(id);
-  }
-
   render() {
-    const { files, currentFile } = this.props;
+    const { files, currentFile, handleFile, handleRemoveFile } = this.props;
 
     if (!files) {
       return null;
@@ -40,8 +26,8 @@ class Tabs extends React.PureComponent {
         id={f.get('id')}
         name={f.get('name')}
         changed={f.get('changed')}
-        onTabClick={this.handleTabClick}
-        onRemoveTab={this.handleRemoveTab}
+        onTabClick={handleFile}
+        onRemoveTab={handleRemoveFile}
         isActive={f.get('id') === currentFile}
       />
     ).valueSeq();
