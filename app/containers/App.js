@@ -45,7 +45,8 @@ class App extends React.Component {
     return (
       <SplitPane
         ref={(n) => { this.sidebar = n; }}
-        className="h-100 v-100"
+        className="vh-100"
+        paneStyle={{ height: '100vh' }}
         split="vertical"
         minSize={0}
         defaultSize={this.sidebarSize()}
@@ -58,7 +59,7 @@ class App extends React.Component {
           <Tabs />
           <SplitPane
             ref={(n) => { this.pane = n; }}
-            className="h-100 v-100"
+            className="h-100"
             split="vertical"
             minSize={0}
             defaultSize={this.paneSize()}
