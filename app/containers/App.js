@@ -26,6 +26,10 @@ class App extends React.Component {
   componentDidUpdate() {
     this.sidebar.setSize({ ...this.sidebar.props, size: this.sidebarSize() }, this.sidebar.state);
     this.pane.setSize({ ...this.pane.props, size: this.paneSize() }, this.pane.state);
+    const { currentFile, fileActions } = this.props;
+    if (!currentFile.get('id')) {
+      fileActions.newFile();
+    }
   }
 
   sidebarSize() {
