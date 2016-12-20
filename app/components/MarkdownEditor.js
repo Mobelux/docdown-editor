@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Editor, EditorState, RichUtils, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import CodeUtils from 'draft-js-code';
