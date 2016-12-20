@@ -7,7 +7,7 @@ import {
   FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT,
   FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_SELECTION, FILE_DISCARD
 } from '../actions/files';
-import { REPLACER_REPLACE, REPLACER_REPLACE_ALL } from '../actions/replacer';
+import { REPLACER_FIND, REPLACER_REPLACE, REPLACER_REPLACE_ALL } from '../actions/replacer';
 
 const initialState = Map({
   folder: null,
@@ -162,12 +162,41 @@ const filesReducer = handleActions({
     file = file.set('changed', false);
     return state.setIn(['files', id], file).set('paths', paths);
   },
+  [REPLACER_FIND]: (state, { payload }) => {
+    const { find } = payload;
+    const id = state.get('currentFile');
+    let file = state.getIn(['files', id], Map({}));
+    const contents = file.get('contents');
+    const anchor = file.get('anchor');
+    const focus = file.get('focus');
+    const from = Math.max.apply(Math, [anchor, focus]);
+    const next = contents.indexOf(find, from);
+    if (next === -1) {
+      return state;
+    }
+    file = file.merge({
+      anchor: next,
+      focus: next + find.length
+    });
+    return state.setIn(['files', id], file);
+  },
   [REPLACER_REPLACE]: (state, { payload }) => {
     const { find, replace } = payload;
     const id = state.get('currentFile');
     let file = state.getIn(['files', id], Map({}));
+    let contents = file.get('contents');
+    const anchor = file.get('anchor');
+    const focus = file.get('focus');
+    const from = Math.max.apply(Math, [anchor, focus]);
+    const next = contents.indexOf(find, from);
+    if (next === -1) {
+      return state;
+    }
+    contents = contents.slice(0, next) + replace + contents.slice(next + find.length);
     file = file.merge({
-      contents: file.get('contents').replace(find, replace),
+      contents,
+      anchor: next,
+      focus: next + replace.length,
       changed: true
     });
     return state.setIn(['files', id], file);

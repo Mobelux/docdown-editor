@@ -43,7 +43,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { currentFile, ui, fileActions, uiActions } = this.props;
+    const { currentFile, replacer, ui, fileActions, uiActions } = this.props;
     const raw = currentFile.get('raw', '');
     const rendered = currentFile.get('rendered', '');
 
@@ -77,6 +77,7 @@ class App extends React.Component {
               <Panel className={ui.get('countVisible') ? 'panel--status' : ''}>
                 <MarkdownEditor
                   file={currentFile}
+                  replacer={replacer}
                   handleUpdate={fileActions.updateFile}
                   handleSelection={fileActions.updateSelection}
                 />
@@ -103,6 +104,7 @@ class App extends React.Component {
 
 App.propTypes = {
   currentFile: ImmutablePropTypes.map,
+  replacer: ImmutablePropTypes.map,
   ui: ImmutablePropTypes.map,
   fileActions: PropTypes.shape({
     newFile: PropTypes.func,
@@ -117,6 +119,7 @@ App.propTypes = {
 };
 const mapStateToProps = state => ({
   currentFile: getCurrentFile(state),
+  replacer: state.replacer,
   ui: state.ui
 });
 const mapDispatchToProps = dispatch => ({

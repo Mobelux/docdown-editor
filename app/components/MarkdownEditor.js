@@ -14,9 +14,40 @@ const options = {
 };
 const decorator = new PrismDecorator(options);
 
+function isVisible(container, el) {
+  const viewport = {
+    top: container.scrollTop,
+    left: container.scrollLeft
+  };
+  viewport.right = viewport.left + container.clientWidth;
+  viewport.bottom = viewport.top + container.clientHeight;
+
+  const bounds = el.getBoundingClientRect();
+
+  const visible = !(
+    viewport.right < bounds.left ||
+    viewport.left > bounds.right ||
+    viewport.bottom < bounds.top ||
+    viewport.top > bounds.bottom
+  );
+
+  return visible;
+}
+
+function scrollSelectionIntoView(container) {
+  const selection = window.getSelection();
+  if (selection.baseNode) {
+    const el = selection.baseNode.parentElement;
+    if (!isVisible(container, el)) {
+      el.scrollIntoView(false);
+    }
+  }
+}
+
 class MarkdownEditor extends React.Component {
   static propTypes = {
     file: ImmutablePropTypes.map,
+    replacer: ImmutablePropTypes.map,
     handleUpdate: PropTypes.func,
     handleSelection: PropTypes.func
   }
@@ -35,8 +66,12 @@ class MarkdownEditor extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.setInitialText(this.props.file);
+  }
+
+  componentDidMount() {
+    scrollSelectionIntoView(this.container);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,6 +80,13 @@ class MarkdownEditor extends React.Component {
     if (path !== originalPath) {
       this.setInitialText(nextProps.file);
     }
+    if (nextProps.replacer !== this.props.replacer) {
+      this.updateText(nextProps.file);
+    }
+  }
+
+  componentDidUpdate() {
+    scrollSelectionIntoView(this.container);
   }
 
   onChange(editorState) {
@@ -89,7 +131,8 @@ class MarkdownEditor extends React.Component {
     });
   }
 
-  updateText(text) {
+  updateText(file) {
+    const text = file.get('raw');
     let { editorState } = this.state;
 
     const updatedContent = {
@@ -101,6 +144,12 @@ class MarkdownEditor extends React.Component {
     };
     const contentState = convertFromRaw(updatedContent);
     editorState = EditorState.push(editorState, contentState, 'change-block-data');
+    let selectionState = editorState.getSelection();
+    selectionState = selectionState.merge({
+      anchorOffset: file.get('anchor'),
+      focusOffset: file.get('focus')
+    });
+    editorState = EditorState.forceSelection(editorState, selectionState);
     this.setState({
       editorState
     });
@@ -170,7 +219,11 @@ class MarkdownEditor extends React.Component {
   render() {
     const { editorState } = this.state;
     return (
-      <pre className="language-markdown h-100" onClick={this.focusEditor}>
+      <pre
+        ref={(e) => { this.container = e; }}
+        className="language-markdown h-100"
+        onClick={this.focusEditor}
+      >
         <Editor
           ref={(e) => { this.editor = e; }}
           editorState={editorState}
