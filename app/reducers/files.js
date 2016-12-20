@@ -15,6 +15,11 @@ const initialState = Map({
   currentFile: null
 });
 
+function getCurrentFile(state) {
+  const id = state.get('currentFile');
+  return state.getIn(['files', id]);
+}
+
 const filesReducer = handleActions({
   [FOLDER_OPEN]: (state, { payload }) => {
     const { path } = payload;
@@ -25,8 +30,8 @@ const filesReducer = handleActions({
     let files = state.get('files');
     const file = Map({
       id,
-      name: '',
-      path: '',
+      name: null,
+      path: null,
       contents: '',
       changed: false
     });
@@ -37,16 +42,28 @@ const filesReducer = handleActions({
     const { path } = payload;
     const pieces = path.split('/');
     const name = pieces[pieces.length - 1];
-    const id = state.getIn(['paths', path], uuid());
     let paths = state.get('paths');
     let files = state.get('files');
-    const file = state.getIn(['files', id], Map({
-      id,
-      name,
-      path,
-      contents: fs.readFileSync(path, 'utf8'),
-      changed: false
-    }));
+    let file = getCurrentFile(state);
+    let id;
+    if (files.size === 1 && !file.get('path') && file.get('contents') === '') {
+      file = file.merge({
+        name,
+        path,
+        contents: fs.readFileSync(path, 'utf8'),
+        changed: false
+      });
+      id = file.get('id');
+    } else {
+      id = state.getIn(['paths', path], uuid());
+      file = state.getIn(['files', id], Map({
+        id,
+        name,
+        path,
+        contents: fs.readFileSync(path, 'utf8'),
+        changed: false
+      }));
+    }
     paths = paths.set(path, id);
     files = files.set(id, file);
     return state.merge({ currentFile: id, files, paths });

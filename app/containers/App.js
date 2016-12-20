@@ -70,7 +70,7 @@ class App extends React.Component {
           >
             <div className="flex flex-column h-100">
               <Panel className={ui.get('countVisible') ? 'panel--status' : ''}>
-                <MarkdownEditor file={currentFile.get('id')} text={raw} handleUpdate={fileActions.updateFile} />
+                <MarkdownEditor file={currentFile} handleUpdate={fileActions.updateFile} />
               </Panel>
               <StatusBar visible={ui.get('countVisible')} className="flex justify-between">
                 <a href="#files" onClick={uiActions.toggleSidebar}><Icon name={ui.get('sidebarVisible') ? 'left' : 'right'} /></a>
