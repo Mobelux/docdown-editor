@@ -3,15 +3,16 @@ import ImmutablePropTypes from 'react-immutable-proptypes';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import SplitPane from 'react-split-pane';
+import Tabs from '../containers/Tabs';
 import Panel from '../components/Panel';
 import MarkdownEditor from '../components/MarkdownEditor';
 import MarkdownRendered from '../components/MarkdownRendered';
 import CharacterCount from '../components/CharacterCount';
 import StatusBar from '../components/StatusBar';
+import Sidebar from '../components/Sidebar';
+import Icon from '../components/Icon';
 import * as fileActionCreators from '../actions/files';
 import * as uiActionCreators from '../actions/ui';
-import Sidebar from '../components/Sidebar';
-import Tabs from '../containers/Tabs';
 import { getCurrentFile } from '../selectors';
 
 class App extends React.Component {
@@ -54,7 +55,7 @@ class App extends React.Component {
         allowResize={ui.get('sidebarVisible')}
         onChange={uiActions.resizeSidebar}
       >
-        <Sidebar visible={ui.get('sidebarVisible')} toggle={uiActions.toggleSidebar} />
+        <Sidebar visible={ui.get('sidebarVisible')} />
         <div className="split-pane-wrapper">
           <Tabs />
           <SplitPane
@@ -70,19 +71,20 @@ class App extends React.Component {
           >
             <div className="flex flex-column h-100">
               <Panel className={ui.get('countVisible') ? 'panel--status' : ''}>
-                <MarkdownEditor
-                  file={currentFile.get('id')}
-                  text={raw}
-                  selection={text}
-                  handleUpdate={fileActions.updateFile}
-                />
+                <MarkdownEditor file={currentFile} selection={text} handleUpdate={fileActions.updateFile} />
               </Panel>
-              <StatusBar visible={ui.get('countVisible')} className="">
+              <StatusBar visible={ui.get('countVisible')} className="flex justify-between">
+                <a href="#files" onClick={uiActions.toggleSidebar}>
+                  <Icon name={ui.get('sidebarVisible') ? 'left' : 'right'} />
+                </a>
                 <CharacterCount text={raw} />
+                <a href="#preview" onClick={uiActions.togglePane}>
+                  <Icon name={ui.get('paneVisible') ? 'right' : 'left'} />
+                </a>
               </StatusBar>
             </div>
             <Panel>
-              <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} toggle={uiActions.togglePane} />
+              <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} />
             </Panel>
           </SplitPane>
         </div>
