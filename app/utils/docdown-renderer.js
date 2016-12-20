@@ -10,7 +10,7 @@ function staticPath(path) {
   return `https://smartdevicelink.com/static/${path}`;
 }
 
-const md = new Remarkable({
+const md = new Remarkable('full', {
   html: true,        // Enable HTML tags in source
   breaks: true,        // Convert '\n' in paragraphs into <br>
   linkTarget: '_blank',
