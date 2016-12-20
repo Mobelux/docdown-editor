@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { Editor, EditorState, RichUtils, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import CodeUtils from 'draft-js-code';
 import '../utils/prism-docdown';
 import PrismDecorator from '../utils/PrismDecorator';
@@ -15,8 +16,7 @@ const decorator = new PrismDecorator(options);
 
 class MarkdownEditor extends React.Component {
   static propTypes = {
-    file: PropTypes.string,
-    text: PropTypes.string,
+    file: ImmutablePropTypes.map,
     handleUpdate: PropTypes.func
   }
 
@@ -32,18 +32,21 @@ class MarkdownEditor extends React.Component {
   }
 
   componentDidMount() {
-    this.setInitialText(this.props.text);
+    const text = this.props.file.get('raw');
+    this.setInitialText(text);
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.file !== this.props.file) {
-      this.setInitialText(nextProps.text);
+      const text = nextProps.file.get('raw');
+      this.setInitialText(text);
     }
   }
 
   onChange(editorState) {
+    const originalText = this.props.file.get('raw');
     const text = editorState.getCurrentContent().getPlainText();
-    if (this.props.text !== text) {
+    if (originalText !== text) {
       this.props.handleUpdate(text);
     }
     this.setState({ editorState });
