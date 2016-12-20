@@ -7,7 +7,7 @@ import {
   FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT,
   FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_SELECTION, FILE_DISCARD
 } from '../actions/files';
-import { TEXT_REPLACE, TEXT_REPLACE_ALL } from '../actions/text';
+import { REPLACER_REPLACE, REPLACER_REPLACE_ALL } from '../actions/replacer';
 
 const initialState = Map({
   folder: null,
@@ -162,7 +162,7 @@ const filesReducer = handleActions({
     file = file.set('changed', false);
     return state.setIn(['files', id], file).set('paths', paths);
   },
-  [TEXT_REPLACE]: (state, { payload }) => {
+  [REPLACER_REPLACE]: (state, { payload }) => {
     const { find, replace } = payload;
     const id = state.get('currentFile');
     let file = state.getIn(['files', id], Map({}));
@@ -172,7 +172,7 @@ const filesReducer = handleActions({
     });
     return state.setIn(['files', id], file);
   },
-  [TEXT_REPLACE_ALL]: (state, { payload }) => {
+  [REPLACER_REPLACE_ALL]: (state, { payload }) => {
     const { find, replace } = payload;
     const id = state.get('currentFile');
     let file = state.getIn(['files', id], Map({}));

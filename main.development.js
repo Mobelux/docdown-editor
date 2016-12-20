@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
 import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './app/actions/files';
-import { findText, replaceText, replaceAllText, clearText } from './app/actions/text';
+import { findText, replaceText, replaceAllText, clearText } from './app/actions/replacer';
 import { toggleSidebar, togglePane, toggleCount } from './app/actions/ui';
 
 let menu;
