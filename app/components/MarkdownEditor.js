@@ -17,8 +17,8 @@ const decorator = new PrismDecorator(options);
 class MarkdownEditor extends React.Component {
   static propTypes = {
     file: ImmutablePropTypes.map,
-    selection: ImmutablePropTypes.map,
-    handleUpdate: PropTypes.func
+    handleUpdate: PropTypes.func,
+    handleSelection: PropTypes.func
   }
 
   constructor(props) {
@@ -31,49 +31,43 @@ class MarkdownEditor extends React.Component {
     this.focusEditor = ::this.focusEditor;
     const editorState = EditorState.createEmpty(decorator);
     this.state = {
-      editorState,
-      selectionState: editorState.getSelection()
+      editorState
     };
   }
 
   componentDidMount() {
-    const text = this.props.file.get('raw');
-    this.setInitialText(text);
+    this.setInitialText(this.props.file);
   }
 
   componentWillReceiveProps(nextProps) {
     const originalPath = this.props.file.get('path');
     const path = nextProps.file.get('path');
     if (path !== originalPath) {
-      const text = nextProps.file.get('raw');
-      this.setInitialText(text);
-    }
-    if (nextProps.selection !== this.props.selection) {
-      this.setSelection(nextProps.selection);
-      if (nextProps.selection.get('update')) {
-        this.updateText(nextProps.text);
-      }
+      this.setInitialText(nextProps.file);
     }
   }
 
   onChange(editorState) {
-    let { selectionState } = this.state;
+    const { file } = this.props;
     const contentState = editorState.getCurrentContent();
-    if (selectionState !== editorState.getSelection()) {
-      selectionState = editorState.getSelection();
-    }
-    const originalText = this.props.file.get('raw');
+    const originalText = file.get('raw');
     const text = contentState.getPlainText();
     if (originalText !== text) {
       this.props.handleUpdate(text);
     }
+    const anchor = file.get('anchor');
+    const focus = file.get('focus');
+    const selectionState = editorState.getSelection();
+    if (anchor !== selectionState.getAnchorOffset() || focus !== selectionState.getFocusOffset()) {
+      this.props.handleSelection(selectionState);
+    }
     this.setState({
-      editorState,
-      selectionState
+      editorState
     });
   }
 
-  setInitialText(text) {
+  setInitialText(file) {
+    const text = file.get('raw');
     const initialContent = {
       entityMap: {},
       blocks: [{
@@ -83,28 +77,15 @@ class MarkdownEditor extends React.Component {
     };
 
     const contentState = convertFromRaw(initialContent);
-    const editorState = EditorState.createWithContent(contentState, decorator);
-    this.setState({
-      editorState,
-      selectionState: editorState.getSelection()
+    let editorState = EditorState.createWithContent(contentState, decorator);
+    let selectionState = editorState.getSelection();
+    selectionState = selectionState.merge({
+      anchorOffset: file.get('anchor'),
+      focusOffset: file.get('focus')
     });
-  }
-
-  setSelection(selection) {
-    const { text } = this.props.file.get('raw');
-    const find = selection.get('find');
-    // const replace = selection.get('replace');
-    // const count = selection.get('count');
-    let { selectionState } = this.state;
-    const start = selectionState.getStartOffset();
-    const end = selectionState.getEndOffset();
-    const from = Math.max.apply(Math, [start, end]);
-    const next = text.indexOf(find, from);
-    if (next > -1) {
-      selectionState = selectionState.merge({ anchorOffset: next, focusOffset: next + find.length, isBackward: false });
-    }
+    editorState = EditorState.forceSelection(editorState, selectionState);
     this.setState({
-      selectionState
+      editorState
     });
   }
 
@@ -126,7 +107,7 @@ class MarkdownEditor extends React.Component {
   }
 
   handleKeyCommand(command) {
-    const editorState = this.state.editorState;
+    const { editorState } = this.state;
     let newState;
 
     if (CodeUtils.hasSelectionInBlock(editorState)) {
@@ -145,7 +126,7 @@ class MarkdownEditor extends React.Component {
   }
 
   keyBindingFn(e) {
-    const editorState = this.state.editorState;
+    const { editorState } = this.state;
     let command;
 
     if (CodeUtils.hasSelectionInBlock(editorState)) {
@@ -159,7 +140,7 @@ class MarkdownEditor extends React.Component {
   }
 
   handleReturn(e) {
-    const editorState = this.state.editorState;
+    const { editorState } = this.state;
     if (!CodeUtils.hasSelectionInBlock(editorState)) {
       return;
     }
@@ -171,7 +152,7 @@ class MarkdownEditor extends React.Component {
 
 
   handleTab(e) {
-    const editorState = this.state.editorState;
+    const { editorState } = this.state;
 
     if (!CodeUtils.hasSelectionInBlock(editorState)) {
       return;
@@ -187,9 +168,7 @@ class MarkdownEditor extends React.Component {
   }
 
   render() {
-    const { selectionState } = this.state;
-    let { editorState } = this.state;
-    editorState = EditorState.forceSelection(editorState, selectionState);
+    const { editorState } = this.state;
     return (
       <pre className="language-markdown h-100" onClick={this.focusEditor}>
         <Editor

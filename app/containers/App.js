@@ -43,7 +43,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { currentFile, text, ui, fileActions, uiActions } = this.props;
+    const { currentFile, ui, fileActions, uiActions } = this.props;
     const raw = currentFile.get('raw', '');
     const rendered = currentFile.get('rendered', '');
 
@@ -75,7 +75,11 @@ class App extends React.Component {
           >
             <div className="flex flex-column h-100">
               <Panel className={ui.get('countVisible') ? 'panel--status' : ''}>
-                <MarkdownEditor file={currentFile} selection={text} handleUpdate={fileActions.updateFile} />
+                <MarkdownEditor
+                  file={currentFile}
+                  handleUpdate={fileActions.updateFile}
+                  handleSelection={fileActions.updateSelection}
+                />
               </Panel>
               <StatusBar visible={ui.get('countVisible')} className="flex justify-between">
                 <a href="#files" onClick={uiActions.toggleSidebar}>
@@ -99,7 +103,6 @@ class App extends React.Component {
 
 App.propTypes = {
   currentFile: ImmutablePropTypes.map,
-  text: ImmutablePropTypes.map,
   ui: ImmutablePropTypes.map,
   fileActions: PropTypes.shape({
     newFile: PropTypes.func,
@@ -114,7 +117,6 @@ App.propTypes = {
 };
 const mapStateToProps = state => ({
   currentFile: getCurrentFile(state),
-  text: state.text,
   ui: state.ui
 });
 const mapDispatchToProps = dispatch => ({

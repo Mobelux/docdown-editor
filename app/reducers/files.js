@@ -5,7 +5,7 @@ import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
 import {
   FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT,
-  FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_DISCARD
+  FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_SELECTION, FILE_DISCARD
 } from '../actions/files';
 import { TEXT_REPLACE, TEXT_REPLACE_ALL } from '../actions/text';
 
@@ -34,7 +34,9 @@ const filesReducer = handleActions({
       name: 'Untitled',
       path: null,
       contents: '',
-      changed: false
+      changed: false,
+      anchor: 0,
+      focus: 0
     });
     files = files.set(id, file);
     return state.merge({ currentFile: id, files });
@@ -62,7 +64,9 @@ const filesReducer = handleActions({
         name,
         path,
         contents: fs.readFileSync(path, 'utf8'),
-        changed: false
+        changed: false,
+        anchor: 0,
+        focus: 0
       }));
     }
     paths = paths.set(path, id);
@@ -117,9 +121,18 @@ const filesReducer = handleActions({
     const id = state.get('currentFile', uuid());
     let file = state.getIn(['files', id], Map({}));
     file = file.merge({
-      id,
       contents: text || '',
       changed: (file.get('changed') || file.get('contents') !== text)
+    });
+    return state.setIn(['files', id], file);
+  },
+  [FILE_SELECTION]: (state, { payload }) => {
+    const { selection } = payload;
+    const id = state.get('currentFile', uuid());
+    let file = state.getIn(['files', id], Map({}));
+    file = file.merge({
+      anchor: selection.getAnchorOffset(),
+      focus: selection.getFocusOffset()
     });
     return state.setIn(['files', id], file);
   },
@@ -151,7 +164,7 @@ const filesReducer = handleActions({
   },
   [TEXT_REPLACE]: (state, { payload }) => {
     const { find, replace } = payload;
-    const id = state.get('currentFile', uuid());
+    const id = state.get('currentFile');
     let file = state.getIn(['files', id], Map({}));
     file = file.merge({
       contents: file.get('contents').replace(find, replace),
@@ -161,7 +174,7 @@ const filesReducer = handleActions({
   },
   [TEXT_REPLACE_ALL]: (state, { payload }) => {
     const { find, replace } = payload;
-    const id = state.get('currentFile', uuid());
+    const id = state.get('currentFile');
     let file = state.getIn(['files', id], Map({}));
     file = file.merge({
       contents: file.get('contents').replace(new RegExp(find, 'g'), replace),
