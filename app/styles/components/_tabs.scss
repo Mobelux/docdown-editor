@@ -34,6 +34,20 @@
       }
     }
 
+    &.is-changed {
+      .tabs__item--close {
+        color: color(blue,dark);
+
+        &::before {
+          content: 'o';
+        }
+
+        &:hover {
+          color: color(blue,light);
+        }
+      }
+    }
+
     &--close {
       padding: 0 0 0 15px;
 
@@ -42,6 +56,10 @@
 
       background: none;
       border: none;
+
+      &::before {
+        content: 'x';
+      }
 
       &:hover {
         color: color(grey,light);

@@ -42,7 +42,9 @@ class MarkdownEditor extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.file !== this.props.file) {
+    const originalPath = this.props.file.get('path');
+    const path = nextProps.file.get('path');
+    if (path !== originalPath) {
       const text = nextProps.file.get('raw');
       this.setInitialText(text);
     }

@@ -31,7 +31,7 @@ const filesReducer = handleActions({
     let files = state.get('files');
     const file = Map({
       id,
-      name: null,
+      name: 'Untitled',
       path: null,
       contents: '',
       changed: false
