@@ -89,7 +89,7 @@ class MarkdownEditor extends React.Component {
   }
 
   setSelection(selection) {
-    const { text } = this.props;
+    const { text } = this.props.file.get('raw');
     const find = selection.get('find');
     // const replace = selection.get('replace');
     // const count = selection.get('count');
