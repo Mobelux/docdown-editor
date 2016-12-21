@@ -1,10 +1,12 @@
 import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
 import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './app/actions/files';
+import { findText, replaceText, replaceAllText, clearText } from './app/actions/replacer';
 import { toggleSidebar, togglePane, toggleCount } from './app/actions/ui';
 
 let menu;
 let template;
 let mainWindow = null;
+let dialogWindow = null;
 
 if (process.env.NODE_ENV === 'development') {
   require('electron-debug')(); // eslint-disable-line global-require
@@ -56,6 +58,40 @@ const launchApp = async () => {
     mainWindow = null;
   });
 
+  dialogWindow = new BrowserWindow({
+    parent: mainWindow,
+    show: false,
+    resizable: false,
+    width: 400,
+    height: 172
+  });
+  dialogWindow.loadURL(`file://${__dirname}/app/replacer.html`);
+
+  dialogWindow.on('close', (e) => {
+    e.preventDefault();
+    dialogWindow.hide();
+    dialogWindow.webContents.send('clear');
+    mainWindow.webContents.send('redux', clearText());
+  });
+
+  dialogWindow.on('closed', () => {
+    dialogWindow = null;
+  });
+
+  if (process.env.NODE_ENV === 'development') {
+    // dialogWindow.openDevTools();
+    dialogWindow.webContents.on('context-menu', (e, props) => {
+      const { x, y } = props;
+
+      Menu.buildFromTemplate([{
+        label: 'Inspect element',
+        click() {
+          dialogWindow.inspectElement(x, y);
+        }
+      }]).popup(dialogWindow);
+    });
+  }
+
   ipcMain.on('save-as', (e, id) => {
     dialog.showSaveDialog(mainWindow, {}, (filename) => {
       mainWindow.webContents.send('redux', saveAsFile(id, filename));
@@ -91,6 +127,18 @@ const launchApp = async () => {
         mainWindow.webContents.send('redux', discardFile(id));
       }
     });
+  });
+
+  ipcMain.on('find', (e, find) => {
+    mainWindow.webContents.send('redux', findText(find));
+  });
+
+  ipcMain.on('replace', (e, find, replace) => {
+    mainWindow.webContents.send('redux', replaceText(find, replace));
+  });
+
+  ipcMain.on('replace-all', (e, find, replace) => {
+    mainWindow.webContents.send('redux', replaceAllText(find, replace));
   });
 
   if (process.env.NODE_ENV === 'development') {
@@ -219,6 +267,15 @@ const launchApp = async () => {
         label: 'Select All',
         accelerator: 'Command+A',
         selector: 'selectAll:'
+      }, {
+        type: 'separator'
+      }, {
+        label: 'Find and Replace',
+        accelerator: 'Command+F',
+        click() {
+          dialogWindow.show();
+          dialogWindow.webContents.send('focus');
+        }
       }, {
         type: 'separator'
       }]

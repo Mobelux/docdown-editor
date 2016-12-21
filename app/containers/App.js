@@ -43,14 +43,15 @@ class App extends React.Component {
   }
 
   render() {
-    const { currentFile, ui, fileActions, uiActions } = this.props;
+    const { currentFile, replacer, ui, fileActions, uiActions } = this.props;
     const raw = currentFile.get('raw', '');
     const rendered = currentFile.get('rendered', '');
 
     return (
       <SplitPane
         ref={(n) => { this.sidebar = n; }}
-        className="h-100 v-100"
+        className="vh-100"
+        paneStyle={{ height: '100vh' }}
         split="vertical"
         minSize={0}
         defaultSize={this.sidebarSize()}
@@ -63,7 +64,7 @@ class App extends React.Component {
           <Tabs />
           <SplitPane
             ref={(n) => { this.pane = n; }}
-            className="h-100 v-100"
+            className="h-100"
             split="vertical"
             minSize={0}
             defaultSize={this.paneSize()}
@@ -74,12 +75,21 @@ class App extends React.Component {
           >
             <div className="flex flex-column h-100">
               <Panel className={ui.get('countVisible') ? 'panel--status' : ''}>
-                <MarkdownEditor file={currentFile} handleUpdate={fileActions.updateFile} />
+                <MarkdownEditor
+                  file={currentFile}
+                  replacer={replacer}
+                  handleUpdate={fileActions.updateFile}
+                  handleSelection={fileActions.updateSelection}
+                />
               </Panel>
               <StatusBar visible={ui.get('countVisible')} className="flex justify-between">
-                <a href="#files" onClick={uiActions.toggleSidebar}><Icon name={ui.get('sidebarVisible') ? 'left' : 'right'} /></a>
+                <a href="#files" onClick={uiActions.toggleSidebar}>
+                  <Icon name={ui.get('sidebarVisible') ? 'left' : 'right'} />
+                </a>
                 <CharacterCount text={raw} />
-                <a href="#preview" onClick={uiActions.togglePane}><Icon name={ui.get('paneVisible') ? 'right' : 'left'} /></a>
+                <a href="#preview" onClick={uiActions.togglePane}>
+                  <Icon name={ui.get('paneVisible') ? 'right' : 'left'} />
+                </a>
               </StatusBar>
             </div>
             <Panel>
@@ -94,6 +104,7 @@ class App extends React.Component {
 
 App.propTypes = {
   currentFile: ImmutablePropTypes.map,
+  replacer: ImmutablePropTypes.map,
   ui: ImmutablePropTypes.map,
   fileActions: PropTypes.shape({
     newFile: PropTypes.func,
@@ -108,6 +119,7 @@ App.propTypes = {
 };
 const mapStateToProps = state => ({
   currentFile: getCurrentFile(state),
+  replacer: state.replacer,
   ui: state.ui
 });
 const mapDispatchToProps = dispatch => ({

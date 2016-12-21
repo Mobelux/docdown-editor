@@ -7,6 +7,7 @@
     "node": true
   },
   "rules": {
+    "max-len": [2, 120, 4],
     "comma-dangle": [2, "never"],
     "new-cap": [0],
     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],

@@ -5,8 +5,9 @@ import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
 import {
   FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT,
-  FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_DISCARD
+  FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_SELECTION, FILE_DISCARD
 } from '../actions/files';
+import { REPLACER_FIND, REPLACER_REPLACE, REPLACER_REPLACE_ALL } from '../actions/replacer';
 
 const initialState = Map({
   folder: null,
@@ -33,7 +34,9 @@ const filesReducer = handleActions({
       name: 'Untitled',
       path: null,
       contents: '',
-      changed: false
+      changed: false,
+      anchor: 0,
+      focus: 0
     });
     files = files.set(id, file);
     return state.merge({ currentFile: id, files });
@@ -61,7 +64,9 @@ const filesReducer = handleActions({
         name,
         path,
         contents: fs.readFileSync(path, 'utf8'),
-        changed: false
+        changed: false,
+        anchor: 0,
+        focus: 0
       }));
     }
     paths = paths.set(path, id);
@@ -116,9 +121,18 @@ const filesReducer = handleActions({
     const id = state.get('currentFile', uuid());
     let file = state.getIn(['files', id], Map({}));
     file = file.merge({
-      id,
       contents: text || '',
-      changed: true
+      changed: (file.get('changed') || file.get('contents') !== text)
+    });
+    return state.setIn(['files', id], file);
+  },
+  [FILE_SELECTION]: (state, { payload }) => {
+    const { selection } = payload;
+    const id = state.get('currentFile', uuid());
+    let file = state.getIn(['files', id], Map({}));
+    file = file.merge({
+      anchor: selection.getAnchorOffset(),
+      focus: selection.getFocusOffset()
     });
     return state.setIn(['files', id], file);
   },
@@ -147,6 +161,55 @@ const filesReducer = handleActions({
     fs.writeFileSync(path, file.get('contents'));
     file = file.set('changed', false);
     return state.setIn(['files', id], file).set('paths', paths);
+  },
+  [REPLACER_FIND]: (state, { payload }) => {
+    const { find } = payload;
+    const id = state.get('currentFile');
+    let file = state.getIn(['files', id], Map({}));
+    const contents = file.get('contents');
+    const anchor = file.get('anchor');
+    const focus = file.get('focus');
+    const from = Math.max.apply(Math, [anchor, focus]);
+    const next = contents.indexOf(find, from);
+    if (next === -1) {
+      return state;
+    }
+    file = file.merge({
+      anchor: next,
+      focus: next + find.length
+    });
+    return state.setIn(['files', id], file);
+  },
+  [REPLACER_REPLACE]: (state, { payload }) => {
+    const { find, replace } = payload;
+    const id = state.get('currentFile');
+    let file = state.getIn(['files', id], Map({}));
+    let contents = file.get('contents');
+    const anchor = file.get('anchor');
+    const focus = file.get('focus');
+    const from = Math.max.apply(Math, [anchor, focus]);
+    const next = contents.indexOf(find, from);
+    if (next === -1) {
+      return state;
+    }
+    contents = contents.slice(0, next) + replace + contents.slice(next + find.length);
+    file = file.merge({
+      contents,
+      anchor: next,
+      focus: next + replace.length,
+      changed: true
+    });
+    return state.setIn(['files', id], file);
+  },
+  [REPLACER_REPLACE_ALL]: (state, { payload }) => {
+    const { find, replace } = payload;
+    const id = state.get('currentFile');
+    let file = state.getIn(['files', id], Map({}));
+    file = file.merge({
+      contents: file.get('contents').replace(new RegExp(find, 'g'), replace),
+      changed: true
+    });
+    return state.setIn(['files', id], file);
   }
 }, initialState);
 
