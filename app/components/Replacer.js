@@ -9,6 +9,17 @@ class Replacer extends React.Component {
     this.replaceAll = ::this.replaceAll;
   }
 
+  componentDidMount() {
+    ipcRenderer.on('focus', () => {
+      this.findInput.focus();
+    });
+
+    ipcRenderer.on('clear', () => {
+      this.findInput.value = '';
+      this.replaceInput.value = '';
+    });
+  }
+
   find(e) {
     e.preventDefault();
     ipcRenderer.send('find', this.findInput.value);

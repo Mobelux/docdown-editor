@@ -58,6 +58,40 @@ const launchApp = async () => {
     mainWindow = null;
   });
 
+  dialogWindow = new BrowserWindow({
+    parent: mainWindow,
+    show: false,
+    resizable: false,
+    width: 400,
+    height: 172
+  });
+  dialogWindow.loadURL(`file://${__dirname}/app/replacer.html`);
+
+  dialogWindow.on('close', (e) => {
+    e.preventDefault();
+    dialogWindow.hide();
+    dialogWindow.webContents.send('clear');
+    mainWindow.webContents.send('redux', clearText());
+  });
+
+  dialogWindow.on('closed', () => {
+    dialogWindow = null;
+  });
+
+  if (process.env.NODE_ENV === 'development') {
+    // dialogWindow.openDevTools();
+    dialogWindow.webContents.on('context-menu', (e, props) => {
+      const { x, y } = props;
+
+      Menu.buildFromTemplate([{
+        label: 'Inspect element',
+        click() {
+          dialogWindow.inspectElement(x, y);
+        }
+      }]).popup(dialogWindow);
+    });
+  }
+
   ipcMain.on('save-as', (e, id) => {
     dialog.showSaveDialog(mainWindow, {}, (filename) => {
       mainWindow.webContents.send('redux', saveAsFile(id, filename));
@@ -239,36 +273,8 @@ const launchApp = async () => {
         label: 'Find and Replace',
         accelerator: 'Command+F',
         click() {
-          dialogWindow = new BrowserWindow({
-            parent: mainWindow,
-            show: false,
-            resizable: false,
-            width: 400,
-            height: 172
-          });
-          dialogWindow.loadURL(`file://${__dirname}/app/replacer.html`);
-          dialogWindow.on('closed', () => {
-            dialogWindow = null;
-            mainWindow.webContents.send('redux', clearText());
-          });
-
-          if (process.env.NODE_ENV === 'development') {
-            dialogWindow.openDevTools();
-            dialogWindow.webContents.on('context-menu', (e, props) => {
-              const { x, y } = props;
-
-              Menu.buildFromTemplate([{
-                label: 'Inspect element',
-                click() {
-                  dialogWindow.inspectElement(x, y);
-                }
-              }]).popup(dialogWindow);
-            });
-          }
-
-          dialogWindow.once('ready-to-show', () => {
-            dialogWindow.show();
-          });
+          dialogWindow.show();
+          dialogWindow.webContents.send('focus');
         }
       }, {
         type: 'separator'
