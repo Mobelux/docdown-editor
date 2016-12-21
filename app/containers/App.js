@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux';
 import SplitPane from 'react-split-pane';
 import Tabs from '../containers/Tabs';
 import Panel from '../components/Panel';
-import MarkdownEditor from '../components/MarkdownEditor';
-import MarkdownRendered from '../components/MarkdownRendered';
+import CodeEditor from '../components/CodeEditor';
+import MarkdownPreview from '../components/MarkdownPreview';
 import CharacterCount from '../components/CharacterCount';
 import StatusBar from '../components/StatusBar';
 import Sidebar from '../components/Sidebar';
@@ -14,6 +14,7 @@ import Icon from '../components/Icon';
 import * as fileActionCreators from '../actions/files';
 import * as uiActionCreators from '../actions/ui';
 import { getCurrentFile } from '../selectors';
+import { isPreviewableFile } from '../utils/file-types';
 
 class App extends React.Component {
   componentDidMount() {
@@ -38,14 +39,15 @@ class App extends React.Component {
   }
 
   paneSize() {
-    const { ui } = this.props;
-    return ui.get('paneVisible') ? ui.get('paneSize') : '0';
+    const { ui, currentFile } = this.props;
+    return (isPreviewableFile(currentFile.get('name')) && ui.get('paneVisible')) ? ui.get('paneSize') : '0';
   }
 
   render() {
     const { currentFile, replacer, ui, fileActions, uiActions } = this.props;
     const raw = currentFile.get('raw', '');
     const rendered = currentFile.get('rendered', '');
+    const showPreview = isPreviewableFile(currentFile.get('name')) && ui.get('paneVisible');
 
     return (
       <SplitPane
@@ -53,7 +55,8 @@ class App extends React.Component {
         className="vh-100"
         paneStyle={{ height: '100vh' }}
         split="vertical"
-        minSize={0}
+        minSize={250}
+        maxSize={400}
         defaultSize={this.sidebarSize()}
         size={ui.get('sidebarVisible') ? undefined : '0'}
         allowResize={ui.get('sidebarVisible')}
@@ -66,16 +69,17 @@ class App extends React.Component {
             ref={(n) => { this.pane = n; }}
             className="h-100"
             split="vertical"
-            minSize={0}
+            minSize={400}
             defaultSize={this.paneSize()}
             size={ui.get('paneVisible') ? undefined : '0'}
+            pane1Style={{ maxWidth: '100%' }}
             allowResize={ui.get('paneVisible')}
             primary="second"
             onChange={uiActions.resizePane}
           >
             <div className="flex flex-column h-100">
               <Panel className={ui.get('countVisible') ? 'panel--status' : ''}>
-                <MarkdownEditor
+                <CodeEditor
                   file={currentFile}
                   replacer={replacer}
                   handleUpdate={fileActions.updateFile}
@@ -88,12 +92,12 @@ class App extends React.Component {
                 </a>
                 <CharacterCount text={raw} />
                 <a href="#preview" onClick={uiActions.togglePane}>
-                  <Icon name={ui.get('paneVisible') ? 'right' : 'left'} />
+                  <Icon name={showPreview ? 'right' : 'left'} />
                 </a>
               </StatusBar>
             </div>
             <Panel>
-              <MarkdownRendered content={rendered} visible={ui.get('paneVisible')} />
+              <MarkdownPreview content={rendered} visible={showPreview} />
             </Panel>
           </SplitPane>
         </div>

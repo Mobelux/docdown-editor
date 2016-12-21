@@ -2,17 +2,28 @@ import React, { PropTypes } from 'react';
 import { Editor, EditorState, RichUtils, convertFromRaw, getDefaultKeyBinding } from 'draft-js';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import CodeUtils from 'draft-js-code';
-import '../utils/prism-docdown';
+import '../utils/prism-languages';
 import PrismDecorator from '../utils/PrismDecorator';
 import PrismToken from './PrismToken';
 
-const options = {
-  defaultSyntax: 'docdown',
-  filter: () => true,
-  getSyntax: () => 'docdown',
-  render: PrismToken
-};
-const decorator = new PrismDecorator(options);
+function findSyntax(ext = '') {
+  return () => {
+    const map = {
+      md: 'docdown',
+      markdown: 'docdown',
+      ft: 'docdown',
+      txt: 'docdown',
+      json: 'json',
+      js: 'javascript',
+      java: 'java',
+      cpp: 'cpp',
+      swift: 'swift',
+      objc: 'objectivec',
+      m: 'objectivec'
+    };
+    return map[ext.toLowerCase()];
+  };
+}
 
 function isVisible(container, el) {
   const viewport = {
@@ -44,7 +55,7 @@ function scrollSelectionIntoView(container) {
   }
 }
 
-class MarkdownEditor extends React.Component {
+class CodeEditor extends React.Component {
   static propTypes = {
     file: ImmutablePropTypes.map,
     replacer: ImmutablePropTypes.map,
@@ -60,7 +71,21 @@ class MarkdownEditor extends React.Component {
     this.handleReturn = ::this.handleReturn;
     this.handleTab = ::this.handleTab;
     this.focusEditor = ::this.focusEditor;
+
+    console.log(Date.now());
+    const { file } = props;
+    const filename = file.get('name') || '';
+    const ext = filename.split('.')[1];
+    const options = {
+      defaultSyntax: 'docdown',
+      filter: () => true,
+      getSyntax: findSyntax(ext),
+      render: PrismToken
+    };
+    const decorator = new PrismDecorator(options);
+
     const editorState = EditorState.createEmpty(decorator);
+    console.log(Date.now());
     this.state = {
       editorState
     };
@@ -119,6 +144,17 @@ class MarkdownEditor extends React.Component {
     };
 
     const contentState = convertFromRaw(initialContent);
+
+    const filename = file.get('name') || '';
+    const ext = filename.split('.')[1];
+    const options = {
+      defaultSyntax: 'docdown',
+      filter: () => true,
+      getSyntax: findSyntax(ext),
+      render: PrismToken
+    };
+    const decorator = new PrismDecorator(options);
+
     let editorState = EditorState.createWithContent(contentState, decorator);
     let selectionState = editorState.getSelection();
     selectionState = selectionState.merge({
@@ -221,7 +257,7 @@ class MarkdownEditor extends React.Component {
     return (
       <pre
         ref={(e) => { this.container = e; }}
-        className="language-markdown h-100"
+        className="language-markdown h-100 w-100"
         onClick={this.focusEditor}
       >
         <Editor
@@ -238,4 +274,4 @@ class MarkdownEditor extends React.Component {
   }
 }
 
-export default MarkdownEditor;
+export default CodeEditor;

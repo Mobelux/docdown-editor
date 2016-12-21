@@ -54,7 +54,9 @@ const filesReducer = handleActions({
         name,
         path,
         contents: fs.readFileSync(path, 'utf8'),
-        changed: false
+        changed: false,
+        anchor: 0,
+        focus: 0
       });
       id = file.get('id');
     } else {
