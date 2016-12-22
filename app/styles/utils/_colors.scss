@@ -17,6 +17,8 @@ $colors: (
     black: (
       base: #202C36,
       dark: #1d2228,
+      inactive: #101010,
+      active: #1C1D1E,
     ),
     grey: (
         base: #A9B3BD,
@@ -25,7 +27,8 @@ $colors: (
     dark-grey: (
         base: #394e60,
         light: #546a7c,
-        dark: #465e72
+        dark: #465e72,
+        darker: #565656
     ),
     blue: (
         base: #5DA0DE,

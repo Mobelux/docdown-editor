@@ -1,8 +1,8 @@
 .character-count {
-  height: $status-height;
-  padding: 0.5em;
-  font-size: 0.75em;
   display: inline-block;
+  font-size: 0.75em;
+  font-family: 'LivioMono';
+  color: color(dark-grey, darker);
 }
 
 .panel {
@@ -14,9 +14,15 @@
 }
 
 .status-bar {
+  align-items: center;
   border-top: black 1px solid;
   height: $status-height;
   z-index: 1;
   color: color(grey,base);
-  background: color(black,base);
+  background: color(black,active);
+
+  a {
+    line-height: $status-height;
+  }
+
 }
