@@ -5,17 +5,14 @@
     flex-direction: row;
     padding: 0;
     margin: 0;
-
     list-style: none;
-
     background: color(black,dark);
   }
 
   &__item {
     margin: 0, 15px, 0, 0;
     padding: 10px;
-
-    background: color(black,dark);
+    background: color(black,inactive);
     border-left: 2px solid color(black,dark);
 
     span {
@@ -26,7 +23,7 @@
     }
 
     &.is-active {
-      background: color(black,base);
+      background: color(black,active);
       border-left: 3px solid color(navy,base);
 
       span {
@@ -39,7 +36,7 @@
         color: color(blue,dark);
 
         &::before {
-          content: 'o';
+          content: '\00B7'; // middle dot
         }
 
         &:hover {
