@@ -1,7 +1,9 @@
 import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
 import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './app/actions/files';
 import { findText, replaceText, replaceAllText, clearText } from './app/actions/replacer';
-import { toggleSidebar, togglePane, toggleCount } from './app/actions/ui';
+import {
+  toggleSidebar, togglePane, toggleCount, increaseFontSize, decreaseFontSize, resetFontSize
+} from './app/actions/ui';
 
 let menu;
 let template;
@@ -62,6 +64,7 @@ const launchApp = async () => {
     parent: mainWindow,
     show: false,
     resizable: false,
+    alwaysOnTop: true,
     width: 400,
     height: 172
   });
@@ -306,6 +309,26 @@ const launchApp = async () => {
         click() {
           mainWindow.toggleDevTools();
         }
+      }, {
+        type: 'separator'
+      }, {
+        label: 'Increase Font Size',
+        accelerator: 'Command+Plus',
+        click() {
+          mainWindow.webContents.send('redux', increaseFontSize());
+        }
+      }, {
+        label: 'Decrease Font Size',
+        accelerator: 'Command+-',
+        click() {
+          mainWindow.webContents.send('redux', decreaseFontSize());
+        }
+      }, {
+        label: 'Default Font Size',
+        accelerator: 'Command+0',
+        click() {
+          mainWindow.webContents.send('redux', resetFontSize());
+        }
       }] : [{
         label: 'Toggle File Panel',
         click() {
@@ -320,6 +343,26 @@ const launchApp = async () => {
         label: 'Toggle Character Count',
         click() {
           mainWindow.webContents.send('redux', toggleCount());
+        }
+      }, {
+        type: 'separator'
+      }, {
+        label: 'Increase Font Size',
+        accelerator: 'Command+Plus',
+        click() {
+          mainWindow.webContents.send('redux', increaseFontSize());
+        }
+      }, {
+        label: 'Decrease Font Size',
+        accelerator: 'Command+-',
+        click() {
+          mainWindow.webContents.send('redux', decreaseFontSize());
+        }
+      }, {
+        label: 'Default Font Size',
+        accelerator: 'Command+0',
+        click() {
+          mainWindow.webContents.send('redux', resetFontSize());
         }
       }]
     }, {
@@ -414,6 +457,26 @@ const launchApp = async () => {
         click() {
           mainWindow.toggleDevTools();
         }
+      }, {
+        type: 'separator'
+      }, {
+        label: '&Increase Font Size',
+        accelerator: 'Ctrl+Plus',
+        click() {
+          mainWindow.webContents.send('redux', increaseFontSize());
+        }
+      }, {
+        label: '&Decrease Font Size',
+        accelerator: 'Ctrl+-',
+        click() {
+          mainWindow.webContents.send('redux', decreaseFontSize());
+        }
+      }, {
+        label: '&Default Font Size',
+        accelerator: 'Ctrl+0',
+        click() {
+          mainWindow.webContents.send('redux', resetFontSize());
+        }
       }] : [{
         label: '&Zoom',
         accelerator: 'F11',
@@ -434,6 +497,26 @@ const launchApp = async () => {
         label: 'Toggle &Character Count',
         click() {
           mainWindow.webContents.send('redux', toggleCount());
+        }
+      }, {
+        type: 'separator'
+      }, {
+        label: '&Increase Font Size',
+        accelerator: 'Ctrl+Plus',
+        click() {
+          mainWindow.webContents.send('redux', increaseFontSize());
+        }
+      }, {
+        label: '&Decrease Font Size',
+        accelerator: 'Ctrl+-',
+        click() {
+          mainWindow.webContents.send('redux', decreaseFontSize());
+        }
+      }, {
+        label: '&Default Font Size',
+        accelerator: 'Ctrl+0',
+        click() {
+          mainWindow.webContents.send('redux', resetFontSize());
         }
       }]
     }, {
