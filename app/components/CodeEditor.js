@@ -72,7 +72,6 @@ class CodeEditor extends React.Component {
     this.handleTab = ::this.handleTab;
     this.focusEditor = ::this.focusEditor;
 
-    console.log(Date.now());
     const { file } = props;
     const filename = file.get('name') || '';
     const ext = filename.split('.')[1];
@@ -85,7 +84,6 @@ class CodeEditor extends React.Component {
     const decorator = new PrismDecorator(options);
 
     const editorState = EditorState.createEmpty(decorator);
-    console.log(Date.now());
     this.state = {
       editorState
     };
