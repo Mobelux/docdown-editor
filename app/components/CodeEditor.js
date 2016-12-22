@@ -247,7 +247,12 @@ class CodeEditor extends React.Component {
   }
 
   focusEditor() {
+    let { editorState } = this.state;
     this.editor.focus();
+    editorState = EditorState.moveFocusToEnd(editorState);
+    this.setState({
+      editorState
+    });
   }
 
   render() {
@@ -258,15 +263,17 @@ class CodeEditor extends React.Component {
         className="language-markdown h-100 w-100"
         onClick={this.focusEditor}
       >
-        <Editor
-          ref={(e) => { this.editor = e; }}
-          editorState={editorState}
-          onChange={this.onChange}
-          keyBindingFn={this.keyBindingFn}
-          handleKeyCommand={this.handleKeyCommand}
-          handleReturn={this.handleReturn}
-          onTab={this.handleTab}
-        />
+        <div className="pa3" onClick={(e) => { e.stopPropagation(); }}>
+          <Editor
+            ref={(e) => { this.editor = e; }}
+            editorState={editorState}
+            onChange={this.onChange}
+            keyBindingFn={this.keyBindingFn}
+            handleKeyCommand={this.handleKeyCommand}
+            handleReturn={this.handleReturn}
+            onTab={this.handleTab}
+          />
+        </div>
       </pre>
     );
   }
