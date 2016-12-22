@@ -1,6 +1,5 @@
 import Immutable from 'immutable';
 import Prism from 'prismjs';
-import 'prismjs/plugins/line-numbers/prism-line-numbers';
 import PrismOptions from './PrismOptions';
 
 function occupySlice(targetArr, start, end, componentKey) {
