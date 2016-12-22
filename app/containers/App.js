@@ -82,6 +82,7 @@ class App extends React.Component {
                 <CodeEditor
                   file={currentFile}
                   replacer={replacer}
+                  fontSize={ui.get('fontSize')}
                   handleUpdate={fileActions.updateFile}
                   handleSelection={fileActions.updateSelection}
                 />

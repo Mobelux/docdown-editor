@@ -1,7 +1,10 @@
 /* global document */
 import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
-import { SIDEBAR_TOGGLE, PANE_TOGGLE, COUNT_TOGGLE, PANE_RESIZE, SIDEBAR_RESIZE } from '../actions/ui';
+import {
+  SIDEBAR_TOGGLE, PANE_TOGGLE, COUNT_TOGGLE, PANE_RESIZE, SIDEBAR_RESIZE,
+  FONT_SIZE_INCREASE, FONT_SIZE_DECREASE, FONT_SIZE_RESET
+} from '../actions/ui';
 import { FOLDER_OPEN } from '../actions/files';
 
 
@@ -10,7 +13,8 @@ const initialState = Map({
   paneVisible: true,
   countVisible: true,
   paneSize: (document.documentElement.clientWidth / 2),
-  sidebarSize: 250
+  sidebarSize: 250,
+  fontSize: 100
 });
 
 const uiReducer = handleActions({
@@ -29,6 +33,15 @@ const uiReducer = handleActions({
   [COUNT_TOGGLE]: state => (state.set('countVisible', !state.get('countVisible'))),
   [FOLDER_OPEN]: state => (state.set('sidebarVisible', true)),
   [PANE_RESIZE]: (state, { payload }) => (state.set('paneSize', payload)),
-  [SIDEBAR_RESIZE]: (state, { payload }) => (state.set('sidebarSize', payload))
+  [SIDEBAR_RESIZE]: (state, { payload }) => (state.set('sidebarSize', payload)),
+  [FONT_SIZE_INCREASE]: (state) => {
+    const newSize = state.get('fontSize') >= 200 ? state.get('fontSize') : state.get('fontSize') + 10;
+    return state.set('fontSize', newSize);
+  },
+  [FONT_SIZE_DECREASE]: (state) => {
+    const newSize = state.get('fontSize') <= 20 ? state.get('fontSize') : state.get('fontSize') - 10;
+    return state.set('fontSize', newSize);
+  },
+  [FONT_SIZE_RESET]: state => (state.set('fontSize', 100))
 }, initialState);
 export default uiReducer;

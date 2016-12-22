@@ -59,6 +59,7 @@ class CodeEditor extends React.Component {
   static propTypes = {
     file: ImmutablePropTypes.map,
     replacer: ImmutablePropTypes.map,
+    fontSize: PropTypes.number,
     handleUpdate: PropTypes.func,
     handleSelection: PropTypes.func
   }
@@ -257,10 +258,11 @@ class CodeEditor extends React.Component {
 
   render() {
     const { editorState } = this.state;
+    const { fontSize } = this.props;
     return (
       <pre
         ref={(e) => { this.container = e; }}
-        className="language-markdown h-100 w-100"
+        className={`language-markdown h-100 w-100 fs-${fontSize}`}
         onClick={this.focusEditor}
       >
         <div className="pa3" onClick={(e) => { e.stopPropagation(); }}>
