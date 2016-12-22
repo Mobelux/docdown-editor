@@ -160,7 +160,7 @@ const launchApp = async () => {
       label: 'DocDown',
       submenu: [{
         label: 'About DocDown',
-        selector: 'orderFrontStandardAboutPanel:'
+        role: 'about'
       }, {
         type: 'separator'
       }, {
@@ -171,14 +171,14 @@ const launchApp = async () => {
       }, {
         label: 'Hide DocDown',
         accelerator: 'Command+H',
-        selector: 'hide:'
+        role: 'hide'
       }, {
         label: 'Hide Others',
         accelerator: 'Command+Shift+H',
-        selector: 'hideOtherApplications:'
+        role: 'hideothers'
       }, {
         label: 'Show All',
-        selector: 'unhideAllApplications:'
+        role: 'unhide'
       }, {
         type: 'separator'
       }, {
@@ -193,17 +193,17 @@ const launchApp = async () => {
       submenu: [{
         label: 'New File',
         accelerator: 'Command+N',
-        selector: 'new:',
         click() {
           mainWindow.webContents.send('redux', newFile());
         }
       }, {
         label: 'Open',
         accelerator: 'Command+O',
-        selector: 'open:',
         click() {
           dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }, (filePaths) => {
-            mainWindow.webContents.send('redux', openFolder(filePaths[0]));
+            if (filePaths) {
+              mainWindow.webContents.send('redux', openFolder(filePaths[0]));
+            }
           });
         }
       }, {
@@ -211,7 +211,6 @@ const launchApp = async () => {
       }, {
         label: 'Save',
         accelerator: 'Command+S',
-        selector: 'save:',
         click() {
           mainWindow.webContents.send('redux', saveFile());
         }
@@ -228,7 +227,6 @@ const launchApp = async () => {
       }, {
         label: 'Close Tab',
         accelerator: 'Command+W',
-        selector: 'performClose:',
         click() {
           mainWindow.webContents.send('redux', closeFile());
         }
@@ -244,29 +242,29 @@ const launchApp = async () => {
       submenu: [{
         label: 'Undo',
         accelerator: 'Command+Z',
-        selector: 'undo:'
+        role: 'undo'
       }, {
         label: 'Redo',
         accelerator: 'Shift+Command+Z',
-        selector: 'redo:'
+        role: 'redo'
       }, {
         type: 'separator'
       }, {
         label: 'Cut',
         accelerator: 'Command+X',
-        selector: 'cut:'
+        role: 'cut'
       }, {
         label: 'Copy',
         accelerator: 'Command+C',
-        selector: 'copy:'
+        role: 'copy'
       }, {
         label: 'Paste',
         accelerator: 'Command+V',
-        selector: 'paste:'
+        role: 'pasteandmatchstyle'
       }, {
         label: 'Select All',
         accelerator: 'Command+A',
-        selector: 'selectAll:'
+        role: 'selectall'
       }, {
         type: 'separator'
       }, {
@@ -335,12 +333,12 @@ const launchApp = async () => {
       }, {
         label: 'Minimize',
         accelerator: 'Command+M',
-        selector: 'performMiniaturize:'
+        role: 'minimize'
       }, {
         type: 'separator'
       }, {
         label: 'Bring All to Front',
-        selector: 'arrangeInFront:'
+        role: 'front'
       }]
     }, {
       label: 'Help',
@@ -360,14 +358,12 @@ const launchApp = async () => {
       submenu: [{
         label: '&New File',
         accelerator: 'Ctrl+N',
-        selector: 'new:',
         click() {
           mainWindow.webContents.send('redux', newFile());
         }
       }, {
         label: '&Open',
         accelerator: 'Ctrl+O',
-        selector: 'open:',
         click() {
           dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }, (filePaths) => {
             mainWindow.webContents.send('redux', openFolder(filePaths[0]));
@@ -378,7 +374,6 @@ const launchApp = async () => {
       }, {
         label: '&Save',
         accelerator: 'Ctrl+S',
-        selector: 'save:',
         click() {
           mainWindow.webContents.send('redux', saveFile());
         }
@@ -395,7 +390,6 @@ const launchApp = async () => {
       }, {
         label: '&Close Tab',
         accelerator: 'Ctrl+W',
-        selector: 'performClose:',
         click() {
           mainWindow.webContents.send('redux', closeFile());
         }
