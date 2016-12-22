@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-class MarkdownRendered extends React.PureComponent {
+class MarkdownPreview extends React.PureComponent {
   static propTypes = {
     content: PropTypes.string,
     visible: PropTypes.bool
@@ -21,4 +21,4 @@ class MarkdownRendered extends React.PureComponent {
   }
 }
 
-export default MarkdownRendered;
+export default MarkdownPreview;

@@ -7,6 +7,7 @@ import Folder from '../components/Folder';
 import File from '../components/File';
 import UnsupportedFile from '../components/UnsupportedFile';
 import { openFile } from '../actions/files';
+import { isSupportedFile } from '../utils/file-types';
 
 const watchOptions = {
   ignoreDotFiles: true,
@@ -14,10 +15,6 @@ const watchOptions = {
   ignoreNotPermitted: true,
   ignoreDirectoryPattern: /node_modules/
 };
-
-function isSupportedFile(filename) {
-  return filename.search(/^.*.(md|markdown|ft|txt)$/i) >= 0;
-}
 
 function folderFirstMapper(value, key) {
   const pieces = key.split('/');
