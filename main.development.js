@@ -97,7 +97,9 @@ const launchApp = async () => {
 
   ipcMain.on('save-as', (e, id) => {
     dialog.showSaveDialog(mainWindow, {}, (filename) => {
-      mainWindow.webContents.send('redux', saveAsFile(id, filename));
+      if (filename) {
+        mainWindow.webContents.send('redux', saveAsFile(id, filename));
+      }
     });
   });
 
@@ -122,8 +124,10 @@ const launchApp = async () => {
           mainWindow.webContents.send('redux', closeFile(id));
         } else {
           dialog.showSaveDialog(mainWindow, {}, (filename) => {
-            mainWindow.webContents.send('redux', saveAsFile(id, filename));
-            mainWindow.webContents.send('redux', closeFile(id));
+            if (filename) {
+              mainWindow.webContents.send('redux', saveAsFile(id, filename));
+              mainWindow.webContents.send('redux', closeFile(id));
+            }
           });
         }
       } else if (response === 0) {
