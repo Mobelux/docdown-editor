@@ -3,5 +3,5 @@ export function isSupportedFile(filename = '') {
 }
 
 export function isPreviewableFile(filename = '') {
-  return filename.search(/^.*.(md|markdown|ft|txt)$/i) >= 0;
+  return filename === 'Untitled' || filename.search(/^.*.(md|markdown|ft|txt)$/i) >= 0;
 }
