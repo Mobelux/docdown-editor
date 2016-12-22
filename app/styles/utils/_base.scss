@@ -1,4 +1,9 @@
+body {
+  -webkit-font-smoothing: antialiased;
+}
 .vw-100 { width: 100vw; }
+
+.pa40 { padding: 2.5rem; }
 
 .split-pane-wrapper {
   width: 100%;

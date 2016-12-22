@@ -265,7 +265,7 @@ class CodeEditor extends React.Component {
         className={`language-markdown h-100 w-100 fs-${fontSize}`}
         onClick={this.focusEditor}
       >
-        <div className="pa3" onClick={(e) => { e.stopPropagation(); }}>
+        <div className="pa40" onClick={(e) => { e.stopPropagation(); }}>
           <Editor
             ref={(e) => { this.editor = e; }}
             editorState={editorState}

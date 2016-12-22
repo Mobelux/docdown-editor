@@ -36,7 +36,7 @@
         color: color(blue,dark);
 
         &::before {
-          content: '\00B7'; // middle dot
+          content: '\2022';
         }
 
         &:hover {
