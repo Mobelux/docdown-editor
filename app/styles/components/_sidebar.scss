@@ -1,17 +1,20 @@
 .sidebar {
-  padding: 10px;
+  padding: 0px;
   height: 100vh;
-
-  background-color: color(black,dark);
+  background-color: color(black,inactive);
   z-index: 2;
   overflow-y: scroll;
 
   & ul {
-    padding: 0 0 0 20px;
+    padding: 0 0 0 14px;
   }
 
   ul {
     list-style-type: none;
+  }
+
+  ul:nth-child(1){
+    margin-top: 10px;
   }
 
   span {
@@ -19,5 +22,9 @@
     font-size: 15px;
     line-height: 1.5px;
     white-space: nowrap;
+  }
+
+  .icon {
+    margin-right: 5px;
   }
 }
