@@ -1,0 +1,15 @@
+.markdown-preview {
+
+  a {
+    color: #6BBD62;
+
+    &:hover {
+      border-bottom: 1px solid #6BBD62;
+    }
+
+  }
+
+  h1:nth-child(1) {
+    margin-top: 12px;
+  }
+}

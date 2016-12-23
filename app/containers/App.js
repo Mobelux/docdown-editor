@@ -97,7 +97,7 @@ class App extends React.Component {
                 </a>
               </StatusBar>
             </div>
-            <Panel>
+            <Panel className="markdown-preview">
               <MarkdownPreview content={rendered} visible={showPreview} />
             </Panel>
           </SplitPane>
