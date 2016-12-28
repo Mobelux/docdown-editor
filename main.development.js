@@ -453,6 +453,44 @@ const launchApp = async () => {
         }
       }]
     }, {
+      label: '&Edit',
+      submenu: [{
+        label: '&Undo',
+        accelerator: 'Ctrl+Z',
+        role: 'undo'
+      }, {
+        label: '&Redo',
+        accelerator: 'Shift+Ctrl+Z',
+        role: 'redo'
+      }, {
+        type: 'separator'
+      }, {
+        label: '&Cut',
+        accelerator: 'Ctrl+X',
+        role: 'cut'
+      }, {
+        label: '&Copy',
+        accelerator: 'Ctrl+C',
+        role: 'copy'
+      }, {
+        label: '&Paste',
+        accelerator: 'Ctrl+V',
+        role: 'pasteandmatchstyle'
+      }, {
+        label: '&Select All',
+        accelerator: 'Ctrl+A',
+        role: 'selectall'
+      }, {
+        type: 'separator'
+      }, {
+        label: '&Find and Replace',
+        accelerator: 'Ctrl+F',
+        click() {
+          dialogWindow.show();
+          dialogWindow.webContents.send('focus');
+        }
+      }]
+    }, {
       label: '&View',
       submenu: (process.env.NODE_ENV === 'development') ? [{
         label: '&Reload',
