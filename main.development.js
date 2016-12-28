@@ -74,7 +74,9 @@ const launchApp = async () => {
     e.preventDefault();
     dialogWindow.hide();
     dialogWindow.webContents.send('clear');
-    mainWindow.webContents.send('redux', clearText());
+    if (mainWindow) {
+      mainWindow.webContents.send('redux', clearText());
+    }
   });
 
   dialogWindow.on('closed', () => {
