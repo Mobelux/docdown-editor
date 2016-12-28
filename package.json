@@ -1,6 +1,6 @@
 {
   "name": "docdown-editor",
-  "productName": "DocDown Editor",
+  "productName": "DocDown",
   "version": "0.1.0",
   "description": "DocDown Editor",
   "main": "main.js",

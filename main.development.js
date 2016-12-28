@@ -18,6 +18,15 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
+app.on('before-quit', () => {
+  if (dialogWindow) {
+    dialogWindow.destroy();
+  }
+  if (mainWindow) {
+    mainWindow.close();
+  }
+});
+
 const installExtensions = async () => {
   if (process.env.NODE_ENV === 'development') {
     const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
