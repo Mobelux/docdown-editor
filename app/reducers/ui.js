@@ -14,7 +14,7 @@ const initialState = Map({
   countVisible: true,
   paneSize: (document.documentElement.clientWidth / 2),
   sidebarSize: 250,
-  fontSize: 100
+  fontSize: 90
 });
 
 const uiReducer = handleActions({
@@ -42,6 +42,6 @@ const uiReducer = handleActions({
     const newSize = state.get('fontSize') <= 20 ? state.get('fontSize') : state.get('fontSize') - 10;
     return state.set('fontSize', newSize);
   },
-  [FONT_SIZE_RESET]: state => (state.set('fontSize', 100))
+  [FONT_SIZE_RESET]: state => (state.set('fontSize', 90))
 }, initialState);
 export default uiReducer;

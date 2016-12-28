@@ -2,7 +2,7 @@ code[class*="language-"],
 pre[class*="language-"] {
   color: #f8f8f2;
   background: none;
-  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  //text-shadow: 0 1px rgba(0, 0, 0, 0.3);
   font-family: 'LivioMono';
   text-align: left;
   white-space: pre;
@@ -10,11 +10,9 @@ pre[class*="language-"] {
   word-break: normal;
   word-wrap: normal;
   line-height: 1.5;
-
   -moz-tab-size: 4;
   -o-tab-size: 4;
   tab-size: 4;
-
   -webkit-hyphens: none;
   -moz-hyphens: none;
   -ms-hyphens: none;
@@ -38,7 +36,7 @@ pre[class*="language-"] {
 
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
-  background: color(black,base);;
+  background: color(black,active);;
 }
 
 /* Inline code */

@@ -15,10 +15,16 @@ p code {
 // Code Block Styling
 //
 
+.DraftEditor-editorContainer {
+  margin: 0 auto;
+  max-width: 820px;
+  min-width: 360px;
+}
+
 .rendered pre {
   margin: 30px 0;
   padding: 30px;
-
+  overflow-x: scroll;
   background: color(black,base);
 }
 
