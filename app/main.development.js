@@ -1,17 +1,25 @@
 import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
-import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './app/actions/files';
-import { findText, replaceText, replaceAllText, clearText } from './app/actions/replacer';
+import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './actions/files';
+import { findText, replaceText, replaceAllText, clearText } from './actions/replacer';
 import {
   toggleSidebar, togglePane, toggleCount, increaseFontSize, decreaseFontSize, resetFontSize
-} from './app/actions/ui';
+} from './actions/ui';
 
 let menu;
 let template;
 let mainWindow = null;
 let dialogWindow = null;
 
+if (process.env.NODE_ENV === 'production') {
+  const sourceMapSupport = require('source-map-support'); // eslint-disable-line
+  sourceMapSupport.install();
+}
+
 if (process.env.NODE_ENV === 'development') {
   require('electron-debug')(); // eslint-disable-line global-require
+  const path = require('path'); // eslint-disable-line
+  const p = path.join(__dirname, '..', 'app', 'node_modules'); // eslint-disable-line
+  require('module').globalPaths.push(p); // eslint-disable-line
 }
 
 app.on('window-all-closed', () => {
@@ -27,6 +35,7 @@ app.on('before-quit', () => {
   }
 });
 
+
 const installExtensions = async () => {
   if (process.env.NODE_ENV === 'development') {
     const installer = require('electron-devtools-installer'); // eslint-disable-line global-require
@@ -36,7 +45,7 @@ const installExtensions = async () => {
       'REDUX_DEVTOOLS'
     ];
     const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-    for (const name of extensions) {
+    for (const name of extensions) { // eslint-disable-line
       try {
         await installer.default(installer[name], forceDownload);
       } catch (e) {} // eslint-disable-line
@@ -53,7 +62,7 @@ const launchApp = async () => {
     height: 728
   });
 
-  mainWindow.loadURL(`file://${__dirname}/app/app.html`);
+  mainWindow.loadURL(`file://${__dirname}/app.html`);
 
   mainWindow.webContents.on('did-finish-load', () => {
     mainWindow.show();
@@ -77,7 +86,7 @@ const launchApp = async () => {
     width: 400,
     height: 172
   });
-  dialogWindow.loadURL(`file://${__dirname}/app/replacer.html`);
+  dialogWindow.loadURL(`file://${__dirname}/replacer.html`);
 
   dialogWindow.on('close', (e) => {
     e.preventDefault();
