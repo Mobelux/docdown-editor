@@ -9,13 +9,16 @@ import webpack from 'webpack';
 import validate from 'webpack-validator';
 import merge from 'webpack-merge';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import formatter from 'eslint-formatter-pretty';
 import baseConfig from './webpack.config.base';
 
 const port = process.env.PORT || 3000;
 
 export default validate(merge(baseConfig, {
   debug: true,
-  devtool: 'cheap-module-eval-source-map',
+
+  devtool: 'inline-source-map',
+
   entry: [
     `webpack-hot-middleware/client?path=http://localhost:${port}/__webpack_hmr`,
     'babel-polyfill',
@@ -28,6 +31,13 @@ export default validate(merge(baseConfig, {
   },
 
   module: {
+    // preLoaders: [
+    //   {
+    //     test: /\.js$/,
+    //     loader: 'eslint-loader',
+    //     exclude: /node_modules/
+    //   }
+    // ],
     loaders: [
       {
         test: /\.global\.css$/,
@@ -36,26 +46,23 @@ export default validate(merge(baseConfig, {
           'css-loader?sourceMap'
         ]
       },
+
       {
         test: /^((?!\.global).)*\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
       },
-      {
-        test: /\.(eot|svg|ttf|woff|woff2)$/,
-        loader: 'file?name=app/styles/fonts/[name].[ext]'
-      }
+
+      { test: /\.(woff2)$/, loader: 'file?name=app/styles/fonts/[name].[ext]' }
     ]
   },
 
-  resolve: {
-    extensions: ['', '.js', '.jsx', '.json'],
-    modulesDirectories: [
-      'node_modules'
-    ]
+  eslint: {
+    formatter
   },
 
   plugins: [
     new ExtractTextPlugin('app.css'),
+
     // https://webpack.github.io/docs/hot-module-replacement-with-webpack.html
     new webpack.HotModuleReplacementPlugin(),
 

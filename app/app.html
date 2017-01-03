@@ -5,11 +5,16 @@
     <title>DocDown</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
-      const link = document.createElement('link');
-      const port = process.env.PORT || 3000;
-      link.rel = 'stylesheet';
-      link.href = (process.env.HOT) ? `http://localhost:${port}/dist/app.css` : '../dist/app.css';
-      document.write(link.outerHTML);
+      (function () {
+        const link = document.createElement('link');
+        const port = process.env.PORT || 3000;
+        link.rel = 'stylesheet';
+        link.href = (process.env.HOT)
+          ? 'http://localhost:' + port + '/dist/app.css'
+          : './dist/app.css';
+        // HACK: Writing the script path should be done with webpack
+        document.getElementsByTagName('head')[0].appendChild(link);
+      }());
     </script>
   </head>
   <body class="sans-serif vh-100 vw-100 relative">
@@ -24,8 +29,11 @@
       {
         const script = document.createElement('script');
         const port = process.env.PORT || 3000;
-        script.src = (process.env.HOT) ? `http://localhost:${port}/dist/bundle.js` : '../dist/bundle.js';
-        document.write(script.outerHTML);
+        script.src = (process.env.HOT)
+          ? 'http://localhost:' + port + '/dist/bundle.js'
+          : './dist/bundle.js';
+        // HACK: Writing the script path should be done with webpack
+        document.body.appendChild(script);
       }
     </script>
   </body>
