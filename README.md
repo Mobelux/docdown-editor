@@ -21,7 +21,7 @@ You can run the application using the following command:
 $ npm run dev
 ```
 
-*Note: requires a node version >= 4 and an npm version >= 2.*
+*Note: requires a node version >= 6 and an npm version >= 3.*
 
 ## Basis
 
