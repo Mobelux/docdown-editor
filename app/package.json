@@ -1,15 +1,15 @@
 {
   "name": "docdown-editor",
   "productName": "DocDown",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "DocDown Editor",
   "main": "main.js",
-  "author": {
-    "name": "Mobelux, LLC",
-    "email": "daniel@mobelux.com",
-    "url": "https://github.com/Mobelux/docdown-editor"
-  },
-  "license": "UNLICENSED",
+  "author": "Daniel Farrell <daniel@mobelux.com>",
+  "contributors": [
+    "Liz Swain <liz@mobelux.com>",
+    "Christian Bryant <christian@mobelux.como>"
+  ],
+  "license": "BSD-3-Clause",
   "dependencies": {
     "classnames": "^2.2.5",
     "csv-parse": "^1.1.7",
