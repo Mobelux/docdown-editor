@@ -212,14 +212,21 @@ const launchApp = async () => {
         label: 'New File',
         accelerator: 'Command+N',
         click() {
-          mainWindow.webContents.send('redux', newFile());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', newFile());
+          } else {
+            launchApp();
+          }
         }
       }, {
         label: 'Open',
         accelerator: 'Command+O',
         click() {
+          if (!mainWindow) {
+            launchApp();
+          }
           dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }, (filePaths) => {
-            if (filePaths) {
+            if (mainWindow && filePaths) {
               mainWindow.webContents.send('redux', openFolder(filePaths[0]));
             }
           });
@@ -230,14 +237,18 @@ const launchApp = async () => {
         label: 'Save',
         accelerator: 'Command+S',
         click() {
-          mainWindow.webContents.send('redux', saveFile());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', saveFile());
+          }
         }
       }, {
         label: 'Save As...',
         accelerator: 'Shift+Command+S',
         click() {
           dialog.showSaveDialog(mainWindow, {}, (filename) => {
-            mainWindow.webContents.send('redux', saveAsFile(filename));
+            if (mainWindow) {
+              mainWindow.webContents.send('redux', saveAsFile(filename));
+            }
           });
         }
       }, {
@@ -246,13 +257,17 @@ const launchApp = async () => {
         label: 'Close Tab',
         accelerator: 'Command+W',
         click() {
-          mainWindow.webContents.send('redux', closeFile());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', closeFile());
+          }
         }
       }, {
         label: 'Close Window',
         accelerator: 'Shift+Command+W',
         click() {
-          mainWindow.close();
+          if (mainWindow) {
+            mainWindow.close();
+          }
         }
       }]
     }, {
@@ -289,8 +304,10 @@ const launchApp = async () => {
         label: 'Find and Replace',
         accelerator: 'Command+F',
         click() {
-          dialogWindow.show();
-          dialogWindow.webContents.send('focus');
+          if (dialogWindow) {
+            dialogWindow.show();
+            dialogWindow.webContents.send('focus');
+          }
         }
       }, {
         type: 'separator'
@@ -301,28 +318,38 @@ const launchApp = async () => {
         label: 'Reload',
         accelerator: 'Command+R',
         click() {
-          mainWindow.webContents.reload();
+          if (mainWindow) {
+            mainWindow.webContents.reload();
+          }
         }
       }, {
         label: 'Toggle File Panel',
         click() {
-          mainWindow.webContents.send('redux', toggleSidebar());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', toggleSidebar());
+          }
         }
       }, {
         label: 'Toggle Preview',
         click() {
-          mainWindow.webContents.send('redux', togglePane());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', togglePane());
+          }
         }
       }, {
         label: 'Toggle Character Count',
         click() {
-          mainWindow.webContents.send('redux', toggleCount());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', toggleCount());
+          }
         }
       }, {
         label: 'Toggle Developer Tools',
         accelerator: 'Alt+Command+I',
         click() {
-          mainWindow.toggleDevTools();
+          if (mainWindow) {
+            mainWindow.toggleDevTools();
+          }
         }
       }, {
         type: 'separator'
@@ -330,34 +357,46 @@ const launchApp = async () => {
         label: 'Increase Font Size',
         accelerator: 'Command+Plus',
         click() {
-          mainWindow.webContents.send('redux', increaseFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', increaseFontSize());
+          }
         }
       }, {
         label: 'Decrease Font Size',
         accelerator: 'Command+-',
         click() {
-          mainWindow.webContents.send('redux', decreaseFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', decreaseFontSize());
+          }
         }
       }, {
         label: 'Default Font Size',
         accelerator: 'Command+0',
         click() {
-          mainWindow.webContents.send('redux', resetFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', resetFontSize());
+          }
         }
       }] : [{
         label: 'Toggle File Panel',
         click() {
-          mainWindow.webContents.send('redux', toggleSidebar());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', toggleSidebar());
+          }
         }
       }, {
         label: 'Toggle Preview',
         click() {
-          mainWindow.webContents.send('redux', togglePane());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', togglePane());
+          }
         }
       }, {
         label: 'Toggle Character Count',
         click() {
-          mainWindow.webContents.send('redux', toggleCount());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', toggleCount());
+          }
         }
       }, {
         type: 'separator'
@@ -365,19 +404,25 @@ const launchApp = async () => {
         label: 'Increase Font Size',
         accelerator: 'Command+Plus',
         click() {
-          mainWindow.webContents.send('redux', increaseFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', increaseFontSize());
+          }
         }
       }, {
         label: 'Decrease Font Size',
         accelerator: 'Command+-',
         click() {
-          mainWindow.webContents.send('redux', decreaseFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', decreaseFontSize());
+          }
         }
       }, {
         label: 'Default Font Size',
         accelerator: 'Command+0',
         click() {
-          mainWindow.webContents.send('redux', resetFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', resetFontSize());
+          }
         }
       }]
     }, {
@@ -386,7 +431,9 @@ const launchApp = async () => {
         label: 'Zoom',
         accelerator: 'Shift+Command+F',
         click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
+          if (mainWindow) {
+            mainWindow.setFullScreen(!mainWindow.isFullScreen());
+          }
         }
       }, {
         label: 'Minimize',
@@ -412,164 +459,202 @@ const launchApp = async () => {
     Menu.setApplicationMenu(menu);
   } else {
     template = [{
-      label: '&File',
+      label: 'File',
       submenu: [{
-        label: '&New File',
+        label: 'New File',
         accelerator: 'Ctrl+N',
         click() {
-          mainWindow.webContents.send('redux', newFile());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', newFile());
+          }
         }
       }, {
-        label: '&Open',
+        label: 'Open',
         accelerator: 'Ctrl+O',
         click() {
           dialog.showOpenDialog(mainWindow, { properties: ['openDirectory'] }, (filePaths) => {
-            mainWindow.webContents.send('redux', openFolder(filePaths[0]));
+            if (mainWindow) {
+              mainWindow.webContents.send('redux', openFolder(filePaths[0]));
+            }
           });
         }
       }, {
         type: 'separator'
       }, {
-        label: '&Save',
+        label: 'Save',
         accelerator: 'Ctrl+S',
         click() {
-          mainWindow.webContents.send('redux', saveFile());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', saveFile());
+          }
         }
       }, {
-        label: '&Save As',
+        label: 'Save As',
         accelerator: 'Shift+Ctrl+S',
         click() {
           dialog.showSaveDialog(mainWindow, {}, (filename) => {
-            mainWindow.webContents.send('redux', saveAsFile(filename));
+            if (mainWindow) {
+              mainWindow.webContents.send('redux', saveAsFile(filename));
+            }
           });
         }
       }, {
         type: 'separator'
       }, {
-        label: '&Close Tab',
+        label: 'Close Tab',
         accelerator: 'Ctrl+W',
         click() {
-          mainWindow.webContents.send('redux', closeFile());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', closeFile());
+          }
         }
       }]
     }, {
-      label: '&Edit',
+      label: 'Edit',
       submenu: [{
-        label: '&Undo',
+        label: 'Undo',
         accelerator: 'Ctrl+Z',
         role: 'undo'
       }, {
-        label: '&Redo',
+        label: 'Redo',
         accelerator: 'Shift+Ctrl+Z',
         role: 'redo'
       }, {
         type: 'separator'
       }, {
-        label: '&Cut',
+        label: 'Cut',
         accelerator: 'Ctrl+X',
         role: 'cut'
       }, {
-        label: '&Copy',
+        label: 'Copy',
         accelerator: 'Ctrl+C',
         role: 'copy'
       }, {
-        label: '&Paste',
+        label: 'Paste',
         accelerator: 'Ctrl+V',
         role: 'pasteandmatchstyle'
       }, {
-        label: '&Select All',
+        label: 'Select All',
         accelerator: 'Ctrl+A',
         role: 'selectall'
       }, {
         type: 'separator'
       }, {
-        label: '&Find and Replace',
+        label: 'Find and Replace',
         accelerator: 'Ctrl+F',
         click() {
-          dialogWindow.show();
-          dialogWindow.webContents.send('focus');
+          if (dialogWindow) {
+            dialogWindow.show();
+            dialogWindow.webContents.send('focus');
+          }
         }
       }]
     }, {
-      label: '&View',
+      label: 'View',
       submenu: (process.env.NODE_ENV === 'development') ? [{
-        label: '&Reload',
+        label: 'Reload',
         accelerator: 'Ctrl+R',
         click() {
-          mainWindow.webContents.reload();
+          if (mainWindow) {
+            mainWindow.webContents.reload();
+          }
         }
       }, {
-        label: 'Toggle &Full Screen',
+        label: 'Toggle Full Screen',
         accelerator: 'F11',
         click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
+          if (mainWindow) {
+            mainWindow.setFullScreen(!mainWindow.isFullScreen());
+          }
         }
       }, {
-        label: 'Toggle &Developer Tools',
+        label: 'Toggle Developer Tools',
         accelerator: 'Alt+Ctrl+I',
         click() {
-          mainWindow.toggleDevTools();
+          if (mainWindow) {
+            mainWindow.toggleDevTools();
+          }
         }
       }, {
         type: 'separator'
       }, {
-        label: '&Increase Font Size',
+        label: 'Increase Font Size',
         accelerator: 'Ctrl+Plus',
         click() {
-          mainWindow.webContents.send('redux', increaseFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', increaseFontSize());
+          }
         }
       }, {
-        label: '&Decrease Font Size',
+        label: 'Decrease Font Size',
         accelerator: 'Ctrl+-',
         click() {
-          mainWindow.webContents.send('redux', decreaseFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', decreaseFontSize());
+          }
         }
       }, {
-        label: '&Default Font Size',
+        label: 'Default Font Size',
         accelerator: 'Ctrl+0',
         click() {
-          mainWindow.webContents.send('redux', resetFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', resetFontSize());
+          }
         }
       }] : [{
-        label: '&Zoom',
+        label: 'Zoom',
         accelerator: 'F11',
         click() {
-          mainWindow.setFullScreen(!mainWindow.isFullScreen());
+          if (mainWindow) {
+            mainWindow.setFullScreen(!mainWindow.isFullScreen());
+          }
         }
       }, {
-        label: 'Toggle &File Panel',
+        label: 'Toggle File Panel',
         click() {
-          mainWindow.webContents.send('redux', toggleSidebar());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', toggleSidebar());
+          }
         }
       }, {
-        label: 'Toggle &Preview',
+        label: 'Toggle Preview',
         click() {
-          mainWindow.webContents.send('redux', togglePane());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', togglePane());
+          }
         }
       }, {
-        label: 'Toggle &Character Count',
+        label: 'Toggle Character Count',
         click() {
-          mainWindow.webContents.send('redux', toggleCount());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', toggleCount());
+          }
         }
       }, {
         type: 'separator'
       }, {
-        label: '&Increase Font Size',
+        label: 'Increase Font Size',
         accelerator: 'Ctrl+Plus',
         click() {
-          mainWindow.webContents.send('redux', increaseFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', increaseFontSize());
+          }
         }
       }, {
-        label: '&Decrease Font Size',
+        label: 'Decrease Font Size',
         accelerator: 'Ctrl+-',
         click() {
-          mainWindow.webContents.send('redux', decreaseFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', decreaseFontSize());
+          }
         }
       }, {
-        label: '&Default Font Size',
+        label: 'Default Font Size',
         accelerator: 'Ctrl+0',
         click() {
-          mainWindow.webContents.send('redux', resetFontSize());
+          if (mainWindow) {
+            mainWindow.webContents.send('redux', resetFontSize());
+          }
         }
       }]
     }, {
