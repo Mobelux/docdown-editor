@@ -71,6 +71,12 @@ export default validate(merge(baseConfig, {
       filename: '../app.html',
       template: 'app/app.html',
       inject: false
+    }),
+
+    new HtmlWebpackPlugin({
+      filename: '../replacer.html',
+      template: 'app/replacer.html',
+      inject: false
     })
   ],
 

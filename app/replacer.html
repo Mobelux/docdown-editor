@@ -5,12 +5,13 @@
     <title>Find and Replace</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script>
-      (function() {
+      (function () {
         const link = document.createElement('link');
         const port = process.env.PORT || 3000;
         link.rel = 'stylesheet';
-        link.href = (process.env.HOT) ? `http://localhost:${port}/dist/app.css` : '../dist/app.css';
-
+        link.href = (process.env.HOT)
+          ? 'http://localhost:' + port + '/dist/app.css'
+          : './dist/app.css';
         // HACK: Writing the script path should be done with webpack
         document.getElementsByTagName('head')[0].appendChild(link);
       }());
@@ -23,7 +24,7 @@
         const script = document.createElement('script');
         const port = process.env.PORT || 3000;
         script.src = (process.env.HOT)
-          ? `http://localhost:${port}/dist/bundle.js`
+          ? 'http://localhost:' + port + '/dist/bundle.js'
           : './dist/bundle.js';
         // HACK: Writing the script path should be done with webpack
         document.body.appendChild(script);
