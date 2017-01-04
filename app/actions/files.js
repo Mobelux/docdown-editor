@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import uuid from 'uuid/v4';
 
 export const FOLDER_OPEN = 'FOLDER_OPEN';
 export const FILE_NEW = 'FILE_NEW';
@@ -12,7 +13,7 @@ export const FILE_SELECTION = 'FILE_SELECTION';
 export const FILE_DISCARD = 'FILE_DISCARD';
 
 export const openFolder = createAction(FOLDER_OPEN, path => ({ path }));
-export const newFile = createAction(FILE_NEW);
+export const newFile = createAction(FILE_NEW, id => ({ id: (id || uuid()) }));
 export const openFile = createAction(FILE_OPEN, path => ({ path }));
 export const closeFile = createAction(FILE_CLOSE, id => ({ id }));
 export const selectFile = createAction(FILE_SELECT, id => ({ id }));

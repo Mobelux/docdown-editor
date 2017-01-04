@@ -11,7 +11,10 @@ describe('files actions', () => {
   });
 
   it('should newFile should create FILE_NEW action', () => {
-    expect(actions.newFile()).toEqual({ type: actions.FILE_NEW });
+    expect(actions.newFile('1234')).toEqual({
+      type: actions.FILE_NEW,
+      payload: { id: '1234' }
+    });
   });
 
   it('should openFile should create FILE_OPEN action', () => {

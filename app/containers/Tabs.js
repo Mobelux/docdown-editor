@@ -20,15 +20,15 @@ class Tabs extends React.PureComponent {
       return null;
     }
 
-    const fileComponents = files.map(f =>
+    const fileComponents = files.map((f, id) =>
       <Tab
-        key={f.get('id')}
-        id={f.get('id')}
+        key={id}
+        id={id}
         name={f.get('name')}
         changed={f.get('changed')}
         onTabClick={handleFile}
         onRemoveTab={handleRemoveFile}
-        isActive={f.get('id') === currentFile}
+        isActive={id === currentFile}
       />
     ).valueSeq();
 
