@@ -61,6 +61,31 @@ describe('files reducer', () => {
     expect(filesReducer(start, { type: FILE_NEW, payload: { id: '1234' } })).toEqualImmutable(end);
   });
 
+  it('should handle FILE_CLOSE', () => {
+    const start = Map({
+      folder: null,
+      files: Map({
+        1234: Map({
+          name: 'Untitled',
+          path: null,
+          contents: '',
+          changed: false,
+          anchor: 0,
+          focus: 0
+        })
+      }),
+      paths: Map({}),
+      currentFile: '1234'
+    });
+    const end = Map({
+      folder: null,
+      files: Map({}),
+      paths: Map({}),
+      currentFile: null
+    });
+    expect(filesReducer(start, { type: FILE_CLOSE, payload: { id: '1234' } })).toEqualImmutable(end);
+  });
+
   it('should handle FILE_DISCARD', () => {
     const start = Map({
       folder: null,

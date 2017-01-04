@@ -1,5 +1,6 @@
 import { createAction } from 'redux-actions';
 import uuid from 'uuid/v4';
+import { ipcRenderer } from 'electron';
 
 export const FOLDER_OPEN = 'FOLDER_OPEN';
 export const FILE_NEW = 'FILE_NEW';
@@ -15,9 +16,32 @@ export const FILE_DISCARD = 'FILE_DISCARD';
 export const openFolder = createAction(FOLDER_OPEN, path => ({ path }));
 export const newFile = createAction(FILE_NEW, id => ({ id: (id || uuid()) }));
 export const openFile = createAction(FILE_OPEN, path => ({ path }));
-export const closeFile = createAction(FILE_CLOSE, id => ({ id }));
+export const closeFile = id => (
+  (dispatch, getState) => {
+    const { files } = getState();
+    const fileId = id || files.get('currentFile');
+    const allFiles = files.get('files');
+    const file = allFiles.get(fileId);
+    if (file.get('changed')) {
+      ipcRenderer.send('close-unsaved', id, file.get('path'));
+    } else {
+      dispatch({ type: FILE_CLOSE, payload: { id } });
+    }
+  }
+);
 export const selectFile = createAction(FILE_SELECT, id => ({ id }));
-export const saveFile = createAction(FILE_SAVE, id => ({ id }));
+export const saveFile = id => (
+  (dispatch, getState) => {
+    const { files } = getState();
+    const fileId = id || files.get('currentFile');
+    const file = files.getIn(['files', fileId]);
+    if (!file.get('path')) {
+      ipcRenderer.send('save-as', fileId);
+    } else {
+      dispatch({ type: FILE_SAVE, payload: { id } });
+    }
+  }
+);
 export const saveAsFile = createAction(FILE_SAVE_AS, (id, path) => ({ id, path }));
 export const updateFile = createAction(FILE_UPDATE, text => ({ text }));
 export const updateSelection = createAction(FILE_SELECTION, selection => ({ selection }));

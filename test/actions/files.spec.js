@@ -1,6 +1,11 @@
 /* eslint-disable no-unused-expressions */
 import expect from 'expect';
+import { Map } from 'immutable';
+import configureStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import * as actions from '../../app/actions/files';
+
+const mockStore = configureStore([thunk]);
 
 describe('files actions', () => {
   it('should openFolder should create FOLDER_OPEN action', () => {
@@ -25,7 +30,22 @@ describe('files actions', () => {
   });
 
   it('should closeFile should create FILE_CLOSE action', () => {
-    expect(actions.closeFile('1234')).toEqual({
+    const store = mockStore({
+      files: Map({
+        folder: null,
+        files: Map({
+          1234: Map({
+            changed: false
+          })
+        }),
+        paths: Map({}),
+        currentFile: null
+      })
+    });
+
+    store.dispatch(actions.closeFile('1234'));
+    const happened = store.getActions();
+    expect(happened[0]).toEqual({
       type: actions.FILE_CLOSE,
       payload: { id: '1234' }
     });
@@ -39,7 +59,22 @@ describe('files actions', () => {
   });
 
   it('should saveFile should create FILE_SAVE action', () => {
-    expect(actions.saveFile('453')).toEqual({
+    const store = mockStore({
+      files: Map({
+        folder: null,
+        files: Map({
+          453: Map({
+            path: '/tmp/file1.txt'
+          })
+        }),
+        paths: Map({}),
+        currentFile: null
+      })
+    });
+
+    store.dispatch(actions.saveFile('453'));
+    const happened = store.getActions();
+    expect(happened[0]).toEqual({
       type: actions.FILE_SAVE,
       payload: { id: '453' }
     });

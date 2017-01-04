@@ -1,5 +1,4 @@
 import fs from 'fs';
-import { ipcRenderer } from 'electron';
 import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
@@ -55,10 +54,6 @@ const filesReducer = handleActions({
     const files = state.get('files');
     const paths = state.get('paths');
     const file = files.get(id);
-    if (file.get('changed')) {
-      ipcRenderer.send('close-unsaved', id, file.get('path'));
-      return state;
-    }
     let currentFile = state.get('currentFile');
     if (id === currentFile) {
       const otherFile = files.filter((f, idx) => idx !== id).last();
@@ -108,10 +103,6 @@ const filesReducer = handleActions({
       id = state.get('currentFile');
     }
     let file = state.getIn(['files', id]);
-    if (!file.get('path')) {
-      ipcRenderer.send('save-as', id);
-      return state;
-    }
     fs.writeFileSync(file.get('path'), file.get('contents'));
     file = fileReducer(file, action);
     return state.setIn(['files', id], file);
