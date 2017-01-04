@@ -17,6 +17,14 @@ import { getCurrentFile } from '../selectors';
 import { isPreviewableFile } from '../utils/file-types';
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.resizeSidebar = ::this.resizeSidebar;
+    this.resizePane = ::this.resizePane;
+    this.toggleSidebar = ::this.toggleSidebar;
+    this.togglePane = ::this.togglePane;
+  }
+
   componentDidMount() {
     const { currentFile, fileActions } = this.props;
     if (!currentFile.get('id')) {
@@ -31,6 +39,7 @@ class App extends React.Component {
     if (!currentFile.get('id')) {
       fileActions.newFile();
     }
+    window.dispatchEvent(new Event('resize'));
   }
 
   sidebarSize() {
@@ -43,8 +52,30 @@ class App extends React.Component {
     return (isPreviewableFile(currentFile.get('name')) && ui.get('paneVisible')) ? ui.get('paneSize') : '0';
   }
 
+  resizeSidebar(size) {
+    const { uiActions } = this.props;
+    uiActions.resizeSidebar(size);
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  resizePane(size) {
+    const { uiActions } = this.props;
+    uiActions.resizePane(size);
+    window.dispatchEvent(new Event('resize'));
+  }
+
+  toggleSidebar() {
+    const { uiActions } = this.props;
+    uiActions.toggleSidebar();
+  }
+
+  togglePane() {
+    const { uiActions } = this.props;
+    uiActions.togglePane();
+  }
+
   render() {
-    const { currentFile, replacer, ui, fileActions, uiActions } = this.props;
+    const { currentFile, replacer, ui, fileActions } = this.props;
     const raw = currentFile.get('raw', '');
     const rendered = currentFile.get('rendered', '');
     const showPreview = isPreviewableFile(currentFile.get('name')) && ui.get('paneVisible');
@@ -60,7 +91,7 @@ class App extends React.Component {
         defaultSize={this.sidebarSize()}
         size={ui.get('sidebarVisible') ? undefined : '0'}
         allowResize={ui.get('sidebarVisible')}
-        onChange={uiActions.resizeSidebar}
+        onChange={this.resizeSidebar}
       >
         <Sidebar visible={ui.get('sidebarVisible')} />
         <div className="split-pane-wrapper">
@@ -75,7 +106,7 @@ class App extends React.Component {
             pane1Style={{ maxWidth: '100%' }}
             allowResize={ui.get('paneVisible')}
             primary="second"
-            onChange={uiActions.resizePane}
+            onChange={this.resizePane}
           >
             <div className="flex flex-column h-100">
               <Panel className={ui.get('countVisible') ? 'panel--status' : ''}>
@@ -88,11 +119,11 @@ class App extends React.Component {
                 />
               </Panel>
               <StatusBar visible={ui.get('countVisible')} className="flex justify-between">
-                <a href="#files" onClick={uiActions.toggleSidebar}>
+                <a href="#files" onClick={this.toggleSidebar}>
                   <Icon name={ui.get('sidebarVisible') ? 'left' : 'right'} />
                 </a>
                 <CharacterCount text={raw} />
-                <a href="#preview" onClick={uiActions.togglePane}>
+                <a href="#preview" onClick={this.togglePane}>
                   <Icon name={showPreview ? 'right' : 'left'} />
                 </a>
               </StatusBar>

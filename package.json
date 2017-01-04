@@ -160,6 +160,7 @@
     "webpack-validator": "^2.3.0"
   },
   "dependencies": {
+    "brace": "^0.9.1",
     "classnames": "^2.2.5",
     "csv-parse": "^1.1.7",
     "draft-js": "^0.9.1",
@@ -171,6 +172,7 @@
     "mustache": "^2.3.0",
     "prismjs": "^1.6.0",
     "react": "^15.4.1",
+    "react-ace": "^4.1.0",
     "react-dom": "^15.4.1",
     "react-immutable-proptypes": "^2.1.0",
     "react-redux": "^5.0.1",
