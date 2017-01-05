@@ -16,10 +16,6 @@ class Tabs extends React.PureComponent {
   render() {
     const { files, currentFile, handleFile, handleRemoveFile } = this.props;
 
-    if (!files) {
-      return null;
-    }
-
     const fileComponents = files.map((f, id) =>
       <Tab
         key={id}
