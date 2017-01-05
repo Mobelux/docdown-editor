@@ -1,11 +1,6 @@
 /* eslint-disable no-unused-expressions */
 import expect from 'expect';
-import { Map } from 'immutable';
-import configureStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 import * as actions from '../../app/actions/files';
-
-const mockStore = configureStore([thunk]);
 
 describe('files actions', () => {
   it('should openFolder should create FOLDER_OPEN action', () => {
@@ -29,25 +24,17 @@ describe('files actions', () => {
     });
   });
 
-  it('should closeFile should create FILE_CLOSE action', () => {
-    const store = mockStore({
-      files: Map({
-        folder: null,
-        files: Map({
-          1234: Map({
-            changed: false
-          })
-        }),
-        paths: Map({}),
-        currentFile: null
-      })
-    });
-
-    store.dispatch(actions.closeFile('1234'));
-    const happened = store.getActions();
-    expect(happened[0]).toEqual({
+  it('should closeFile should create FILE_OPEN action', () => {
+    expect(actions.closeFile('1234')).toEqual({
       type: actions.FILE_CLOSE,
       payload: { id: '1234' }
+    });
+  });
+
+  it('should confirmCloseFile should create FILE_OPEN action', () => {
+    expect(actions.confirmedCloseFile('1235')).toEqual({
+      type: actions.FILE_CLOSE_CONFIRMED,
+      payload: { id: '1235' }
     });
   });
 
@@ -58,25 +45,17 @@ describe('files actions', () => {
     });
   });
 
-  it('should saveFile should create FILE_SAVE action', () => {
-    const store = mockStore({
-      files: Map({
-        folder: null,
-        files: Map({
-          453: Map({
-            path: '/tmp/file1.txt'
-          })
-        }),
-        paths: Map({}),
-        currentFile: null
-      })
-    });
-
-    store.dispatch(actions.saveFile('453'));
-    const happened = store.getActions();
-    expect(happened[0]).toEqual({
+  it('should saveFile should create FILE_SELECT action', () => {
+    expect(actions.saveFile('765')).toEqual({
       type: actions.FILE_SAVE,
-      payload: { id: '453' }
+      payload: { id: '765' }
+    });
+  });
+
+  it('should confirmSaveFile should create FILE_SELECT action', () => {
+    expect(actions.confirmedSaveFile('767')).toEqual({
+      type: actions.FILE_SAVE_CONFIRMED,
+      payload: { id: '767' }
     });
   });
 

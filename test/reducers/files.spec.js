@@ -3,8 +3,8 @@ import expectImmutable from 'expect-immutable';
 import { Map } from 'immutable';
 import filesReducer from '../../app/reducers/files';
 import {
-  FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT,
-  FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_DISCARD
+  FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE_CONFIRMED, FILE_SELECT,
+  FILE_SAVE_CONFIRMED, FILE_SAVE_AS, FILE_UPDATE, FILE_DISCARD
 } from '../../app/actions/files';
 
 expect.extend(expectImmutable);
@@ -61,7 +61,7 @@ describe('files reducer', () => {
     expect(filesReducer(start, { type: FILE_NEW, payload: { id: '1234' } })).toEqualImmutable(end);
   });
 
-  it('should handle FILE_CLOSE', () => {
+  it('should handle FILE_CLOSE_CONFIRMED', () => {
     const start = Map({
       folder: null,
       files: Map({
@@ -83,7 +83,7 @@ describe('files reducer', () => {
       paths: Map({}),
       currentFile: null
     });
-    expect(filesReducer(start, { type: FILE_CLOSE, payload: { id: '1234' } })).toEqualImmutable(end);
+    expect(filesReducer(start, { type: FILE_CLOSE_CONFIRMED, payload: { id: '1234' } })).toEqualImmutable(end);
   });
 
   it('should handle FILE_DISCARD', () => {
