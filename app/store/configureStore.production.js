@@ -3,12 +3,15 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { asyncSessionStorage } from 'redux-persist/storages';
 import immutableTransform from 'redux-persist-transform-immutable';
-import thunk from 'redux-thunk';
+import { createEpicMiddleware } from 'redux-observable';
 import rootReducer from '../reducers';
+import rootEpic from '../epics';
+
+const epicMiddleware = createEpicMiddleware(rootEpic);
 
 const enhancer = compose(
   autoRehydrate(),
-  applyMiddleware(thunk)
+  applyMiddleware(epicMiddleware)
 );
 
 export default function configureStore(initialState) {

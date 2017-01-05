@@ -1,8 +1,7 @@
-import fs from 'fs';
 import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
 import {
-  FILE_NEW, FILE_OPEN, FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_SELECTION
+  FILE_NEW, FILE_OPEN, FILE_READ, FILE_SAVE_AS, FILE_WRITE, FILE_UPDATE, FILE_SELECTION
 } from '../actions/files';
 import { REPLACER_FIND, REPLACER_REPLACE, REPLACER_REPLACE_ALL } from '../actions/replacer';
 
@@ -23,20 +22,23 @@ const fileReducer = handleActions({
     const name = pieces[pieces.length - 1];
     return file.merge({
       name,
-      path,
-      contents: fs.readFileSync(path, 'utf8'),
+      contents: '',
       changed: false,
       anchor: 0,
       focus: 0
     });
   },
-  [FILE_SAVE]: file => file.set('changed', false),
+  [FILE_READ]: (file, { payload }) => {
+    const { path, contents } = payload;
+    return file.merge({ path, contents });
+  },
   [FILE_SAVE_AS]: (file, { payload }) => {
     const { path } = payload;
     const pieces = path.split('/');
     const name = pieces[pieces.length - 1];
-    return file.merge({ path, name, changed: false });
+    return file.merge({ path, name });
   },
+  [FILE_WRITE]: file => file.set('changed', false),
   [FILE_UPDATE]: (file, { payload }) => {
     const { text } = payload;
     return file.merge({

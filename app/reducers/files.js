@@ -1,11 +1,10 @@
-import fs from 'fs';
 import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
 import fileReducer from './file';
 import {
-  FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT,
-  FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_SELECTION, FILE_DISCARD
+  FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_READ, FILE_CLOSE_CONFIRMED, FILE_SELECT,
+  FILE_SAVE_CONFIRMED, FILE_SAVE_AS, FILE_WRITE, FILE_UPDATE, FILE_SELECTION, FILE_DISCARD
 } from '../actions/files';
 import { REPLACER_FIND, REPLACER_REPLACE, REPLACER_REPLACE_ALL } from '../actions/replacer';
 
@@ -46,7 +45,17 @@ const filesReducer = handleActions({
     files = files.set(id, file);
     return state.merge({ currentFile: id, files, paths });
   },
-  [FILE_CLOSE]: (state, { payload }) => {
+  [FILE_READ]: (state, action) => {
+    const { payload: { path } } = action;
+    const paths = state.get('paths');
+    const id = paths.get(path);
+    let files = state.get('files');
+    let file = state.getIn(['files', id]);
+    file = fileReducer(file, action);
+    files = files.set(id, file);
+    return state.set('files', files);
+  },
+  [FILE_CLOSE_CONFIRMED]: (state, { payload }) => {
     let { id } = payload;
     if (!id) {
       id = state.get('currentFile');
@@ -97,13 +106,12 @@ const filesReducer = handleActions({
     file = fileReducer(file, action);
     return state.setIn(['files', id], file);
   },
-  [FILE_SAVE]: (state, action) => {
+  [FILE_SAVE_CONFIRMED]: (state, action) => {
     let { payload: { id } } = action;
     if (!id) {
       id = state.get('currentFile');
     }
     let file = state.getIn(['files', id]);
-    fs.writeFileSync(file.get('path'), file.get('contents'));
     file = fileReducer(file, action);
     return state.setIn(['files', id], file);
   },
@@ -112,9 +120,17 @@ const filesReducer = handleActions({
     let file = state.getIn(['files', id]);
     let paths = state.get('paths');
     paths = paths.set(path, id);
-    fs.writeFileSync(path, file.get('contents'));
     file = fileReducer(file, action);
     return state.setIn(['files', id], file).set('paths', paths);
+  },
+  [FILE_WRITE]: (state, action) => {
+    let { payload: { id } } = action;
+    if (!id) {
+      id = state.get('currentFile');
+    }
+    let file = state.getIn(['files', id]);
+    file = fileReducer(file, action);
+    return state.setIn(['files', id], file);
   },
   [REPLACER_FIND]: (state, action) => {
     const id = state.get('currentFile');
