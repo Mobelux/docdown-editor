@@ -23,9 +23,9 @@ export const closeFile = id => (
     const allFiles = files.get('files');
     const file = allFiles.get(fileId);
     if (file.get('changed')) {
-      ipcRenderer.send('close-unsaved', id, file.get('path'));
+      ipcRenderer.send('close-unsaved', fileId, file.get('path'));
     } else {
-      dispatch({ type: FILE_CLOSE, payload: { id } });
+      dispatch({ type: FILE_CLOSE, payload: { fileId } });
     }
   }
 );
@@ -34,11 +34,12 @@ export const saveFile = id => (
   (dispatch, getState) => {
     const { files } = getState();
     const fileId = id || files.get('currentFile');
-    const file = files.getIn(['files', fileId]);
+    const allFiles = files.get('files');
+    const file = allFiles.getIn(['files', fileId]);
     if (!file.get('path')) {
       ipcRenderer.send('save-as', fileId);
     } else {
-      dispatch({ type: FILE_SAVE, payload: { id } });
+      dispatch({ type: FILE_SAVE, payload: { fileId } });
     }
   }
 );
