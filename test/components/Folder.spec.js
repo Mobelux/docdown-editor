@@ -2,11 +2,13 @@
 import expect from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
+import { List } from 'immutable';
 import Folder from '../../app/components/Folder';
 
 function setup() {
-  const component = mount(<Folder name="files" forceOpen><li>FILE!</li></Folder>);
-  const collapsedComponent = mount(<Folder name="files" collapsed ><li>FILE!</li></Folder>);
+  const children = List([<li>FILE!</li>]);
+  const component = mount(<Folder name="files" forceOpen>{children}</Folder>);
+  const collapsedComponent = mount(<Folder name="files" collapsed >{children}</Folder>);
   return {
     component,
     collapsedComponent,

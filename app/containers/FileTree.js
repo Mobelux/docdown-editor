@@ -35,7 +35,7 @@ function buildTree(folderName, files, handleClick, forceOpen = false) {
         return <File key={value} name={filename} path={value} handleClick={handleClick} />;
       }
       return <UnsupportedFile key={value} name={filename} />;
-    }).valueSeq().toArray();
+    }).toList();
   }
   return (
     <Folder key={folderName} name={folderName} forceOpen={forceOpen}>

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { withState } from 'recompose';
 import Icon from './Icon';
 
@@ -22,7 +23,7 @@ Folder.propTypes = {
   forceOpen: PropTypes.bool,
   collapsed: PropTypes.bool,
   toggleCollapsed: PropTypes.func,
-  children: PropTypes.arrayOf(PropTypes.element)
+  children: ImmutablePropTypes.listOf(PropTypes.element)
 };
 
 const collapsible = withState('collapsed', 'toggleCollapsed', true);
