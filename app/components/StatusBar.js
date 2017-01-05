@@ -8,9 +8,11 @@ const StatusBar = ({ visible, children, className = '' }) => {
     <div className={`status-bar ${className}`}>{children}</div>
   );
 };
+
 StatusBar.propTypes = {
   visible: PropTypes.bool.isRequired,
-  children: PropTypes.any,
+  children: PropTypes.arrayOf(PropTypes.element),
   className: PropTypes.string
 };
+
 export default StatusBar;

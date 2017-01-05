@@ -7,7 +7,7 @@ const PrismToken = ({ type, alias, children }) => (
 PrismToken.propTypes = {
   type: PropTypes.string,
   alias: PropTypes.string,
-  children: PropTypes.any
+  children: PropTypes.arrayOf(PropTypes.element)
 };
 
 export default PrismToken;

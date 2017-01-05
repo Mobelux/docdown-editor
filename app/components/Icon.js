@@ -5,7 +5,9 @@ const Icon = ({ name }) => (
     <use xlinkHref={`#icon-${name}`} />
   </svg>
 );
+
 Icon.propTypes = {
   name: PropTypes.string.isRequired
 };
+
 export default Icon;

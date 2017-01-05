@@ -1,24 +1,21 @@
 import React, { PropTypes } from 'react';
+import { pure } from 'recompose';
 
-class MarkdownPreview extends React.PureComponent {
-  static propTypes = {
-    content: PropTypes.string,
-    visible: PropTypes.bool
+const MarkdownPreview = ({ visible, content }) => {
+  if (!visible) {
+    return null;
   }
 
-  render() {
-    const { visible, content } = this.props;
+  return (
+    <div>
+      <div className="vh-100 pa4 overflow-auto rendered" dangerouslySetInnerHTML={{ __html: content }} />
+    </div>
+  );
+};
 
-    if (!visible) {
-      return null;
-    }
+MarkdownPreview.propTypes = {
+  content: PropTypes.string,
+  visible: PropTypes.bool
+};
 
-    return (
-      <div>
-        <div className="vh-100 overflow-auto rendered pa4" dangerouslySetInnerHTML={{ __html: content }} />
-      </div>
-    );
-  }
-}
-
-export default MarkdownPreview;
+export default pure(MarkdownPreview);

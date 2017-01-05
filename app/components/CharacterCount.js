@@ -6,8 +6,10 @@ const CharacterCount = ({ text, className = '' }) => {
     <div className={`character-count ${className}`}>{count} chars</div>
   );
 };
+
 CharacterCount.propTypes = {
   text: PropTypes.string.isRequired,
   className: PropTypes.string
 };
+
 export default CharacterCount;

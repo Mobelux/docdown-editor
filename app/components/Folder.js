@@ -22,7 +22,7 @@ Folder.propTypes = {
   forceOpen: PropTypes.bool,
   collapsed: PropTypes.bool,
   toggleCollapsed: PropTypes.func,
-  children: PropTypes.any
+  children: PropTypes.arrayOf(PropTypes.element)
 };
 
 const collapsible = withState('collapsed', 'toggleCollapsed', true);
