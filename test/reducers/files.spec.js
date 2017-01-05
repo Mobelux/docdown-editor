@@ -4,7 +4,7 @@ import { Map } from 'immutable';
 import filesReducer from '../../app/reducers/files';
 import {
   FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE_CONFIRMED, FILE_SELECT,
-  FILE_SAVE_CONFIRMED, FILE_SAVE_AS, FILE_UPDATE, FILE_DISCARD
+  FILE_UPDATE, FILE_DISCARD
 } from '../../app/actions/files';
 
 expect.extend(expectImmutable);
@@ -59,6 +59,42 @@ describe('files reducer', () => {
       currentFile: '1234'
     });
     expect(filesReducer(start, { type: FILE_NEW, payload: { id: '1234' } })).toEqualImmutable(end);
+  });
+
+  it('should handle FILE_OPEN', () => {
+    const start = Map({
+      folder: null,
+      files: Map({
+        1234: Map({
+          name: 'Untitled',
+          path: null,
+          contents: '',
+          changed: false,
+          anchor: 0,
+          focus: 0
+        })
+      }),
+      paths: Map({}),
+      currentFile: '1234'
+    });
+    const end = Map({
+      folder: null,
+      files: Map({
+        1234: Map({
+          name: 'this.md',
+          path: null,
+          contents: '',
+          changed: false,
+          anchor: 0,
+          focus: 0
+        })
+      }),
+      paths: Map({
+        '/tmp/this.md': '1234'
+      }),
+      currentFile: '1234'
+    });
+    expect(filesReducer(start, { type: FILE_OPEN, payload: { path: '/tmp/this.md' } })).toEqualImmutable(end);
   });
 
   it('should handle FILE_CLOSE_CONFIRMED', () => {

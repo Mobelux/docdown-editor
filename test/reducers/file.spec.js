@@ -3,7 +3,7 @@ import expectImmutable from 'expect-immutable';
 import { Map } from 'immutable';
 import fileReducer from '../../app/reducers/file';
 import {
-  FILE_NEW, FILE_OPEN, FILE_SAVE, FILE_SAVE_AS, FILE_UPDATE, FILE_SELECTION
+  FILE_NEW, FILE_OPEN, FILE_READ, FILE_SAVE_AS, FILE_WRITE, FILE_UPDATE, FILE_SELECTION
 } from '../../app/actions/files';
 import { REPLACER_FIND, REPLACER_REPLACE, REPLACER_REPLACE_ALL } from '../../app/actions/replacer';
 
@@ -34,20 +34,43 @@ describe('file reducer', () => {
     expect(fileReducer(Map({}), { type: FILE_NEW, payload: { id: '1234' } })).toEqualImmutable(end);
   });
 
-  it('should handle FILE_SAVE', () => {
+  it('should handle FILE_OPEN', () => {
     const start = Map({
-      name: 'file2.txt',
-      path: '/tmp/file2.txt',
-      contents: 'Something here',
-      changed: true
+      name: 'Untitled',
+      path: null,
+      contents: '',
+      changed: false,
+      anchor: 0,
+      focus: 0
     });
     const end = Map({
-      name: 'file2.txt',
-      path: '/tmp/file2.txt',
-      contents: 'Something here',
+      name: 'file3.txt',
+      path: null,
+      contents: '',
+      changed: false,
+      anchor: 0,
+      focus: 0
+    });
+    expect(fileReducer(start, { type: FILE_OPEN, payload: { path: '/tmp/file3.txt' } })).toEqualImmutable(end);
+  });
+
+  it('should handle FILE_READ', () => {
+    const start = Map({
+      name: 'file3.txt',
+      path: null,
+      contents: '',
       changed: false
     });
-    expect(fileReducer(start, { type: FILE_SAVE })).toEqualImmutable(end);
+    const end = Map({
+      name: 'file3.txt',
+      path: '/tmp/file3.txt',
+      contents: 'GREAT!',
+      changed: false
+    });
+    expect(fileReducer(start, {
+      type: FILE_READ,
+      payload: { path: '/tmp/file3.txt', contents: 'GREAT!' }
+    })).toEqualImmutable(end);
   });
 
   it('should handle FILE_SAVE_AS', () => {
@@ -55,7 +78,7 @@ describe('file reducer', () => {
       name: 'Untitled',
       path: null,
       contents: 'Something here',
-      changed: true
+      changed: false
     });
     const end = Map({
       name: 'file3.txt',
@@ -64,6 +87,22 @@ describe('file reducer', () => {
       changed: false
     });
     expect(fileReducer(start, { type: FILE_SAVE_AS, payload: { path: '/tmp/file3.txt' } })).toEqualImmutable(end);
+  });
+
+  it('should handle FILE_WRITE', () => {
+    const start = Map({
+      name: 'file2.txt',
+      path: '/tmp/file2.txt',
+      contents: 'Something here',
+      changed: true
+    });
+    const end = Map({
+      name: 'file2.txt',
+      path: '/tmp/file2.txt',
+      contents: 'Something here',
+      changed: false
+    });
+    expect(fileReducer(start, { type: FILE_WRITE })).toEqualImmutable(end);
   });
 
   it('should handle FILE_UPDATE', () => {

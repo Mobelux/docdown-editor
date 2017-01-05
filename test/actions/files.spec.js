@@ -24,6 +24,13 @@ describe('files actions', () => {
     });
   });
 
+  it('should readFile should create FILE_READ action', () => {
+    expect(actions.readFile('/tmp/filename.md', 'SOMETHING')).toEqual({
+      type: actions.FILE_READ,
+      payload: { path: '/tmp/filename.md', contents: 'SOMETHING' }
+    });
+  });
+
   it('should closeFile should create FILE_OPEN action', () => {
     expect(actions.closeFile('1234')).toEqual({
       type: actions.FILE_CLOSE,
@@ -63,6 +70,13 @@ describe('files actions', () => {
     expect(actions.saveAsFile('111', '/tmp/file.txt')).toEqual({
       type: actions.FILE_SAVE_AS,
       payload: { id: '111', path: '/tmp/file.txt' }
+    });
+  });
+
+  it('should writeFile should create FILE_WRITE action', () => {
+    expect(actions.writeFile('112')).toEqual({
+      type: actions.FILE_WRITE,
+      payload: { id: '112' }
     });
   });
 
