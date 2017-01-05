@@ -22,10 +22,9 @@ const filesReducer = handleActions({
   },
   [FILE_NEW]: (state, { payload }) => {
     const { id } = payload;
-    let files = state.get('files');
-    const file = fileReducer(undefined, { type: FILE_NEW });
-    files = files.set(id, file);
-    return state.merge({ currentFile: id, files });
+    return state
+      .update('files', files => files.set(id, fileReducer(undefined, { type: FILE_NEW })))
+      .set('currentFile', id);
   },
   [FILE_OPEN]: (state, action) => {
     const { payload: { path } } = action;
@@ -49,11 +48,7 @@ const filesReducer = handleActions({
     const { payload: { path } } = action;
     const paths = state.get('paths');
     const id = paths.get(path);
-    let files = state.get('files');
-    let file = state.getIn(['files', id]);
-    file = fileReducer(file, action);
-    files = files.set(id, file);
-    return state.set('files', files);
+    return state.updateIn(['files', id], file => fileReducer(file, action));
   },
   [FILE_CLOSE_CONFIRMED]: (state, { payload }) => {
     let { id } = payload;
@@ -96,59 +91,43 @@ const filesReducer = handleActions({
   },
   [FILE_UPDATE]: (state, action) => {
     const id = state.get('currentFile');
-    let file = state.getIn(['files', id]);
-    file = fileReducer(file, action);
-    return state.setIn(['files', id], file);
+    return state.updateIn(['files', id], file => fileReducer(file, action));
   },
   [FILE_SELECTION]: (state, action) => {
     const id = state.get('currentFile');
-    let file = state.getIn(['files', id]);
-    file = fileReducer(file, action);
-    return state.setIn(['files', id], file);
+    return state.updateIn(['files', id], file => fileReducer(file, action));
   },
   [FILE_SAVE_CONFIRMED]: (state, action) => {
     let { payload: { id } } = action;
     if (!id) {
       id = state.get('currentFile');
     }
-    let file = state.getIn(['files', id]);
-    file = fileReducer(file, action);
-    return state.setIn(['files', id], file);
+    return state.updateIn(['files', id], file => fileReducer(file, action));
   },
   [FILE_SAVE_AS]: (state, action) => {
     const { payload: { id, path } } = action;
-    let file = state.getIn(['files', id]);
-    let paths = state.get('paths');
-    paths = paths.set(path, id);
-    file = fileReducer(file, action);
-    return state.setIn(['files', id], file).set('paths', paths);
+    return state
+      .update('paths', paths => paths.set(path, id))
+      .updateIn(['files', id], file => fileReducer(file, action));
   },
   [FILE_WRITE]: (state, action) => {
     let { payload: { id } } = action;
     if (!id) {
       id = state.get('currentFile');
     }
-    let file = state.getIn(['files', id]);
-    file = fileReducer(file, action);
-    return state.setIn(['files', id], file);
+    return state.updateIn(['files', id], file => fileReducer(file, action));
   },
   [REPLACER_FIND]: (state, action) => {
     const id = state.get('currentFile');
-    let file = state.getIn(['files', id]);
-    file = fileReducer(file, action);
-    return state.setIn(['files', id], file);
+    return state.updateIn(['files', id], file => fileReducer(file, action));
   },
   [REPLACER_REPLACE]: (state, action) => {
     const id = state.get('currentFile');
-    let file = state.getIn(['files', id]);
-    file = fileReducer(file, action);
-    return state.setIn(['files', id], file);
+    return state.updateIn(['files', id], file => fileReducer(file, action));
   },
   [REPLACER_REPLACE_ALL]: (state, action) => {
     const id = state.get('currentFile');
-    let file = state.getIn(['files', id]);
-    file = fileReducer(file, action);
-    return state.setIn(['files', id], file);
+    return state.updateIn(['files', id], file => fileReducer(file, action));
   }
 }, initialState);
 
