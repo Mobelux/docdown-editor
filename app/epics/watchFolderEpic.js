@@ -1,5 +1,6 @@
 import { watchRx } from 'watch-rx';
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/bufferTime';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
@@ -16,12 +17,15 @@ const watchFolderEpic = action$ =>
       const { path } = payload;
 
       return watchRx(path, watchOptions)
-        .filter(file => file.event !== 'change')
+        .filter(change => change.event !== 'change')
+        .bufferTime(100)
+        .filter(changes => changes.length)
         .map(
-          file => changeFolder(file),
+          changes => changeFolder(changes),
           err => closeFolder(err),
           () => closeFolder()
-        ).takeUntil(action$.ofType(FOLDER_OPEN, FOLDER_CLOSE));
+        )
+        .takeUntil(action$.ofType(FOLDER_OPEN, FOLDER_CLOSE));
     });
 
 export default watchFolderEpic;
