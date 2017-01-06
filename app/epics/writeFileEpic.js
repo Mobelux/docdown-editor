@@ -1,8 +1,6 @@
-import fs from 'fs';
-import 'rxjs/add/operator/map';
 import { FILE_SAVE_CONFIRMED, FILE_SAVE_AS, writeFile } from '../actions/files';
 
-const writeFileEpic = (action$, store) =>
+const writeFileEpic = (action$, { store, fs }) =>
   action$.ofType(FILE_SAVE_CONFIRMED, FILE_SAVE_AS)
     .map(({ payload }) => {
       const { files } = store.getState();

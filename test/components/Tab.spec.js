@@ -1,14 +1,13 @@
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
-import { spy } from 'sinon';
+import expect, { createSpy } from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
 import Tab from '../../app/components/Tab';
 
 function setup() {
   const actions = {
-    onTabClick: spy(),
-    onRemoveTab: spy()
+    onTabClick: createSpy(),
+    onRemoveTab: createSpy()
   };
   const component = mount(<Tab id="123" name="test.md" {...actions} />);
   const activeComponent = mount(<Tab id="234" name="test.md" isActive {...actions} />);
@@ -48,12 +47,12 @@ describe('Tab component', () => {
   it('should link should call onTabClick', () => {
     const { link, actions } = setup();
     link.simulate('click');
-    expect(actions.onTabClick.called).toExist();
+    expect(actions.onTabClick.calls.length).toExist();
   });
 
   it('should button should call onRemoveTab', () => {
     const { button, actions } = setup();
     button.simulate('click');
-    expect(actions.onRemoveTab.called).toExist();
+    expect(actions.onRemoveTab.calls.length).toExist();
   });
 });

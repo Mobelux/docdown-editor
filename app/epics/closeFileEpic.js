@@ -1,9 +1,6 @@
-import { ipcRenderer } from 'electron';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
 import { FILE_CLOSE, confirmedCloseFile } from '../actions/files';
 
-const closeFileEpic = (action$, store) =>
+const closeFileEpic = (action$, { store, ipc }) =>
   action$.ofType(FILE_CLOSE)
     .filter(({ payload }) => {
       const { id } = payload;
@@ -12,7 +9,7 @@ const closeFileEpic = (action$, store) =>
       const allFiles = files.get('files');
       const file = allFiles.get(fileId);
       if (file.get('changed')) {
-        ipcRenderer.send('close-unsaved', fileId, file.get('path'));
+        ipc.send('close-unsaved', fileId, file.get('path'));
         return false;
       }
       return true;
