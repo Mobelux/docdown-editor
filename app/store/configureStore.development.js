@@ -3,12 +3,15 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, autoRehydrate } from 'redux-persist';
 import { asyncSessionStorage } from 'redux-persist/storages';
 import immutableTransform from 'redux-persist-transform-immutable';
-import thunk from 'redux-thunk';
+import { createEpicMiddleware } from 'redux-observable';
 import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
+import rootEpic from '../epics';
 
 import * as fileActions from '../actions/files';
 import * as uiActions from '../actions/ui';
+
+const epicMiddleware = createEpicMiddleware(rootEpic);
 
 const actionCreators = {
   ...fileActions,
@@ -22,7 +25,7 @@ const logger = createLogger({
 
 const enhancer = compose(
   autoRehydrate(),
-  applyMiddleware(thunk, logger),
+  applyMiddleware(epicMiddleware, logger),
   window.devToolsExtension ?
     window.devToolsExtension({ actionCreators }) :
     noop => noop

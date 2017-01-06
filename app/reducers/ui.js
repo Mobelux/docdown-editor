@@ -7,12 +7,13 @@ import {
 } from '../actions/ui';
 import { FOLDER_OPEN } from '../actions/files';
 
+const browserWidth = document.documentElement.clientWidth || 1024;
 
 const initialState = Map({
   sidebarVisible: false,
   paneVisible: true,
   countVisible: true,
-  paneSize: (document.documentElement.clientWidth / 2),
+  paneSize: (browserWidth / 2),
   sidebarSize: 250,
   fontSize: 90
 });
