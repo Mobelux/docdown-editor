@@ -1,11 +1,9 @@
-import { combineEpics } from 'redux-observable';
-import { Observable } from 'rxjs';
 import { watchRx } from 'watch-rx';
 import 'rxjs/add/operator/filter';
+import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
+import 'rxjs/add/operator/takeUntil';
 import { FOLDER_OPEN, FOLDER_CLOSE, closeFolder, addFolder, removeFolder } from '../actions/folder';
-
-let subscription;
 
 const watchOptions = {
   ignorePermissionErrors: true,
@@ -17,11 +15,7 @@ const watchFolderEpic = action$ =>
     .mergeMap(({ payload }) => {
       const { path } = payload;
 
-      if (subscription) {
-        subscription = null;
-      }
-
-      subscription = watchRx(path, watchOptions)
+      return watchRx(path, watchOptions)
         .filter(file => file.event !== 'change')
         .map(
           (file) => {
@@ -39,16 +33,7 @@ const watchFolderEpic = action$ =>
           },
           err => closeFolder(err),
           () => closeFolder()
-        );
-
-      return subscription;
+        ).takeUntil(action$.ofType(FOLDER_OPEN, FOLDER_CLOSE));
     });
 
-const unwatchFolderEpic = action$ =>
-  action$.ofType(FOLDER_CLOSE)
-    .filter(() => {
-      subscription = null;
-      return false;
-    });
-
-export default combineEpics(watchFolderEpic, unwatchFolderEpic);
+export default watchFolderEpic;

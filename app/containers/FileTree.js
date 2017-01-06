@@ -7,6 +7,7 @@ import Folder from '../components/Folder';
 import File from '../components/File';
 import UnsupportedFile from '../components/UnsupportedFile';
 import { openFile } from '../actions/files';
+import { openFolder } from '../actions/folder';
 import { isSupportedFile } from '../utils/file-types';
 
 function buildTree(folderName, files, handleClick, forceOpen = false) {
@@ -33,7 +34,14 @@ class FileTree extends React.PureComponent {
   static propTypes = {
     path: PropTypes.string,
     filetree: ImmutablePropTypes.orderedMap,
-    handleFile: PropTypes.func
+    handleFile: PropTypes.func,
+    startWatch: PropTypes.func
+  }
+
+  componentWillMount() {
+    if (this.props.path) {
+      this.props.startWatch(this.props.path);
+    }
   }
 
   render() {
@@ -54,6 +62,7 @@ const mapStateToProps = state => ({
   filetree: getFiletree(state)
 });
 const mapDispatchToProps = dispatch => ({
-  handleFile: bindActionCreators(openFile, dispatch)
+  handleFile: bindActionCreators(openFile, dispatch),
+  startWatch: bindActionCreators(openFolder, dispatch)
 });
 export default connect(mapStateToProps, mapDispatchToProps)(FileTree);
