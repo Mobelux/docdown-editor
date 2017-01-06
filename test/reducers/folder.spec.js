@@ -11,7 +11,7 @@ expect.extend(expectImmutable);
 describe('folder reducer', () => {
   it('should handle initial state', () => {
     const initial = Map({
-      folder: null,
+      path: null,
       files: Map({})
     });
     expect(folderReducer(undefined, { type: 'none' })).toEqualImmutable(initial);
@@ -19,11 +19,11 @@ describe('folder reducer', () => {
 
   it('should handle FOLDER_OPEN', () => {
     const start = Map({
-      folder: null,
+      path: null,
       files: Map({})
     });
     const end = Map({
-      folder: '/tmp/files',
+      path: '/tmp/files',
       files: Map({})
     });
     expect(folderReducer(start, { type: FOLDER_OPEN, payload: { path: '/tmp/files' } })).toEqualImmutable(end);
@@ -31,11 +31,11 @@ describe('folder reducer', () => {
 
   it('should handle FOLDER_CLOSE', () => {
     const start = Map({
-      folder: '/tmp/files',
+      path: '/tmp/files',
       files: Map({})
     });
     const end = Map({
-      folder: null,
+      path: null,
       files: Map({})
     });
     expect(folderReducer(start, { type: FOLDER_CLOSE })).toEqualImmutable(end);

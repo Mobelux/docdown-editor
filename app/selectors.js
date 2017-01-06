@@ -40,7 +40,7 @@ function folderFirstMapper(f, key) {
 export const getFiletree = createSelector(
   getFolder,
   (folder) => {
-    const path = folder.get('folder');
+    const path = folder.get('path');
     const files = folder.get('files');
     if (!path || files.size === 0) {
       return OrderedMap({});

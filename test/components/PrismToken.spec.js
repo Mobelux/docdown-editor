@@ -5,7 +5,7 @@ import { mount } from 'enzyme';
 import PrismToken from '../../app/components/PrismToken';
 
 function setup() {
-  const component = mount(<PrismToken type="test1" alias="test2"><div>TEST</div></PrismToken>);
+  const component = mount(<PrismToken type="test1" alias="test2"><div>TEST</div><strong/></PrismToken>);
   return {
     component,
     div: component.find('div')

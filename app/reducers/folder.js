@@ -5,14 +5,14 @@ import {
 } from '../actions/folder';
 
 const initialState = Map({
-  folder: null,
+  path: null,
   files: Map({})
 });
 
 const folderReducer = handleActions({
   [FOLDER_OPEN]: (state, { payload }) => {
     const { path } = payload;
-    return state.set('folder', path);
+    return state.set('path', path);
   },
   [FOLDER_CLOSE]: () => initialState,
   [FOLDER_ADD]: (state, { payload }) => {

@@ -58,7 +58,7 @@ class FileTree extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  path: state.folder.get('folder'),
+  path: state.folder.get('path'),
   filetree: getFiletree(state)
 });
 const mapDispatchToProps = dispatch => ({
