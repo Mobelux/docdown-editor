@@ -7,7 +7,7 @@ import { FOLDER_OPEN, FOLDER_CLOSE, closeFolder, addFolder, removeFolder } from 
 
 const watchOptions = {
   ignorePermissionErrors: true,
-  ignored: /(^|[\/\\])\../
+  ignored: /(^|[/\\])\../
 };
 
 const watchFolderEpic = action$ =>
