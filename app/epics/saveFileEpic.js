@@ -1,9 +1,6 @@
-import { ipcRenderer } from 'electron';
-import 'rxjs/add/operator/filter';
-import 'rxjs/add/operator/map';
 import { FILE_SAVE, confirmedSaveFile } from '../actions/files';
 
-const saveFileEpic = (action$, store) =>
+const saveFileEpic = (action$, { store, ipc }) =>
   action$.ofType(FILE_SAVE)
     .filter(({ payload }) => {
       const { id } = payload;
@@ -12,7 +9,7 @@ const saveFileEpic = (action$, store) =>
       const allFiles = files.get('files');
       const file = allFiles.get(fileId);
       if (!file.get('path')) {
-        ipcRenderer.send('save-as', fileId);
+        ipc.send('save-as', fileId);
         return false;
       }
       return true;

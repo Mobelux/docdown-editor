@@ -1,8 +1,6 @@
-import fs from 'fs';
-import 'rxjs/add/operator/map';
 import { FILE_OPEN, readFile } from '../actions/files';
 
-const readFileEpic = action$ =>
+const readFileEpic = (action$, { fs }) =>
   action$.ofType(FILE_OPEN)
     .map(({ payload }) => {
       const { path } = payload;
