@@ -1,7 +1,7 @@
 import { Map } from 'immutable';
 import { handleActions } from 'redux-actions';
 import {
-  FOLDER_OPEN, FOLDER_CLOSE, FOLDER_ADD, FOLDER_REMOVE
+  FOLDER_OPEN, FOLDER_CLOSE, FOLDER_CHANGE
 } from '../actions/folder';
 
 const initialState = Map({
@@ -15,14 +15,23 @@ const folderReducer = handleActions({
     return state.set('path', path);
   },
   [FOLDER_CLOSE]: () => initialState,
-  [FOLDER_ADD]: (state, { payload }) => {
-    const { path, folder } = payload;
-    return state.update('files', files => files.set(path, folder));
-  },
-  [FOLDER_REMOVE]: (state, { payload }) => state.update('files', (files) => {
-    const idx = files.indexOf(payload.path);
-    return files.delete(idx);
-  })
+  [FOLDER_CHANGE]: (state, { payload }) => {
+    const { file } = payload;
+    switch (file.event) {
+      case 'add':
+        return state.update('files', files => files.set(file.name, false));
+      case 'addDir':
+        return state.update('files', files => files.set(file.name, true));
+      case 'unlink':
+      case 'unlinkDir':
+        return state.update('files', (files) => {
+          const idx = files.indexOf(payload.path);
+          return files.delete(idx);
+        });
+      default:
+        return state;
+    }
+  }
 }, initialState);
 
 export default folderReducer;

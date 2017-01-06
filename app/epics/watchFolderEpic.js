@@ -3,7 +3,7 @@ import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import 'rxjs/add/operator/takeUntil';
-import { FOLDER_OPEN, FOLDER_CLOSE, closeFolder, addFolder, removeFolder } from '../actions/folder';
+import { FOLDER_OPEN, FOLDER_CLOSE, changeFolder, closeFolder } from '../actions/folder';
 
 const watchOptions = {
   ignorePermissionErrors: true,
@@ -18,19 +18,7 @@ const watchFolderEpic = action$ =>
       return watchRx(path, watchOptions)
         .filter(file => file.event !== 'change')
         .map(
-          (file) => {
-            switch (file.event) {
-              case 'add':
-                return addFolder(file.name);
-              case 'addDir':
-                return addFolder(file.name, true);
-              case 'unlink':
-                return removeFolder(file.name);
-              case 'unlinkDir':
-                return removeFolder(file.name, true);
-              default:
-            }
-          },
+          file => changeFolder(file),
           err => closeFolder(err),
           () => closeFolder()
         ).takeUntil(action$.ofType(FOLDER_OPEN, FOLDER_CLOSE));
