@@ -1,4 +1,3 @@
-import { watchRx } from 'watch-rx';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/bufferTime';
 import 'rxjs/add/operator/map';
@@ -11,12 +10,12 @@ const watchOptions = {
   ignored: /(^|[/\\])\../
 };
 
-const watchFolderEpic = action$ =>
+const watchFolderEpic = (action$, { watch }) =>
   action$.ofType(FOLDER_OPEN)
     .mergeMap(({ payload }) => {
       const { path } = payload;
 
-      return watchRx(path, watchOptions)
+      return watch(path, watchOptions)
         .filter(change => change.event !== 'change')
         .bufferTime(100)
         .filter(changes => changes.length)

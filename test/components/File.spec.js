@@ -1,13 +1,12 @@
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
-import { spy } from 'sinon';
+import expect, { createSpy } from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
 import File from '../../app/components/File';
 
 function setup() {
   const actions = {
-    handleClick: spy()
+    handleClick: createSpy()
   };
   const component = mount(<File path="/tmp/test.md" name="test.md" {...actions} />);
   return {
@@ -27,6 +26,6 @@ describe('File component', () => {
   it('should link should call handleClick', () => {
     const { link, actions } = setup();
     link.simulate('click');
-    expect(actions.handleClick.called).toExist();
+    expect(actions.handleClick.calls.length).toExist();
   });
 });
