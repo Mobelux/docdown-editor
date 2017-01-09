@@ -22,13 +22,15 @@ describe('saveFileEpic', () => {
         currentFile: 323
       })
     });
-    const ipc = createSpy();
+    const ipc = {
+      send: createSpy()
+    };
     const action$ = ActionsObservable.of(saveFile('323'));
     saveFileEpic(action$, { store, ipc })
       .toPromise()
       .then(() => {
-        expect(ipc.calls.length).toExist();
-        expect(ipc.calls[0].arguments).toEqual(['save-as', '323']);
+        expect(ipc.send.calls.length).toExist();
+        expect(ipc.send.calls[0].arguments).toEqual(['save-as', '323']);
       });
   });
 
@@ -43,7 +45,9 @@ describe('saveFileEpic', () => {
         currentFile: null
       })
     });
-    const ipc = createSpy();
+    const ipc = {
+      send: createSpy()
+    };
     const action$ = ActionsObservable.of(saveFile('423'));
     saveFileEpic(action$, { store, ipc })
       .toPromise()
@@ -51,6 +55,6 @@ describe('saveFileEpic', () => {
         expect(actionReceived.type).toBe(FILE_SAVE_CONFIRMED);
         expect(actionReceived.payload).toEqual({ id: '423' });
       });
-    expect(ipc.calls.length).toNotExist();
+    expect(ipc.send.calls.length).toNotExist();
   });
 });

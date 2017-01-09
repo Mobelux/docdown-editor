@@ -23,13 +23,15 @@ describe('closeFileEpic', () => {
         currentFile: null
       })
     });
-    const ipc = createSpy();
+    const ipc = {
+      send: createSpy()
+    };
     const action$ = ActionsObservable.of(closeFile('123'));
     closeFileEpic(action$, { store, ipc })
       .toPromise()
       .then(() => {
-        expect(ipc.calls.length).toExist();
-        expect(ipc.calls[0].arguments).toEqual(['close-unsaved', '123', '/tmp/more.txt']);
+        expect(ipc.send.calls.length).toExist();
+        expect(ipc.send.calls[0].arguments).toEqual(['close-unsaved', '123', '/tmp/more.txt']);
       });
   });
 
@@ -38,13 +40,15 @@ describe('closeFileEpic', () => {
       files: Map({
         files: Map({
           123: Map({
-            changed: true
+            changed: false
           })
         }),
         currentFile: null
       })
     });
-    const ipc = createSpy();
+    const ipc = {
+      send: createSpy()
+    };
     const action$ = ActionsObservable.of(closeFile('123'));
     closeFileEpic(action$, { store, ipc })
       .toPromise()
@@ -52,6 +56,6 @@ describe('closeFileEpic', () => {
         expect(actionReceived.type).toBe(FILE_CLOSE_CONFIRMED);
         expect(actionReceived.payload).toEqual({ id: '123' });
       });
-    expect(ipc.calls.length).toNotExist();
+    expect(ipc.send.calls.length).toNotExist();
   });
 });

@@ -5,11 +5,11 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { ActionsObservable } from 'redux-observable';
 import writeFileEpic from '../../app/epics/writeFileEpic';
-import { WRITE_FILE, openFile } from '../../app/actions/files';
+import { FILE_WRITE, confirmedSaveFile } from '../../app/actions/files';
 
 const mockStore = configureStore([]);
 
-describe('readFileEpic', () => {
+describe('writeFileEpic', () => {
   it('should send fs read in the file', () => {
     const store = mockStore({
       files: Map({
@@ -25,13 +25,13 @@ describe('readFileEpic', () => {
     const fs = {
       writeFile: createSpy()
     };
-    const action$ = ActionsObservable.of(openFile('/tmp/file.md'));
+    const action$ = ActionsObservable.of(confirmedSaveFile('223'));
     writeFileEpic(action$, { store, fs })
       .toPromise()
       .then((actionReceived) => {
         expect(fs.writeFile.calls.length).toExist();
         expect(fs.writeFile.calls[0].arguments).toEqual(['/tmp/this.md', 'Great stuff!']);
-        expect(actionReceived.type).toBe(WRITE_FILE);
+        expect(actionReceived.type).toBe(FILE_WRITE);
         expect(actionReceived.payload).toEqual({ id: '223' });
       });
   });

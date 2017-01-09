@@ -3,7 +3,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { ActionsObservable } from 'redux-observable';
 import readFileEpic from '../../app/epics/readFileEpic';
-import { READ_FILE, openFile } from '../../app/actions/files';
+import { FILE_READ, openFile } from '../../app/actions/files';
 
 describe('readFileEpic', () => {
   it('should send fs read in the file', () => {
@@ -16,7 +16,7 @@ describe('readFileEpic', () => {
       .then((actionReceived) => {
         expect(fs.readFileSync.calls.length).toExist();
         expect(fs.readFileSync.calls[0].arguments).toEqual(['/tmp/file.md', 'utf8']);
-        expect(actionReceived.type).toBe(READ_FILE);
+        expect(actionReceived.type).toBe(FILE_READ);
         expect(actionReceived.payload).toEqual({
           path: '/tmp/file.md',
           contents: 'Example file!'
