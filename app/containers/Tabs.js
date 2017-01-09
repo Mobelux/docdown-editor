@@ -9,12 +9,13 @@ class Tabs extends React.PureComponent {
   static propTypes = {
     files: ImmutablePropTypes.map,
     handleFile: PropTypes.func,
+    ui: ImmutablePropTypes.map,
     handleRemoveFile: PropTypes.func,
     currentFile: PropTypes.string
   }
 
   render() {
-    const { files, currentFile, handleFile, handleRemoveFile } = this.props;
+    const { files, currentFile, ui, handleFile, handleRemoveFile } = this.props;
 
     const fileComponents = files.map((f, id) =>
       <Tab
@@ -28,8 +29,10 @@ class Tabs extends React.PureComponent {
       />
     ).valueSeq();
 
+    const style = { width: ui.get('sidebarVisible') ? `calc(100vw - ${ui.get('sidebarSize')}px)` : '100vw' };
+
     return (
-      <ul className="tabs__list">
+      <ul className="tabs__list" style={style}>
         { fileComponents }
       </ul>
     );
@@ -38,7 +41,8 @@ class Tabs extends React.PureComponent {
 
 const mapStateToProps = state => ({
   files: state.files.get('files'),
-  currentFile: state.files.get('currentFile')
+  currentFile: state.files.get('currentFile'),
+  ui: state.ui
 });
 
 const mapDispatchToProps = dispatch => ({
