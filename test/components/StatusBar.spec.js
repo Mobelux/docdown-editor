@@ -5,8 +5,8 @@ import { shallow, mount } from 'enzyme';
 import StatusBar from '../../app/components/StatusBar';
 
 function setup() {
-  const invisibleComponent = shallow(<StatusBar visible={false}><span>MORE</span></StatusBar>);
-  const component = mount(<StatusBar visible><span>MORE</span></StatusBar>);
+  const invisibleComponent = shallow(<StatusBar visible={false}><span>MORE</span><div /></StatusBar>);
+  const component = mount(<StatusBar visible><span>MORE</span><div /></StatusBar>);
   return {
     invisibleComponent,
     component,

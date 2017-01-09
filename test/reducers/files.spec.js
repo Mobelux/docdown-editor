@@ -3,7 +3,7 @@ import expectImmutable from 'expect-immutable';
 import { Map } from 'immutable';
 import filesReducer from '../../app/reducers/files';
 import {
-  FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE_CONFIRMED, FILE_SELECT,
+  FILE_NEW, FILE_OPEN, FILE_CLOSE_CONFIRMED, FILE_SELECT,
   FILE_UPDATE, FILE_DISCARD
 } from '../../app/actions/files';
 
@@ -12,7 +12,6 @@ expect.extend(expectImmutable);
 describe('files reducer', () => {
   it('should handle initial state', () => {
     const initial = Map({
-      folder: null,
       files: Map({}),
       paths: Map({}),
       currentFile: null
@@ -20,31 +19,13 @@ describe('files reducer', () => {
     expect(filesReducer(undefined, { type: 'none' })).toEqualImmutable(initial);
   });
 
-  it('should handle FOLDER_OPEN', () => {
-    const start = Map({
-      folder: null,
-      files: Map({}),
-      paths: Map({}),
-      currentFile: null
-    });
-    const end = Map({
-      folder: '/tmp/files',
-      files: Map({}),
-      paths: Map({}),
-      currentFile: null
-    });
-    expect(filesReducer(start, { type: FOLDER_OPEN, payload: { path: '/tmp/files' } })).toEqualImmutable(end);
-  });
-
   it('should handle FILE_NEW', () => {
     const start = Map({
-      folder: null,
       files: Map({}),
       paths: Map({}),
       currentFile: null
     });
     const end = Map({
-      folder: null,
       files: Map({
         1234: Map({
           name: 'Untitled',
@@ -63,7 +44,6 @@ describe('files reducer', () => {
 
   it('should handle FILE_OPEN', () => {
     const start = Map({
-      folder: null,
       files: Map({
         1234: Map({
           name: 'Untitled',
@@ -78,7 +58,6 @@ describe('files reducer', () => {
       currentFile: '1234'
     });
     const end = Map({
-      folder: null,
       files: Map({
         1234: Map({
           name: 'this.md',
@@ -99,7 +78,6 @@ describe('files reducer', () => {
 
   it('should handle FILE_CLOSE_CONFIRMED', () => {
     const start = Map({
-      folder: null,
       files: Map({
         1234: Map({
           name: 'Untitled',
@@ -114,7 +92,6 @@ describe('files reducer', () => {
       currentFile: '1234'
     });
     const end = Map({
-      folder: null,
       files: Map({}),
       paths: Map({}),
       currentFile: null
@@ -124,7 +101,6 @@ describe('files reducer', () => {
 
   it('should handle FILE_DISCARD', () => {
     const start = Map({
-      folder: null,
       files: Map({
         1234: Map({
           name: 'Untitled',
@@ -139,7 +115,6 @@ describe('files reducer', () => {
       currentFile: null
     });
     const end = Map({
-      folder: null,
       files: Map({}),
       paths: Map({}),
       currentFile: null
@@ -149,7 +124,6 @@ describe('files reducer', () => {
 
   it('should handle FILE_SELECT', () => {
     const start = Map({
-      folder: null,
       files: Map({
         1234: Map({
           name: 'Untitled',
@@ -164,7 +138,6 @@ describe('files reducer', () => {
       currentFile: null
     });
     const end = Map({
-      folder: null,
       files: Map({
         1234: Map({
           name: 'Untitled',
@@ -183,7 +156,6 @@ describe('files reducer', () => {
 
   it('should handle FILE_UPDATE', () => {
     const start = Map({
-      folder: null,
       files: Map({
         1234: Map({
           name: 'Untitled',
@@ -198,7 +170,6 @@ describe('files reducer', () => {
       currentFile: '1234'
     });
     const end = Map({
-      folder: null,
       files: Map({
         1234: Map({
           name: 'Untitled',

@@ -3,23 +3,18 @@ import { handleActions } from 'redux-actions';
 import uuid from 'uuid/v4';
 import fileReducer from './file';
 import {
-  FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_READ, FILE_CLOSE_CONFIRMED, FILE_SELECT,
+  FILE_NEW, FILE_OPEN, FILE_READ, FILE_CLOSE_CONFIRMED, FILE_SELECT,
   FILE_SAVE_CONFIRMED, FILE_SAVE_AS, FILE_WRITE, FILE_UPDATE, FILE_SELECTION, FILE_DISCARD
 } from '../actions/files';
 import { REPLACER_FIND, REPLACER_REPLACE, REPLACER_REPLACE_ALL } from '../actions/replacer';
 
 const initialState = Map({
-  folder: null,
   files: Map({}),
   paths: Map({}),
   currentFile: null
 });
 
 const filesReducer = handleActions({
-  [FOLDER_OPEN]: (state, { payload }) => {
-    const { path } = payload;
-    return state.set('folder', path);
-  },
   [FILE_NEW]: (state, { payload }) => {
     const { id } = payload;
     return state

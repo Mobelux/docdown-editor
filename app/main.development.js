@@ -1,5 +1,6 @@
 import { app, BrowserWindow, Menu, shell, dialog, ipcMain } from 'electron';
-import { newFile, openFolder, saveFile, saveAsFile, closeFile, discardFile } from './actions/files';
+import { newFile, saveFile, saveAsFile, closeFile, discardFile } from './actions/files';
+import { openFolder } from './actions/folder';
 import { findText, replaceText, replaceAllText, clearText } from './actions/replacer';
 import {
   toggleSidebar, togglePane, toggleCount, increaseFontSize, decreaseFontSize, resetFontSize

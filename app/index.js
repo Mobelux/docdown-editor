@@ -6,7 +6,8 @@ import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import App from './containers/App';
 import Replacer from './components/Replacer';
-import { openFolder, openFile } from './actions/files';
+import { openFile } from './actions/files';
+import { openFolder } from './actions/folder';
 
 const store = configureStore();
 

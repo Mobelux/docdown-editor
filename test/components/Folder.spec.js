@@ -6,7 +6,7 @@ import { List } from 'immutable';
 import Folder from '../../app/components/Folder';
 
 function setup() {
-  const children = List([<li>FILE!</li>]);
+  const children = List([<li key="file">FILE!</li>]);
   const component = mount(<Folder name="files" forceOpen>{children}</Folder>);
   const collapsedComponent = mount(<Folder name="files" collapsed >{children}</Folder>);
   return {
