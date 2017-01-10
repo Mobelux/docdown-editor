@@ -15,12 +15,14 @@
     padding: 10px;
     background: color(black,inactive);
     border-left: 3px solid color(black,dark);
+    white-space: nowrap;
 
     span {
       padding-left: 15px;
 
       color: color(grey,base);
       font-size: 15px;
+      white-space: nowrap;
     }
 
     &.is-active {
