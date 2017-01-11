@@ -22,12 +22,20 @@ function setup() {
         })
       }),
       currentFile: '1234'
+    }),
+    ui: Map({
+      sidebarVisible: true,
+      sidebarSize: 200
     })
   });
   const emptyStore = mockStore({
     files: Map({
       files: Map({}),
       currentFile: null
+    }),
+    ui: Map({
+      sidebarVisible: true,
+      sidebarSize: 200
     })
   });
   const container = mount(<Tabs store={store} />);
