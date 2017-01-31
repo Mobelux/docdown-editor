@@ -1,14 +1,16 @@
-import expect from 'expect';
-import expectImmutable from 'expect-immutable';
-import { Map, List } from 'immutable';
+/* global jest, describe, it, expect, beforeEach */
+import * as matchers from 'jest-immutable-matchers';
+import { Map } from 'immutable';
 import folderReducer from '../../app/reducers/folder';
 import {
   FOLDER_OPEN, FOLDER_CLOSE
 } from '../../app/actions/folder';
 
-expect.extend(expectImmutable);
-
 describe('folder reducer', () => {
+  beforeEach(() => {
+    jest.addMatchers(matchers);
+  });
+
   it('should handle initial state', () => {
     const initial = Map({
       path: null,

@@ -1,5 +1,5 @@
+/* global describe, it, expect */
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
 import CharacterCount from '../../app/components/CharacterCount';
@@ -19,7 +19,7 @@ describe('CharacterCount component', () => {
 
   it('should component should have classes', () => {
     const { component } = setup();
-    expect(component.hasClass('character-count')).toExist();
-    expect(component.hasClass('test')).toExist();
+    expect(component.hasClass('character-count')).toBeTruthy();
+    expect(component.hasClass('test')).toBeTruthy();
   });
 });

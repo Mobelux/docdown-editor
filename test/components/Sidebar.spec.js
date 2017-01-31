@@ -1,5 +1,5 @@
+/* global describe, it, expect */
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
 import Sidebar from '../../app/components/Sidebar';
@@ -16,11 +16,11 @@ function setup() {
 describe('Sidebar component', () => {
   it('should component should not render when not visible', () => {
     const { invisibleComponent } = setup();
-    expect(invisibleComponent.html()).toNotExist();
+    expect(invisibleComponent.html()).toBeFalsy();
   });
 
   it('should component should have classes', () => {
     const { component } = setup();
-    expect(component.hasClass('sidebar')).toExist();
+    expect(component.hasClass('sidebar')).toBeTruthy();
   });
 });

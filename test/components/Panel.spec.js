@@ -1,5 +1,5 @@
+/* global describe, it, expect */
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
 import Panel from '../../app/components/Panel';
@@ -15,8 +15,8 @@ function setup() {
 describe('Panel component', () => {
   it('should panel should have classes', () => {
     const { component } = setup();
-    expect(component.hasClass('panel')).toExist();
-    expect(component.hasClass('test')).toExist();
+    expect(component.hasClass('panel')).toBeTruthy();
+    expect(component.hasClass('test')).toBeTruthy();
   });
 
   it('should panel should render children', () => {

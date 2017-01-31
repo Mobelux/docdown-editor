@@ -1,5 +1,5 @@
+/* global describe, it, expect */
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
 import React from 'react';
 import { shallow } from 'enzyme';
 import Icon from '../../app/components/Icon';
@@ -14,12 +14,12 @@ function setup() {
 describe('Icon component', () => {
   it('should svg should contain use', () => {
     const { component } = setup();
-    expect(component.find('use')).toExist();
+    expect(component.find('use')).toBeTruthy();
   });
 
   it('should svg should have icon classes', () => {
     const { component } = setup();
-    expect(component.hasClass('icon')).toExist();
-    expect(component.hasClass('icon-test')).toExist();
+    expect(component.hasClass('icon')).toBeTruthy();
+    expect(component.hasClass('icon-test')).toBeTruthy();
   });
 });

@@ -1,5 +1,5 @@
+/* global describe, it, expect */
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
 import { Map } from 'immutable';
@@ -54,7 +54,7 @@ describe('Tabs container', () => {
 
   it('should container should have no li', () => {
     const { emptyContainer } = setup();
-    expect(emptyContainer.find('li').length).toNotExist();
+    expect(emptyContainer.find('li').length).toBeFalsy();
   });
 
   it('should tabs should get setup properly', () => {
@@ -62,7 +62,7 @@ describe('Tabs container', () => {
     const tabs = container.find('li');
     const activeTab = tabs.first();
     const changedTab = tabs.last();
-    expect(activeTab.hasClass('is-active')).toExist();
-    expect(changedTab.hasClass('is-changed')).toExist();
+    expect(activeTab.hasClass('is-active')).toBeTruthy();
+    expect(changedTab.hasClass('is-changed')).toBeTruthy();
   });
 });

@@ -1,4 +1,4 @@
-import expect, { createSpy } from 'expect';
+/* global jest, describe, it, expect */
 import 'rxjs/add/observable/of';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/bufferTime';
@@ -17,13 +17,14 @@ describe('watchFolderEpic', () => {
     const addDirEvent = { event: 'addDir', name: '/tmp/' };
     const addEvent = { event: 'add', name: '/tmp/file.md' };
     const fileEvents = Observable.of(addDirEvent, addEvent);
-    const watch = createSpy().andReturn(fileEvents);
+    const watch = jest.fn();
+    watch.mockReturnValueOnce(fileEvents);
     const action$ = ActionsObservable.of(openFolder('/tmp/'));
     watchFolderEpic(action$, { watch })
       .delay(200)
       .toPromise()
       .then((actionReceived) => {
-        expect(watch.calls.length).toExist();
+        expect(watch.calls.length).toBeTruthy();
         expect(watch.calls[0].arguments).toEqual(['/tmp/', {
           ignorePermissionErrors: true,
           ignored: /(^|[/\\])\../

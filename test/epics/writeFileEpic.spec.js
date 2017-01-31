@@ -1,4 +1,4 @@
-import expect, { createSpy } from 'expect';
+/* global jest, describe, it, expect */
 import configureStore from 'redux-mock-store';
 import { Map } from 'immutable';
 import 'rxjs/add/operator/map';
@@ -23,14 +23,14 @@ describe('writeFileEpic', () => {
       })
     });
     const fs = {
-      writeFile: createSpy()
+      writeFile: jest.fn()
     };
     const action$ = ActionsObservable.of(confirmedSaveFile('223'));
     writeFileEpic(action$, { store, fs })
       .toPromise()
       .then((actionReceived) => {
-        expect(fs.writeFile.calls.length).toExist();
-        expect(fs.writeFile.calls[0].arguments).toEqual(['/tmp/this.md', 'Great stuff!']);
+        expect(fs.writeFile.mock.calls.length).toBeTruthy();
+        expect(fs.writeFile.mock.calls[0].arguments).toEqual(['/tmp/this.md', 'Great stuff!']);
         expect(actionReceived.type).toBe(FILE_WRITE);
         expect(actionReceived.payload).toEqual({ id: '223' });
       });

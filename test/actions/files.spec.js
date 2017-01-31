@@ -1,5 +1,5 @@
+/* global describe, it, expect */
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
 import * as actions from '../../app/actions/files';
 
 describe('files actions', () => {

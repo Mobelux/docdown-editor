@@ -1,5 +1,5 @@
+/* global describe, it, expect */
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
 import UnsupportedFile from '../../app/components/UnsupportedFile';
