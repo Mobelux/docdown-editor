@@ -1,13 +1,15 @@
-import expect from 'expect';
-import expectImmutable from 'expect-immutable';
+/* global jest, describe, it, expect, beforeEach */
+import * as matchers from 'jest-immutable-matchers';
 import { Map } from 'immutable';
 import replacerReducer from '../../app/reducers/replacer';
 import { REPLACER_FIND, REPLACER_REPLACE, REPLACER_REPLACE_ALL, REPLACER_CLEAR } from '../../app/actions/replacer';
 import { FOLDER_OPEN, FILE_NEW, FILE_OPEN, FILE_CLOSE, FILE_SELECT } from '../../app/actions/files';
 
-expect.extend(expectImmutable);
-
 describe('replacer reducer', () => {
+  beforeEach(() => {
+    jest.addMatchers(matchers);
+  });
+
   it('should handle initial state', () => {
     const initial = Map({
       find: null,

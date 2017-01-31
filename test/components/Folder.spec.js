@@ -1,5 +1,5 @@
+/* global describe, it, expect */
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
 import { List } from 'immutable';
@@ -31,6 +31,6 @@ describe('Folder component', () => {
 
   it('should collapsed component should have no children', () => {
     const { collapsedComponent } = setup();
-    expect(collapsedComponent.contains('ul')).toNotExist();
+    expect(collapsedComponent.contains('ul')).toBeFalsy();
   });
 });

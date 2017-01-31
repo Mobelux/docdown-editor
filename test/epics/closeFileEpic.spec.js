@@ -1,4 +1,4 @@
-import expect, { createSpy } from 'expect';
+/* global jest, describe, it, expect */
 import configureStore from 'redux-mock-store';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
@@ -24,14 +24,14 @@ describe('closeFileEpic', () => {
       })
     });
     const ipc = {
-      send: createSpy()
+      send: jest.fn()
     };
     const action$ = ActionsObservable.of(closeFile('123'));
     closeFileEpic(action$, { store, ipc })
       .toPromise()
       .then(() => {
-        expect(ipc.send.calls.length).toExist();
-        expect(ipc.send.calls[0].arguments).toEqual(['close-unsaved', '123', '/tmp/more.txt']);
+        expect(ipc.send.mock.calls.length).toBeTruthy();
+        expect(ipc.send.mock.calls[0].arguments).toEqual(['close-unsaved', '123', '/tmp/more.txt']);
       });
   });
 
@@ -47,7 +47,7 @@ describe('closeFileEpic', () => {
       })
     });
     const ipc = {
-      send: createSpy()
+      send: jest.fn()
     };
     const action$ = ActionsObservable.of(closeFile('123'));
     closeFileEpic(action$, { store, ipc })
@@ -56,6 +56,6 @@ describe('closeFileEpic', () => {
         expect(actionReceived.type).toBe(FILE_CLOSE_CONFIRMED);
         expect(actionReceived.payload).toEqual({ id: '123' });
       });
-    expect(ipc.send.calls.length).toNotExist();
+    expect(ipc.send.mock.calls.length).toBeFalsy();
   });
 });

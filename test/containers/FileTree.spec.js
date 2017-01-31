@@ -1,5 +1,5 @@
+/* global describe, it, expect */
 /* eslint-disable no-unused-expressions */
-import expect from 'expect';
 import React from 'react';
 import { mount } from 'enzyme';
 import { Map } from 'immutable';
@@ -40,7 +40,7 @@ describe('FileTree container', () => {
 
   it('should container should have no li', () => {
     const { emptyContainer } = setup();
-    expect(emptyContainer.find('li').length).toNotExist();
+    expect(emptyContainer.find('li').length).toBeFalsy();
   });
 
   it('should container should start expanded', () => {

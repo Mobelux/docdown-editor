@@ -1,5 +1,5 @@
-import expect from 'expect';
-import expectImmutable from 'expect-immutable';
+/* global jest, describe, it, expect, beforeEach */
+import * as matchers from 'jest-immutable-matchers';
 import { Map } from 'immutable';
 import uiReducer from '../../app/reducers/ui';
 import {
@@ -8,9 +8,12 @@ import {
 } from '../../app/actions/ui';
 import { FOLDER_OPEN } from '../../app/actions/files';
 
-expect.extend(expectImmutable);
 
 describe('ui reducer', () => {
+  beforeEach(() => {
+    jest.addMatchers(matchers);
+  });
+
   it('should handle initial state', () => {
     const initial = Map({
       sidebarVisible: false,

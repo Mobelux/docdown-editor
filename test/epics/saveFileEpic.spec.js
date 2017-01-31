@@ -1,4 +1,4 @@
-import expect, { createSpy } from 'expect';
+/* global jest, describe, it, expect */
 import configureStore from 'redux-mock-store';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
@@ -23,14 +23,14 @@ describe('saveFileEpic', () => {
       })
     });
     const ipc = {
-      send: createSpy()
+      send: jest.fn()
     };
     const action$ = ActionsObservable.of(saveFile('323'));
     saveFileEpic(action$, { store, ipc })
       .toPromise()
       .then(() => {
-        expect(ipc.send.calls.length).toExist();
-        expect(ipc.send.calls[0].arguments).toEqual(['save-as', '323']);
+        expect(ipc.send.mock.calls.length).toBeTruthy();
+        expect(ipc.send.mock.calls[0].arguments).toEqual(['save-as', '323']);
       });
   });
 
@@ -46,7 +46,7 @@ describe('saveFileEpic', () => {
       })
     });
     const ipc = {
-      send: createSpy()
+      send: jest.fn()
     };
     const action$ = ActionsObservable.of(saveFile('423'));
     saveFileEpic(action$, { store, ipc })
@@ -55,6 +55,6 @@ describe('saveFileEpic', () => {
         expect(actionReceived.type).toBe(FILE_SAVE_CONFIRMED);
         expect(actionReceived.payload).toEqual({ id: '423' });
       });
-    expect(ipc.send.calls.length).toNotExist();
+    expect(ipc.send.mock.calls.length).toBeFalsy();
   });
 });
