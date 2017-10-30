@@ -4,14 +4,13 @@
 
 import path from 'path';
 import webpack from 'webpack';
-import validate from 'webpack-validator';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import merge from 'webpack-merge';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import BabiliPlugin from 'babili-webpack-plugin';
 import baseConfig from './webpack.config.base';
 
-export default validate(merge(baseConfig, {
+export default merge(baseConfig, {
   devtool: 'cheap-module-source-map',
 
   entry: [
@@ -26,38 +25,34 @@ export default validate(merge(baseConfig, {
   },
 
   module: {
-    loaders: [
+    rules: [
       // Extract all .global.css to style.css as is
       {
         test: /\.global\.css$/,
-        loader: ExtractTextPlugin.extract(
-          'style-loader',
-          'css-loader'
-        )
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
       },
 
       // Stylesheets
       {
         test: /^((?!\.global).)*\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!sass-loader')
+        use: ExtractTextPlugin.extract({ fallback: 'style-loader', use: ['css-loader', 'sass-loader'] })
       },
 
       // Fonts
-      { test: /\.(woff2)$/, loader: 'file?name=app/styles/fonts/[name].[ext]' },
+      { test: /\.(woff2)$/, use: 'file-loader?name=app/styles/fonts/[name].[ext]' },
 
       // Images
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
-        loader: 'url-loader'
+        use: 'url-loader'
       }
     ]
   },
 
   plugins: [
-    // https://webpack.github.io/docs/list-of-plugins.html#occurrenceorderplugin
-    // https://github.com/webpack/webpack/issues/864
-    new webpack.optimize.OccurrenceOrderPlugin(),
-
     // NODE_ENV should be production so that modules do not perform certain development checks
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production')
@@ -65,7 +60,7 @@ export default validate(merge(baseConfig, {
 
     new BabiliPlugin(),
 
-    new ExtractTextPlugin('app.css', { allChunks: true }),
+    new ExtractTextPlugin({ filename: 'app.css', allChunks: true }),
 
     new HtmlWebpackPlugin({
       filename: '../app.html',
@@ -82,4 +77,4 @@ export default validate(merge(baseConfig, {
 
   // https://github.com/chentsulin/webpack-target-electron-renderer#how-this-module-works
   target: 'electron-renderer'
-}));
+});

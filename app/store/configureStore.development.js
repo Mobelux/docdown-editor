@@ -4,7 +4,7 @@ import { persistStore, autoRehydrate } from 'redux-persist';
 import { asyncSessionStorage } from 'redux-persist/storages';
 import immutableTransform from 'redux-persist-transform-immutable';
 import { createEpicMiddleware } from 'redux-observable';
-import createLogger from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import rootReducer from '../reducers';
 import rootEpic from '../epics';
 
